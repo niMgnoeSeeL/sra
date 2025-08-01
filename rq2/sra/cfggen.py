@@ -5,7 +5,7 @@ import pprint
 import re
 import subprocess
 import sys
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Set, Tuple, Final
 import json
 
 import pydot
@@ -196,6 +196,61 @@ def parse_node_label(
     )
 
 
+_TOP_LEVEL_SEP: Final[str] = "|"           # record-field separator at depth 0
+
+
+def extract_ir_from_dot_label(label: str) -> str:
+    """
+    Return the LLVM-IR body contained in a GraphViz record `label=` string
+    produced by `clang -dot-cfg`.
+
+    Works with LLVM 10 → trunk and for both unconditional and conditional
+    basic blocks.
+    """
+    # 1) unquote the attribute and un-escape GraphViz sequences
+    decoded = bytes(label.strip('"'), "utf-8").decode("unicode_escape")
+
+    # 2) drop the outermost braces  { … }
+    if decoded.startswith("{") and decoded.endswith("}"):
+        inner = decoded[1:-1]
+    else:                               # defensive fallback
+        inner = decoded
+
+    # 3) walk the string, tracking nested braces, and stop at the FIRST
+    #    top-level "|" (if any).  That yields the IR body for both
+    #    unconditional and conditional blocks.
+    depth = 0
+    ir_chars = []
+    for ch in inner:
+        if ch == "{" :
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+        elif ch == _TOP_LEVEL_SEP and depth == 0:
+            break                       # reached successor-port sub-record
+        ir_chars.append(ch)
+
+    ir_field = "".join(ir_chars)
+
+    # 4) tidy up:   remove the block label "%bb:" if still present,
+    #               translate "\l" line-breaks, strip misc escapes,
+    #               normalise away ", align N" (optional).
+    ir_field = re.sub(r"^\s*%[\w\.\d]+:\s*", "", ir_field)     # header
+    ir_field = (ir_field
+                .replace("\\l", "\n")
+                .replace("\\\\", "\\")
+                .replace('\\"', '"'))
+    ir_field = re.sub(r",\s*align\s+\d+", "", ir_field)        # align N
+    ir_field = ir_field.rstrip().replace("\n...", "")
+    # remove empty first line
+    if ir_field.startswith("\n"):
+        ir_field = ir_field[1:]
+    # remove first line if it is number with colon
+    if re.match(r"^\s*\d+:\s", ir_field):
+        ir_field = "\n".join(ir_field.split("\n")[1:])
+    return ir_field.rstrip()                                   # final trim
+
+
 def parse_dotfiles(
     dotfiles: List[str],
     path: str,
@@ -233,21 +288,11 @@ def parse_dotfiles(
         for i in range(len(nodes)):
             node = nodes[i]
             node_label = node.get_attributes()["label"]
-            modified_node_label = "\n".join(
-                node_label.strip('"')
-                .replace("\\l", "\n")
-                .replace("\n...", "")
-                .replace("\\\\", "\\")
-                .replace('\\"', '"')
-                .replace("\\{", "{")
-                .replace("\\}", "}")
-                .replace("\<", "<")
-                .replace("\>", ">")
-                .replace(", align 8", "")
-                .replace(", align 4", "")
-                .split("|")[0]
-                .split("\n")[1:]
-            ).rstrip("\n}")
+            # if debug:
+            #     print(f"DEBUG:: {node_label}")
+            
+            modified_node_label = extract_ir_from_dot_label(node_label)
+
             block = blocks_dict[function_name][i]
             if "No predecessors!" in block:
                 continue
@@ -257,8 +302,16 @@ def parse_dotfiles(
                 re.sub(r";\s.+\n", "\n", block, 0, re.MULTILINE)
                 .replace(", align 8", "")
                 .replace(", align 4", "")
+                .replace(", align 1", "")
                 .rstrip("\n}")
             )
+
+            # remove the first line if it starts with "\s{number}:\s"
+            if re.match(r"\s*\d+:\s", modified_block):
+                modified_block = "\n".join(
+                    modified_block.split("\n")[1:]
+                )
+            # modifed_block doesn't contain some debugger lines
             blur_idx = lambda s: re.sub(
                 "#\d+", "#num", re.sub(r"!\d+", "!num", s)
             )

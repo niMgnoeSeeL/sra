@@ -3,5 +3,4 @@ pandas
 matplotlib
 seaborn
 pydot
-difflib
-sklearn
+scikit-learn

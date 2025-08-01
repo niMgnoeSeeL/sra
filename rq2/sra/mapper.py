@@ -1,7 +1,7 @@
 import json
 import sys
 import time
-from typing import Dict, List, Set, Tuple, Union
+from typing import Dict, List, Set, Tuple, Union, Any
 
 import numpy as np
 
@@ -17,6 +17,18 @@ def get_bbs_fuzz_of_func(func_name: str, bbs_fuzz: List[Dict]):
     for bb in bbs_fuzz:
         if bb["function"] == func_name:
             yield bb
+
+def get_node_from_bb_lineno_fuzz(cfg_inter: Dict, func_name: str, line_no: int) -> Tuple[str, Any]:
+    """
+    Get the node name from LLVM dot files, by the function name and line_no.
+    """
+    for node, node_info in cfg_inter["nodes"].items():
+        if (
+            node_info["func"] == func_name
+            and line_no in node_info["linenums"]
+        ):
+            return node, node_info
+    return None
 
 
 def get_mapping(

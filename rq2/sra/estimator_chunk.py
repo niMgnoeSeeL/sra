@@ -44,6 +44,23 @@ def gotu_estimation(obss: np.ndarray, debug: bool = False) -> np.ndarray:
     return probs / sum(probs) * (np.sum(occurs) / num_obs)
 
 
+def structure_estimation_path_specific(
+    obss: np.ndarray,
+    graph: Graph,
+    target_node: str,
+    observable_nodes: List[str],
+    alpha: float,
+    path_unit: Tuple[str, str, str],
+    debug: bool = False,
+) -> Tuple[float, int, int]:
+    """
+    Estimate the probability of reaching the target node along the given path unit
+    This is the same as structure_estimation, except that it only considers the given path unit.
+    """
+    raise NotImplementedError(
+        "This function is not implemented yet. Please use structure_estimation instead."
+    )
+
 def structure_estimation(
     obss: np.ndarray,
     graph: Graph,

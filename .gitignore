@@ -1,0 +1,16 @@
+# CFG files
+*.dot
+
+# Cache files
+*.pyc
+*.pyo
+__pycache__/
+.pytest_cache/
+
+# fuzz data
+rq2/fuzz-data/**
+rq2/fuzz-result/**
+rq2/esti-result/**
+
+# taint analysis projects
+taint-subjects/**
