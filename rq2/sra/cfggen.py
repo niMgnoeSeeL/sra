@@ -47,25 +47,51 @@ def generate_data_from_ll(path: str, llfile: str) -> List[str]:
     return dotfiles
 
 
-def generate_data(path: str, filename: str) -> List[str]:
+def dump_cfg(filename: str, opt_path: str | None = None) -> bytes:
+    opt_path = opt_path or "opt"
+
+    # --- figure out whether this ‘opt’ is legacy or new PM-only ----------
+    try:
+        version_out = subprocess.check_output(
+            [opt_path, "--version"], text=True, stderr=subprocess.STDOUT
+        )
+        m = re.search(r"LLVM version (\d+)", version_out)
+        major = int(m.group(1)) if m else 0
+    except Exception:
+        # fall back to legacy spelling when we can’t determine the version
+        major = 0
+
+    legacy = major and major < 18
+
+    # --- choose the right CLI flags --------------------------------------
+    pass_flag = "-dot-cfg" if legacy else "-passes=dot-cfg"
+    pm_flag   = "-enable-new-pm=0" if legacy else ""
+
+    # --- run opt ----------------------------------------------------------
+    cmd = f"{opt_path} {pass_flag} {filename}.ll -disable-output {pm_flag}"
+    return subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+
+
+def generate_data(path: str, filename: str, clang_path: str = None, opt_path: str = None) -> List[str]:
     # move to path
     cur_dir = os.getcwd()
     os.chdir(path)
 
     # remove old files
-    os.system(f"rm {filename}.ll")
-    os.system("rm .*.dot")
+    try:
+        os.system(f"rm {filename}.ll")
+        os.system("rm .*.dot")
+    except Exception as e:
+        pass
 
     # generate .ll, dotfiles
+    clang_path = clang_path if clang_path else "clang"
     os.system(
-        f"clang -g -gcolumn-info -S -emit-llvm {filename}.c -o {filename}.ll 2> /dev/null"
+        f"{clang_path} -g -gcolumn-info -S -emit-llvm -Xclang -disable-O0-optnone {filename}.c -o {filename}.ll 2> /dev/null"
     )
+
     try:
-        ret = subprocess.check_output(
-            f"opt -dot-cfg {filename}.ll -disable-output -enable-new-pm=0",
-            shell=True,
-            stderr=subprocess.STDOUT,
-        )
+        ret = dump_cfg(filename, opt_path)
     except subprocess.CalledProcessError as e:
         print(e.output)
         raise e
@@ -216,6 +242,12 @@ def extract_ir_from_dot_label(label: str) -> str:
     else:                               # defensive fallback
         inner = decoded
 
+    # 3.0) newer LLVM, in dot files, 
+    # each block label is followed by a separator |
+    # we need to remove this pattern "\d+:\\l|"
+    # so that the block body is still at index 0
+    inner = re.sub(r"\d+:\\l\|", "", inner)
+
     # 3) walk the string, tracking nested braces, and stop at the FIRST
     #    top-level "|" (if any).  That yields the IR body for both
     #    unconditional and conditional blocks.
@@ -300,17 +332,19 @@ def parse_dotfiles(
                 block = "\n".join(block.split("\n")[1:])
             modified_block = (
                 re.sub(r";\s.+\n", "\n", block, 0, re.MULTILINE)
-                .replace(", align 8", "")
-                .replace(", align 4", "")
-                .replace(", align 1", "")
-                .rstrip("\n}")
             )
+            # Remove all ', align N' where N is any number
+            modified_block = re.sub(r", align \d+", "", modified_block).rstrip("\n}")
 
             # remove the first line if it starts with "\s{number}:\s"
             if re.match(r"\s*\d+:\s", modified_block):
                 modified_block = "\n".join(
                     modified_block.split("\n")[1:]
                 )
+            
+            # remove lines with debugger msg like #dbg_
+            modified_block = re.sub(r".*#dbg_.*\n?", "", modified_block)
+
             # modifed_block doesn't contain some debugger lines
             blur_idx = lambda s: re.sub(
                 "#\d+", "#num", re.sub(r"!\d+", "!num", s)
