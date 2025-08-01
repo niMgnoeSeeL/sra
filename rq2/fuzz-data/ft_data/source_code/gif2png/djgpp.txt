@@ -1,0 +1,32 @@
+Special notes for gif2png compiled with djgpp (DOS/386)
+
+For MSDOS and similar systems, there are two versions of gif2png available.
+
+gif2png.exe is compiled as a `normal' DOS executable without support for XMS
+or EMS or anything and should be used if either you are using a 286 or the
+386 version is not working correctly.
+
+gif2png3.exe is compiled as go32 (386 protected mode) executable and works only
+on machines with at least a 386sx. This version supports virtual memory
+management provided by djgpp. For best performance, you should set the
+enviroment variable GO32TMP to a local hard disk, e.g. GO32TMP=c:\tmp.
+
+The program can run under either VCPI or DPMI memory management, if you have
+both, you can disable DPMI by adding nodpmi to the GO32 variable (don't ask
+me why, I think this a performance plus).
+
+If you are running Windows and the program crashes the system, you might try
+to disable screen saver programs, I had problems when After Dark was running.
+
+
+If you are interested in djgpp and especially in the sources for go32.exe, you
+can get the package from some SimTel mirrors in the directory vendors/djgpp,
+e.g. on ftp://oak.oakland.edu/SimTel
+
+
+OK, and if it is not working at all, you can always install Linux and compile
+the program yourself, then you shouldn't have problems with memory management
+:-)
+
+Alexander Lehmann <alex@hal.rhein-main.de>
+

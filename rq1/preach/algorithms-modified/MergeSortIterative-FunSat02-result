@@ -1,0 +1,1575 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/
+$class_files: /PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(III)V
+$input_params: v1,v2,v3
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02//branch_probability.txt
+Traceback (most recent call last):
+  File "collect-interval-analysis.py", line 311, in <module>
+    main(sys.argv[1], arg_list)
+  File "collect-interval-analysis.py", line 178, in main
+    var2 = vars[1]
+IndexError: list index out of range
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/
+POLY
+LMain.test(III)V
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/
+source in command: "Main.test.*"
+method info: "Main.test(III)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/ -S"Main.test.*" "Main.test(III)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt merge.txt iterativeMergesort.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+('copy', 'merge.txt')
+('copy', 'iterativeMergesort.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt merge.txt iterativeMergesort.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(III)V', 'BB1', 'I2', '8', ['v1', 'v5'])
+('LMain', 'test(III)V', 'BB5', 'I11', '12', ['v9', 'v1'])
+('LMain', 'test(III)V', 'BB9', 'I25', '17', ['v5'])
+('LMain', 'test(III)V', 'BB10', 'I28', '17', ['v2', 'v3'])
+('LMain', 'test(III)V', 'BB11', 'I31', '17', ['v3', 'v1'])
+('LMain', 'test(III)V', 'BB13', 'I35', '21', ['v11', 'v5'])
+info: ('Main', 'test(III)V', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v5 = 0
+info: ('Main', 'test(III)V', 'BB5', 'I11')
+vcon: 	    -1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 -1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1812313233 +1FrameParameterv(0,268599241)v1ⁱⁿ = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameArrayLengthAccessPath(0,268599241)1252424392.length +1FrameParameterv(0,268599241)v1ⁱⁿ = 0
+info: ('Main', 'test(III)V', 'BB5', 'I11')
+vcon: 	    -1FrameRegisterv(0,268599241)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1875828777 +1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameArrayLengthAccessPath(0,268599241)1252424392.length +1FrameParameterv(0,268599241)v1ⁱⁿ = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1812313233 +1FrameParameterv(0,268599241)v1ⁱⁿ = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1 >= 0
+info: ('Main', 'test(III)V', 'BB9', 'I25')
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1 = 0
+info: ('Main', 'test(III)V', 'BB10', 'I28')
+vcon: 	    1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -1 = 0
+info: ('Main', 'test(III)V', 'BB5', 'I11')
+vcon: 	    -1FrameRegisterv(0,268599241)v8 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameArrayLengthAccessPath(0,268599241)1252424392.length +1FrameParameterv(0,268599241)v1ⁱⁿ = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1812313233 +1FrameParameterv(0,268599241)v1ⁱⁿ = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -2 >= 0
+info: ('Main', 'test(III)V', 'BB11', 'I31')
+vcon: 	    1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v2ⁱⁿ +1FrameParameterv(0,268599241)v3ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1 = 0
+info: ('Main', 'test(III)V', 'BB9', 'I25')
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -2 = 0
+info: ('Main', 'test(III)V', 'BB10', 'I28')
+vcon: 	    1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -2 = 0
+info: ('Main', 'test(III)V', 'BB5', 'I11')
+vcon: 	    -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameArrayLengthAccessPath(0,268599241)1252424392.length +1FrameParameterv(0,268599241)v1ⁱⁿ = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1812313233 +1FrameParameterv(0,268599241)v1ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1875828777 +1FrameRegisterv(0,268599241)v9 -1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1FrameRegisterv(0,268599241)v9 >= 0
+info: ('Main', 'test(III)V', 'BB11', 'I31')
+vcon: 	    1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v2ⁱⁿ +1FrameParameterv(0,268599241)v3ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -2 = 0
+info: ('Main', 'test(III)V', 'BB13', 'I35')
+vcon: 	    1FrameParameterv(0,268599241)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -2 = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v3ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v11 = 0
+info: ('Main', 'test(III)V', 'BB9', 'I25')
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v1ⁱⁿ +1FrameRegisterv(0,268599241)v9This branch is not considered for model counting! Fifty fifty selectivity!
+ = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -1 >= 0
+info: ('Main', 'test(III)V', 'BB10', 'I28')
+vcon: 	    1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v1ⁱⁿ +1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+info: ('Main', 'test(III)V', 'BB11', 'I31')
+vcon: 	    1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v2ⁱⁿ +1FrameParameterv(0,268599241)v3ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v1ⁱⁿ +1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v9 -1 >= 0
+info: ('Main', 'test(III)V', 'BB13', 'I35')
+vcon: 	    -1FrameParameterv(0,268599241)v1ⁱⁿ +1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v8 -1FrameRegisterv(0,268599241)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v2ⁱⁿ +1FrameParameterv(0,268599241)v3ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v3ⁱⁿ +1FrameRegisterv(0,268599241)v9 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v11 = 0
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/ yes
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java
+Class Name: Main
+blockSize < a.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:30)
+(declare-fun blockSize () Int)
+(declare-fun alength () Int)
+(assert (< blockSize alength))
+(check-sat)
+
+Constraint solving time: 0.003826247
+Model counting time: 0.007199936
+Branch model count: 9223372034707292160
+(declare-fun blockSize () Int)
+(declare-fun alength () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 3.7429E-4
+Model counting time: 5.66764E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+start < a.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:31)
+(declare-fun alength () Int)
+(declare-fun start () Int)
+(assert (< start alength))
+(check-sat)
+
+Constraint solving time: 5.08486E-4
+Model counting time: 9.20365E-4
+Branch model count: 9223372034707292160
+(declare-fun alength () Int)
+(declare-fun start () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.16944E-4
+Model counting time: 3.14892E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+a != from
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:48)
+blockSize < a.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:41)
+(declare-fun blockSize () Int)
+(declare-fun alength () Int)
+(assert (< blockSize alength))
+(check-sat)
+
+Constraint solving time: 4.99926E-4
+Model counting time: 9.07095E-4
+Branch model count: 9223372034707292160
+(declare-fun blockSize () Int)
+(declare-fun alength () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.19754E-4
+Model counting time: 3.31121E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+start < a.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:42)
+(declare-fun alength () Int)
+(declare-fun start () Int)
+(assert (< start alength))
+(check-sat)
+
+Constraint solving time: 5.01726E-4
+Model counting time: 8.99676E-4
+Branch model count: 9223372034707292160
+(declare-fun alength () Int)
+(declare-fun start () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.16284E-4
+Model counting time: 3.30121E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+k < a.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:50)
+(declare-fun k () Int)
+(declare-fun alength () Int)
+(assert (< k alength))
+(check-sat)
+
+Constraint solving time: 4.85637E-4
+Model counting time: 8.75956E-4
+Branch model count: 9223372034707292160
+(declare-fun k () Int)
+(declare-fun alength () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.13064E-4
+Model counting time: 3.07252E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+mid >= a.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:79)
+(declare-fun alength () Int)
+(declare-fun mid () Int)
+(assert (>= mid alength))
+(check-sat)
+
+Constraint solving time: 5.02546E-4
+Model counting time: 8.93675E-4
+Branch model count: 9223372039002259456
+(declare-fun alength () Int)
+(declare-fun mid () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.17644E-4
+Model counting time: 3.13911E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.5000000001164153
+False branch probability: 0.4999999998835847
+hi > a.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:80)
+(declare-fun hi () Int)
+(declare-fun alength () Int)
+(assert (> hi alength))
+(check-sat)
+
+Constraint solving time: 4.98796E-4
+Model counting time: 9.03445E-4
+Branch model count: 9223372034707292160
+(declare-fun hi () Int)
+(declare-fun alength () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.20084E-4
+Model counting time: 3.12502E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+i == mid
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:83)
+(declare-fun i () Int)
+(declare-fun mid () Int)
+(assert (= i mid))
+(check-sat)
+
+Constraint solving time: 5.01326E-4
+Model counting time: 7.3808E-4
+Branch model count: 4294967296
+(declare-fun i () Int)
+(declare-fun mid () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.16345E-4
+Model counting time: 3.03712E-4
+Branch domain count:18446744073709551616
+True branch probability: 2.3283064365386963E-10
+False branch probability: 0.9999999997671694
+j == hi
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:84)
+(declare-fun hi () Int)
+(declare-fun j () Int)
+(assert (= j hi))
+(check-sat)
+
+Constraint solving time: 4.65528E-4
+Model counting time: 6.90732E-4
+Branch model count: 4294967296
+(declare-fun hi () Int)
+(declare-fun j () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.14074E-4
+Model counting time: 3.03932E-4
+Branch domain count:18446744073709551616
+True branch probability: 2.3283064365386963E-10
+False branch probability: 0.9999999997671694
+a[j] < a[i]
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:85)
+(declare-fun aj () Int)
+(declare-fun ai () Int)
+(assert (< aj ai))
+(check-sat)
+
+Constraint solving time: 4.87946E-4
+Model counting time: 8.85856E-4
+Branch model count: 9223372034707292160
+(declare-fun aj () Int)
+(declare-fun ai () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.16174E-4
+Model counting time: 3.07951E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+k < hi
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:82)
+(declare-fun k () Int)
+(declare-fun hi () Int)
+(assert (< k hi))
+(check-sat)
+
+Constraint solving time: 4.78497E-4
+Model counting time: 9.06216E-4
+Branch model count: 9223372034707292160
+(declare-fun k () Int)
+(declare-fun hi () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.15865E-4
+Model counting time: 3.13712E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+k < hi
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:89)
+(declare-fun k () Int)
+(declare-fun hi () Int)
+(assert (< k hi))
+(check-sat)
+
+Constraint solving time: 4.68427E-4
+Model counting time: 8.41057E-4
+Branch model count: 9223372034707292160
+(declare-fun k () Int)
+(declare-fun hi () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.13214E-4
+Model counting time: 2.88392E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+mid > from.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:57)
+(declare-fun fromlength () Int)
+(declare-fun mid () Int)
+(assert (> mid fromlength))
+(check-sat)
+
+Constraint solving time: 4.85507E-4
+Model counting time: 8.57127E-4
+Branch model count: 9223372034707292160
+(declare-fun fromlength () Int)
+(declare-fun mid () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.17195E-4
+Model counting time: 2.91633E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+hi > from.length
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:58)
+(declare-fun hi () Int)
+(declare-fun fromlength () Int)
+(assert (> hi fromlength))
+(check-sat)
+
+Constraint solving time: 4.77887E-4
+Model counting time: 8.48317E-4
+Branch model count: 9223372034707292160
+(declare-fun hi () Int)
+(declare-fun fromlength () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.15184E-4
+Model counting time: 2.91232E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+i == mid
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:61)
+(declare-fun i () Int)
+(declare-fun mid () Int)
+(assert (= i mid))
+(check-sat)
+
+Constraint solving time: 4.89747E-4
+Model counting time: 7.05841E-4
+Branch model count: 4294967296
+(declare-fun i () Int)
+(declare-fun mid () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.14364E-4
+Model counting time: 2.91562E-4
+Branch domain count:18446744073709551616
+True branch probability: 2.3283064365386963E-10
+False branch probability: 0.9999999997671694
+j == hi
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:62)
+(declare-fun hi () Int)
+(declare-fun j () Int)
+(assert (= j hi))
+(check-sat)
+
+Constraint solving time: 4.60527E-4
+Model counting time: 6.68262E-4
+Branch model count: 4294967296
+(declare-fun hi () Int)
+(declare-fun j () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.15714E-4
+Model counting time: 3.19801E-4
+Branch domain count:18446744073709551616
+True branch probability: 2.3283064365386963E-10
+False branch probability: 0.9999999997671694
+from[j] < from[i]
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:63)
+(declare-fun fromj () Int)
+(declare-fun fromi () Int)
+(assert (< fromj fromi))
+(check-sat)
+
+Constraint solving time: 4.85017E-4
+Model counting time: 8.50997E-4
+Branch model count: 9223372034707292160
+(declare-fun fromj () Int)
+(declare-fun fromi () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.14974E-4
+Model counting time: 2.86412E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+k < hi
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:60)
+(declare-fun k () Int)
+(declare-fun hi () Int)
+(assert (< k hi))
+(check-sat)
+
+Constraint solving time: 4.73467E-4
+Model counting time: 8.47907E-4
+Branch model count: 9223372034707292160
+(declare-fun k () Int)
+(declare-fun hi () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.12624E-4
+Model counting time: 2.84082E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+(hi - lo) <= 1
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:95)
+(declare-fun hi () Int)
+(declare-fun lo () Int)
+(assert (<= (- hi lo) 1))
+(check-sat)
+
+Constraint solving time: 5.96584E-4
+Model counting time: 0.001048491
+Branch model count: 9223372043297226751
+(declare-fun hi () Int)
+(declare-fun lo () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.35544E-4
+Model counting time: 3.12012E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.500000000349246
+False branch probability: 0.49999999965075403
+N <= 0
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:8)
+(declare-fun N () Int)
+(assert (<= N 0))
+(check-sat)
+
+Constraint solving time: 4.47478E-4
+Model counting time: 0.001153639
+Branch model count: 2147483649
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.11984E-4
+Model counting time: 3.06522E-4
+Branch domain count:4294967296
+True branch probability: 0.5000000002328306
+False branch probability: 0.49999999976716936
+((0 > i1) || (i1 >= i2)) || (i2 >= N)
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:17)
+(declare-fun i2 () Int)
+(declare-fun i1 () Int)
+(declare-fun N () Int)
+(assert (or (or (> 0 i1) (>= i1 i2)) (>= i2 N)))
+(check-sat)
+
+Constraint solving time: 0.00108332
+Model counting time: 0.001653915
+Branch model count: 77577575797523006902176317440
+(declare-fun i2 () Int)
+(declare-fun i1 () Int)
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.32914E-4
+Model counting time: 3.05352E-4
+Branch domain count:79228162514264337593543950336
+True branch probability: 0.9791666666957705
+False branch probability: 0.02083333330422954
+i < N
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02/Main.java:12)
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (< i N))
+(check-sat)
+
+Constraint solving time: 4.83557E-4
+Model counting time: 8.67846E-4
+Branch model count: 9223372034707292160
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.15274E-4
+Model counting time: 2.84112E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+----------------------------------------------------
+Total processing time: 0 seconds
+----------------------------------------------------
+
+('Analysis time without Interval analysis: ', 0.7844340801239014)
+('Analysis time: ', 12.200743198394775)
+SMDEBUG::collect-branch-probability.py::12.2054619789 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 3s
+Constructing heap graph: 0s
+Call graph stats:
+  Nodes: 3336
+  Edges: 10729
+  Methods: 3305
+  Bytecode Bytes: 195571
+Root --> #Classes : 1  #Methods : 8
+#Classes : 1   #Methods : 8
+ABC library loaded properly
+LMain.iterativeMergesortWithoutCopy([I)V
+LMain.mergeWithoutCopy([I[IIII)V
+LMain.merge([I[IIII)V
+LMain.test(III)V
+LMain.main([Ljava/lang/String;)V
+LMain.recursiveMergesort([I)V
+LMain.recursiveMergesort([I[III)V
+LMain.iterativeMergesort([I)V
+Number of Classes: 1
+Number of Methods: 8
+Dependency analysis started ...
+
+=============================
+
+conditional branch(lt, to iindex=33) 3,1
+
+=============================
+
+11:
+if v3 < v1 
+Branch condition:11
+FALSE node: 12
+18
+
+
+=============================
+
+9 = phi  8,5
+conditional branch(ge, to iindex=21) 9,1
+ifv9>
+
+=============================
+
+5:
+9 = phi  8,5 if v9 >= v1 
+11:
+if v3 < v1 
+Branch condition:11
+FALSE node: 12
+18
+
+
+=============================
+
+conditional branch(gt, to iindex=4) 1,5
+
+=============================
+
+5:
+9 = phi  8,5 if v9 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+18
+
+11:
+if v3 < v1 
+Branch condition:11
+FALSE node: 12
+18
+
+Bytecode : conditional branch(ge, to iindex=21) 9,1
+Source line number = 12
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(gt, to iindex=4) 1,5
+Source line number = 8
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(lt, to iindex=33) 3,1
+Source line number = 17
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+
+=============================
+
+conditional branch(gt, to iindex=32) 5,2
+
+=============================
+
+5:
+9 = phi  8,5 if v9 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+18
+
+9:
+if v5 > v2 
+Branch condition:9
+FALSE node: 10
+12
+return 
+18
+
+11
+if v3 < v1 
+13
+v11 = LMain.$assertionsDisabled if v11 != v5 
+17
+return 
+18
+
+14
+12 = new <Application,Ljava/lang/AssertionError>@56 
+15
+v12.<init>() 
+16
+throw 12 
+12
+return 
+11:
+if v3 < v1 
+Branch condition:11
+FALSE node: 12
+18
+
+
+=============================
+
+conditional branch(ge, to iindex=32) 2,3
+
+=============================
+
+5:
+9 = phi  8,5 if v9 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+18
+
+10:
+if v2 >= v3 
+Branch condition:10
+FALSE node: 11
+13
+v11 = LMain.$assertionsDisabled if v11 != v5 
+17
+return 
+18
+
+14
+12 = new <Application,Ljava/lang/AssertionError>@56 
+15
+v12.<init>() 
+16
+throw 12 
+12
+return 
+18
+
+9:
+if v5 > v2 
+Branch condition:9
+FALSE node: 10
+12
+return 
+18
+
+11
+if v3 < v1 
+13
+v11 = LMain.$assertionsDisabled if v11 != v5 
+17
+return 
+18
+
+14
+12 = new <Application,Ljava/lang/AssertionError>@56 
+15
+v12.<init>() 
+16
+throw 12 
+12
+return 
+11:
+if v3 < v1 
+Branch condition:11
+FALSE node: 12
+18
+
+Bytecode : conditional branch(ge, to iindex=21) 9,1
+Source line number = 12
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(gt, to iindex=4) 1,5
+Source line number = 8
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(ge, to iindex=32) 2,3
+Source line number = 17
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(gt, to iindex=32) 5,2
+Source line number = 17
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(lt, to iindex=33) 3,1
+Source line number = 17
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+
+=============================
+
+conditional branch(ge, to iindex=32) 2,3
+ifv2>
+
+=============================
+
+5:
+9 = phi  8,5 if v9 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+18
+
+10:
+if v2 >= v3 
+Branch condition:10
+FALSE node: 11
+13
+v11 = LMain.$assertionsDisabled if v11 != v5 
+17
+return 
+18
+
+14
+12 = new <Application,Ljava/lang/AssertionError>@56 
+15
+v12.<init>() 
+16
+throw 12 
+12
+return 
+18
+
+9:
+if v5 > v2 
+Branch condition:9
+FALSE node: 10
+12
+return 
+18
+
+11
+if v3 < v1 
+13
+v11 = LMain.$assertionsDisabled if v11 != v5 
+17
+return 
+18
+
+14
+12 = new <Application,Ljava/lang/AssertionError>@56 
+15
+v12.<init>() 
+16
+throw 12 
+12
+return 
+11:
+if v3 < v1 
+Branch condition:11
+FALSE node: 12
+18
+
+
+=============================
+
+conditional branch(lt, to iindex=33) 3,1
+
+=============================
+
+5:
+9 = phi  8,5 if v9 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+18
+
+10:
+if v2 >= v3 
+Branch condition:10
+FALSE node: 11
+13
+v11 = LMain.$assertionsDisabled if v11 != v5 
+17
+return 
+18
+
+14
+12 = new <Application,Ljava/lang/AssertionError>@56 
+15
+v12.<init>() 
+16
+throw 12 
+12
+return 
+18
+
+9:
+if v5 > v2 
+Branch condition:9
+FALSE node: 10
+12
+return 
+18
+
+11
+if v3 < v1 
+13
+v11 = LMain.$assertionsDisabled if v11 != v5 
+17
+return 
+18
+
+14
+12 = new <Application,Ljava/lang/AssertionError>@56 
+15
+v12.<init>() 
+16
+throw 12 
+12
+return 
+11:
+if v3 < v1 
+Branch condition:11
+FALSE node: 12
+18
+
+Bytecode : conditional branch(ge, to iindex=21) 9,1
+Source line number = 12
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(gt, to iindex=4) 1,5
+Source line number = 8
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(ge, to iindex=32) 2,3
+Source line number = 17
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(gt, to iindex=32) 5,2
+Source line number = 17
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Bytecode : conditional branch(lt, to iindex=33) 3,1
+Source line number = 17
+throw 12
+return
+Source line number = 22
+return
+Source line number = 18
+conditional branch(ne, to iindex=40) 11,5
+12 = new <Application,Ljava/lang/AssertionError>@56
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @60 exception:13
+conditional branch(gt, to iindex=32) 5,2
+invokestatic < Application, LMain, iterativeMergesort([I)V > 6 @31 exception:10
+conditional branch(ge, to iindex=32) 2,3
+conditional branch(lt, to iindex=33) 3,1
+conditional branch(ge, to iindex=21) 9,1
+goto (from iindex= 20 to iindex = 9)
+arraystore 6[9] = 9
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 9
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/MergeSortIterative-FunSat02//branch_probability.txt
+LMain.iterativeMergesort([I)V
+LMain.merge([I[IIII)V
+[ { "id" : "[ testLMPIPIPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#1 ] LocalLoad(I,0) Constant(I,0) ConditionalBranch(I,gt,4) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 > v5", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#3" : "TRUE", "testLMPIPIPI#2" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#2 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPIPI#3 ] LocalLoad(I,0) New([I,1) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#4" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#4 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#5" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#5 ] LocalStore(Ljava/lang/Object;,3) Constant(I,0) LocalStore(I,4) LocalLoad(I,4) LocalLoad(I,0) ConditionalBranch(I,ge,21) ", "instruction_count" : "6", "cost" : "6", "secret_dependent_branch" : "true", "ins_to_translate" : "if v9 >= v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#8" : "TRUE", "testLMPIPIPI#6" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#6 ] LocalLoad(Ljava/lang/Object;,3) LocalLoad(I,4) LocalLoad(I,4) ArrayStore(I) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#7" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#7 ] LocalLoad(I,4) Constant(I,1) BinaryOp(I,add) LocalStore(I,4) Goto(9) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#5" : "Jump" } },
+{ "id" : "[ testLMPIPIPI#8 ] LocalLoad(Ljava/lang/Object;,3) Invoke(STATIC,LMain;,iterativeMergesort,([I)V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#0" : "Invoke"} },
+{ "id" : "[ iterativeMergesortLMPI#1#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#1" : "Implicit" } },
+{ "id" : "[ iterativeMergesortLMPI#1#1 ] LocalLoad(Ljava/lang/Object;,0) ArrayLength() ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#2" : "Implicit" } },
+{ "id" : "[ iterativeMergesortLMPI#1#2 ] New([I,1) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#3" : "Implicit" } },
+{ "id" : "[ iterativeMergesortLMPI#1#3 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#4" : "Implicit" } },
+{ "id" : "[ iterativeMergesortLMPI#1#4 ] LocalStore(Ljava/lang/Object;,1) Constant(I,1) LocalStore(I,2) LocalLoad(I,2) LocalLoad(Ljava/lang/Object;,0) ArrayLength() ", "instruction_count" : "6", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#5" : "Implicit" } },
+{ "id" : "[ iterativeMergesortLMPI#1#5 ] ConditionalBranch(I,ge,40) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v18 >= v6", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#12" : "TRUE", "iterativeMergesortLMPI#1#6" : "FALSE" }} },
+{ "id" : "[ iterativeMergesortLMPI#1#6 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#7" : "Implicit" } },
+{ "id" : "[ iterativeMergesortLMPI#1#7 ] Constant(I,0) LocalStore(I,3) LocalLoad(I,3) LocalLoad(Ljava/lang/Object;,0) ArrayLength() ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#8" : "Implicit" } },
+{ "id" : "[ iterativeMergesortLMPI#1#8 ] ConditionalBranch(I,ge,35) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v16 >= v8", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#11" : "TRUE", "iterativeMergesortLMPI#1#9" : "FALSE" }} },
+{ "id" : "[ iterativeMergesortLMPI#1#9 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,3) LocalLoad(I,3) LocalLoad(I,2) BinaryOp(I,add) LocalLoad(I,3) Constant(I,2) LocalLoad(I,2) BinaryOp(I,mul) BinaryOp(I,add) Invoke(STATIC,LMain;,merge,([I[IIII)V) ", "instruction_count" : "12", "cost" : "23", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#0" : "Invoke"} },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#1" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#1 ] LocalLoad(I,3) LocalLoad(Ljava/lang/Object;,0) ArrayLength() ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#2" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#2 ] ConditionalBranch(I,lt,5) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v4 < v7", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#4" : "TRUE", "mergeLMPIPIPIPIPI#1#3" : "FALSE" }} },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#3 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#1001001" : "Return" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#4 ] LocalLoad(I,4) LocalLoad(Ljava/lang/Object;,0) ArrayLength() ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#5" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#5 ] ConditionalBranch(I,le,12) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v5 <= v8", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#8" : "TRUE", "mergeLMPIPIPIPIPI#1#6" : "FALSE" }} },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#6 ] LocalLoad(Ljava/lang/Object;,0) ArrayLength() ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#7" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#7 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#8" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#8 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#9" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#9 ] LocalStore(I,4) LocalLoad(I,2) LocalStore(I,5) LocalLoad(I,3) LocalStore(I,6) LocalLoad(I,2) LocalStore(I,7) LocalLoad(I,7) LocalLoad(I,4) ConditionalBranch(I,ge,82) ", "instruction_count" : "10", "cost" : "10", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v27 >= v10", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#27" : "TRUE", "mergeLMPIPIPIPIPI#1#10" : "FALSE" }} },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#10 ] LocalLoad(I,5) LocalLoad(I,3) ConditionalBranch(I,ne,35) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v25 != v4", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#14" : "TRUE", "mergeLMPIPIPIPIPI#1#11" : "FALSE" }} },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#11 ] LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,7) LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,6) LocalLoad(I,6) Constant(I,1) BinaryOp(I,add) LocalStore(I,6) ArrayLoad(I) ", "instruction_count" : "9", "cost" : "10", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#12" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#12 ] ArrayStore(I) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#13" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#13 ] Goto(77) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#26" : "Jump" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#14 ] LocalLoad(I,6) LocalLoad(I,4) ConditionalBranch(I,ne,49) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v26 != v10", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#18" : "TRUE", "mergeLMPIPIPIPIPI#1#15" : "FALSE" }} },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#15 ] LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,7) LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,5) LocalLoad(I,5) Constant(I,1) BinaryOp(I,add) LocalStore(I,5) ArrayLoad(I) ", "instruction_count" : "9", "cost" : "10", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#16" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#16 ] ArrayStore(I) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#17" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#17 ] Goto(77) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#26" : "Jump" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#18 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,6) ArrayLoad(I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#19" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#19 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,5) ArrayLoad(I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#20" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#20 ] ConditionalBranch(I,ge,67) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v16 >= v17", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#24" : "TRUE", "mergeLMPIPIPIPIPI#1#21" : "FALSE" }} },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#21 ] LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,7) LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,6) LocalLoad(I,6) Constant(I,1) BinaryOp(I,add) LocalStore(I,6) ArrayLoad(I) ", "instruction_count" : "9", "cost" : "10", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#22" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#22 ] ArrayStore(I) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#23" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#23 ] Goto(77) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#26" : "Jump" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#24 ] LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,7) LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,5) LocalLoad(I,5) Constant(I,1) BinaryOp(I,add) LocalStore(I,5) ArrayLoad(I) ", "instruction_count" : "9", "cost" : "10", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#25" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#25 ] ArrayStore(I) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#26" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#26 ] LocalLoad(I,7) Constant(I,1) BinaryOp(I,add) LocalStore(I,7) Goto(18) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#9" : "Jump" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#27 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#28" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#28 ] LocalLoad(I,2) LocalStore(I,7) LocalLoad(I,7) LocalLoad(I,4) ConditionalBranch(I,ge,98) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v30 >= v10", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#32" : "TRUE", "mergeLMPIPIPIPIPI#1#29" : "FALSE" }} },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#29 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,7) LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,7) ArrayLoad(I) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#30" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#30 ] ArrayStore(I) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#31" : "Implicit" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#31 ] LocalLoad(I,7) Constant(I,1) BinaryOp(I,add) LocalStore(I,7) Goto(84) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#28" : "Jump" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#32 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "mergeLMPIPIPIPIPI#1#1001001" : "Return" } },
+{ "id" : "[ mergeLMPIPIPIPIPI#1#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#10" : "Implicit" } } },
+{ "id" : "[ iterativeMergesortLMPI#1#10 ] LocalLoad(I,3) Constant(I,2) LocalLoad(I,2) BinaryOp(I,mul) BinaryOp(I,add) LocalStore(I,3) Goto(12) ", "instruction_count" : "7", "cost" : "17", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#7" : "Jump" } },
+{ "id" : "[ iterativeMergesortLMPI#1#11 ] LocalLoad(I,2) Constant(I,2) BinaryOp(I,mul) LocalStore(I,2) Goto(6) ", "instruction_count" : "5", "cost" : "14", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#4" : "Jump" } },
+{ "id" : "[ iterativeMergesortLMPI#1#12 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "iterativeMergesortLMPI#1#1001001" : "Return" } },
+{ "id" : "[ iterativeMergesortLMPI#1#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#9" : "Implicit" } } },
+{ "id" : "[ testLMPIPIPI#9 ] Constant(I,0) LocalLoad(I,1) ConditionalBranch(I,gt,32) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v5 > v2", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#12" : "TRUE", "testLMPIPIPI#10" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#10 ] LocalLoad(I,1) LocalLoad(I,2) ConditionalBranch(I,ge,32) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v2 >= v3", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#12" : "TRUE", "testLMPIPIPI#11" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#11 ] LocalLoad(I,2) LocalLoad(I,0) ConditionalBranch(I,lt,33) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v3 < v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#13" : "TRUE", "testLMPIPIPI#12" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#12 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPIPI#13 ] Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,40) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v11 != v5", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#17" : "TRUE", "testLMPIPIPI#14" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#14 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#15" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#15 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#16" : "Invoke" } },
+{ "id" : "[ testLMPIPIPI#16 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Implicit"} } },
+{ "id" : "[ testLMPIPIPI#17 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPIPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+Instruction to translate: if v1 > v5
+[ifv2>, ifv9>, v1, v2, v3]
+(declare-fun v1() Int)
+(declare-fun v5() Int)
+(assert (> v1 0 ))
+(check-sat)
+Constraint solving time: 0.003585563
+Model counting time: 0.005029464
+Constraint solving time: 2.90892E-4
+Model counting time: 4.14499E-4
+Probability of true branch: 0.4999847412109375
+Probability of false branch: 0.5000152587890625
+Instruction to translate: if v9 >= v1
+[ifv2>, ifv9>, v1, v2, v3]
+(declare-fun v9() Int)
+(declare-fun v1() Int)
+(assert (>= v9 v1))
+(check-sat)
+Constraint solving time: 5.63515E-4
+Model counting time: 8.47758E-4
+Constraint solving time: 1.52416E-4
+Model counting time: 2.41114E-4
+Probability of true branch: 0.5000076293945312
+Probability of false branch: 0.49999237060546875
+iterativeMergesortLMPI#1#5
+ "iterativeMergesortLMPI#1#6" : "FALSE"
+iterativeMergesortLMPI#1#8
+ "iterativeMergesortLMPI#1#9" : "FALSE"
+mergeLMPIPIPIPIPI#1#2
+ "mergeLMPIPIPIPIPI#1#3" : "FALSE"
+mergeLMPIPIPIPIPI#1#5
+ "mergeLMPIPIPIPIPI#1#6" : "FALSE"
+mergeLMPIPIPIPIPI#1#9
+ "mergeLMPIPIPIPIPI#1#10" : "FALSE"
+mergeLMPIPIPIPIPI#1#10
+ "mergeLMPIPIPIPIPI#1#11" : "FALSE"
+mergeLMPIPIPIPIPI#1#14
+ "mergeLMPIPIPIPIPI#1#15" : "FALSE"
+mergeLMPIPIPIPIPI#1#20
+ "mergeLMPIPIPIPIPI#1#21" : "FALSE"
+mergeLMPIPIPIPIPI#1#28
+ "mergeLMPIPIPIPIPI#1#29" : "FALSE"
+testLMPIPIPI#13
+ "testLMPIPIPI#14" : "FALSE"
+Instruction to translate: not (not (if v5 > v2) and not (if v2 >= v3)) and not (if v3 < v1)
+[ifv2>, ifv9>, v1, v2, v3]
+(declare-fun v1() Int)
+(declare-fun v2() Int)
+(declare-fun v3() Int)
+(declare-fun v5() Int)
+(assert (not (> 0 v2)))
+(assert (not (>= v2 v3)))
+(assert (not (< v3 v1)))
+(check-sat)
+Constraint solving time: 8.72007E-4
+Model counting time: 0.001278126
+Constraint solving time: 1.95325E-4
+Model counting time: 3.10252E-4
+Probability of true branch: 0.8958352407207713
+Probability of false branch: 0.10416475927922875
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "0.49999999976716936"];
+	1 -> 3[label= "0.5000000002328306"];
+	3 -> 4[label= "1.0"];
+	2 -> 5[label= "1.0"];
+	5 -> 6[label= "1.0"];
+	6 -> 7[label= "0.5000000001164153"];
+	6 -> 8[label= "0.4999999998835847"];
+	8 -> 9[label= "1.0"];
+	9 -> 6[label= "1.0"];
+	7 -> 10[label= "1.0"];
+	10 -> 11[label= "1.0"];
+	11 -> 12[label= "1.0"];
+	12 -> 13[label= "1.0"];
+	13 -> 14[label= "1.0"];
+	14 -> 15[label= "1.0"];
+	15 -> 16[label= "1.0"];
+	15 -> 17[label= "1.0"];
+	17 -> 18[label= "1.0"];
+	18 -> 19[label= "1.0"];
+	19 -> 20[label= "1.0"];
+	19 -> 21[label= "1.0"];
+	21 -> 22[label= "1.0"];
+	22 -> 23[label= "1.0"];
+	23 -> 24[label= "1.0"];
+	24 -> 25[label= "1.0"];
+	24 -> 26[label= "1.0"];
+	26 -> 27[label= "1.0"];
+	25 -> 28[label= "1.0"];
+	28 -> 29[label= "1.0"];
+	28 -> 30[label= "1.0"];
+	30 -> 31[label= "1.0"];
+	31 -> 29[label= "1.0"];
+	29 -> 32[label= "1.0"];
+	32 -> 33[label= "1.0"];
+	32 -> 34[label= "1.0"];
+	34 -> 35[label= "1.0"];
+	34 -> 36[label= "1.0"];
+	36 -> 37[label= "1.0"];
+	37 -> 38[label= "1.0"];
+	38 -> 39[label= "1.0"];
+	35 -> 40[label= "1.0"];
+	35 -> 41[label= "1.0"];
+	41 -> 42[label= "1.0"];
+	42 -> 43[label= "1.0"];
+	43 -> 39[label= "1.0"];
+	40 -> 44[label= "1.0"];
+	44 -> 45[label= "1.0"];
+	45 -> 46[label= "1.0"];
+	45 -> 47[label= "1.0"];
+	47 -> 48[label= "1.0"];
+	48 -> 49[label= "1.0"];
+	49 -> 39[label= "1.0"];
+	46 -> 50[label= "1.0"];
+	50 -> 39[label= "1.0"];
+	39 -> 32[label= "1.0"];
+	33 -> 51[label= "1.0"];
+	51 -> 52[label= "1.0"];
+	51 -> 53[label= "1.0"];
+	53 -> 54[label= "1.0"];
+	54 -> 55[label= "1.0"];
+	55 -> 51[label= "1.0"];
+	52 -> 27[label= "1.0"];
+	27 -> 56[label= "1.0"];
+	56 -> 18[label= "1.0"];
+	20 -> 14[label= "1.0"];
+	16 -> 57[label= "1.0"];
+	57 -> 58[label= "1.0"];
+	59 -> 4[label= "1.0"];
+	60 -> 61[label= "0.0"];
+	60 -> 62[label= "1.0"];
+	62 -> 63[label= "1.0"];
+	63 -> 64[label= "1.0"];
+	64 -> 4[label= "1.0"];
+	61 -> 4[label= "1.0"];
+	58 -> 60[label= "0.02083333330422954"];
+	58 -> 59[label= "0.9791666666957705"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..67] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 0.49999999976716936 : (s' = 2) + 0.5000000002328306 : (s' = 3);
+	[] s = 3 -> 1.0 : (s' = 4);
+	[] s = 2 -> 1.0 : (s' = 5);
+	[] s = 5 -> 1.0 : (s' = 6);
+	[] s = 6 -> 0.5000000001164153 : (s' = 7) + 0.4999999998835847 : (s' = 8);
+	[] s = 8 -> 1.0 : (s' = 9);
+	[] s = 9 -> 1.0 : (s' = 6);
+	[] s = 7 -> 1.0 : (s' = 10);
+	[] s = 10 -> 1.0 : (s' = 11);
+	[] s = 11 -> 1.0 : (s' = 12);
+	[] s = 12 -> 1.0 : (s' = 13);
+	[] s = 13 -> 1.0 : (s' = 14);
+	[] s = 14 -> 1.0 : (s' = 15);
+	[] s = 15 -> 1.0 : (s' = 16);
+	[] s = 15 -> 1.0 : (s' = 17);
+	[] s = 17 -> 1.0 : (s' = 18);
+	[] s = 18 -> 1.0 : (s' = 19);
+	[] s = 19 -> 1.0 : (s' = 20);
+	[] s = 19 -> 1.0 : (s' = 21);
+	[] s = 21 -> 1.0 : (s' = 22);
+	[] s = 22 -> 1.0 : (s' = 23);
+	[] s = 23 -> 1.0 : (s' = 24);
+	[] s = 24 -> 1.0 : (s' = 25);
+	[] s = 24 -> 1.0 : (s' = 26);
+	[] s = 26 -> 1.0 : (s' = 27);
+	[] s = 25 -> 1.0 : (s' = 28);
+	[] s = 28 -> 1.0 : (s' = 29);
+	[] s = 28 -> 1.0 : (s' = 30);
+	[] s = 30 -> 1.0 : (s' = 31);
+	[] s = 31 -> 1.0 : (s' = 29);
+	[] s = 29 -> 1.0 : (s' = 32);
+	[] s = 32 -> 1.0 : (s' = 33);
+	[] s = 32 -> 1.0 : (s' = 34);
+	[] s = 34 -> 1.0 : (s' = 35);
+	[] s = 34 -> 1.0 : (s' = 36);
+	[] s = 36 -> 1.0 : (s' = 37);
+	[] s = 37 -> 1.0 : (s' = 38);
+	[] s = 38 -> 1.0 : (s' = 39);
+	[] s = 35 -> 1.0 : (s' = 40);
+	[] s = 35 -> 1.0 : (s' = 41);
+	[] s = 41 -> 1.0 : (s' = 42);
+	[] s = 42 -> 1.0 : (s' = 43);
+	[] s = 43 -> 1.0 : (s' = 39);
+	[] s = 40 -> 1.0 : (s' = 44);
+	[] s = 44 -> 1.0 : (s' = 45);
+	[] s = 45 -> 1.0 : (s' = 46);
+	[] s = 45 -> 1.0 : (s' = 47);
+	[] s = 47 -> 1.0 : (s' = 48);
+	[] s = 48 -> 1.0 : (s' = 49);
+	[] s = 49 -> 1.0 : (s' = 39);
+	[] s = 46 -> 1.0 : (s' = 50);
+	[] s = 50 -> 1.0 : (s' = 39);
+	[] s = 39 -> 1.0 : (s' = 32);
+	[] s = 33 -> 1.0 : (s' = 51);
+	[] s = 51 -> 1.0 : (s' = 52);
+	[] s = 51 -> 1.0 : (s' = 53);
+	[] s = 53 -> 1.0 : (s' = 54);
+	[] s = 54 -> 1.0 : (s' = 55);
+	[] s = 55 -> 1.0 : (s' = 51);
+	[] s = 52 -> 1.0 : (s' = 27);
+	[] s = 27 -> 1.0 : (s' = 56);
+	[] s = 56 -> 1.0 : (s' = 18);
+	[] s = 20 -> 1.0 : (s' = 14);
+	[] s = 16 -> 1.0 : (s' = 57);
+	[] s = 57 -> 1.0 : (s' = 58);
+	[] s = 59 -> 1.0 : (s' = 4);
+	[] s = 60 -> 0.0 : (s' = 61) + 1.0 : (s' = 62);
+	[] s = 62 -> 1.0 : (s' = 63);
+	[] s = 63 -> 1.0 : (s' = 64);
+	[] s = 64 -> 1.0 : (s' = 4);
+	[] s = 61 -> 1.0 : (s' = 4);
+	[] s = 58 -> 0.02083333330422954 : (s' = 60) + 0.9791666666957705 : (s' = 59);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 62]
+PRISM
+=====
+
+Version: 4.5
+Date: Tue Dec 27 14:22:26 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=62 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=62 ]
+
+Building model...
+
+Warning: Update 1 of command 68 of module "LMain_test" doesn't do anything ("(s'=61)", line 74, column 28)
+
+Warning: Guard for command 16 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 20 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 25 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 29 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 34 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 36 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 41 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 48 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 57 of module "LMain_test" overlaps with previous commands.
+
+Computing reachable states...
+
+Reachability (BFS): 31 iterations in 0.00 seconds (average 0.000032, setup 0.00)
+
+Time for model construction: 0.023 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      64 (1 initial)
+Transitions: 76
+
+Transition matrix: 195 nodes (9 terminal), 76 minterms, vars: 7r/7c
+
+Prob0: 22 iterations in 0.00 seconds (average 0.000091, setup 0.00)
+
+Prob1: 21 iterations in 0.00 seconds (average 0.000048, setup 0.00)
+
+yes = 2, no = 5, maybe = 57
+
+Computing remaining probabilities...
+Engine: Hybrid
+
+Building hybrid MTBDD matrix... [levels=7, nodes=173] [8.1 KB]
+Adding explicit sparse matrices... [levels=7, num=1, compact] [0.4 KB]
+Creating vector for diagonals... [dist=1, compact] [0.1 KB]
+Creating vector for RHS... [dist=2, compact] [0.1 KB]
+Allocating iteration vectors... [2 x 0.5 KB]
+TOTAL: [9.8 KB]
+
+Starting iterations...
+
+Jacobi: 550 iterations in 0.00 seconds (average 0.000004, setup 0.00)
+
+Value in the initial state: 0.010416435057580064
+
+Time for model checking: 0.005 seconds.
+
+Result: 0.010416435057580064 (value in the initial state)
+Probability for assertion reachability: 0.010416435057580064
+Dependency analysis time: 11ms
+Execution time for probabilistic analysis: 323ms
+Total Execution time: 334ms
+
+real	0m20.528s
+user	0m57.014s
+sys	0m3.940s

@@ -1,0 +1,19 @@
+		gif2png -- GIF to PNG graphics file conversion
+
+The gif2png program converts files from the Graphic Interchange Format
+to Portable Network Graphics.  It can be built under any Unix, or
+under MS-DOS or Windows using djgpp, or using Borland C. I don't know
+when the djgpp or Borland builds were last tested.
+
+This distribution also supplies web2png, a Python front end for
+gif2png which automagically converts entire web hierarchies (the
+graphics files themselves and references to them in web pages).
+Note: this script requires Python 1.5.2.
+
+These programs has a home site at <http://www.catb.org/~esr/gif2png/>.
+Look there for updates and related resources. 
+See NEWS for the project history.
+
+					Eric S. Raymond
+					esr@thyrsus.com
+					http://www.catb.org/~esr

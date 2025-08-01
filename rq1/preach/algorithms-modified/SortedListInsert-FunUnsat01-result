@@ -1,0 +1,463 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/
+$class_files: /PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(II)V
+$input_params: v1,v2
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01//branch_probability.txt
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/
+POLY
+LMain.test(II)V
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/
+source in command: "Main.test.*"
+method info: "Main.test(II)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/ -S"Main.test.*" "Main.test(II)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt insert.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+('copy', 'insert.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt insert.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(II)V', 'BB1', 'I2', '33', ['v1', 'v4'])
+('LMain', 'test(II)V', 'BB6', 'I12', '37', ['v10', 'v1'])
+('LMain', 'test(II)V', 'BB9', 'I23', '41', ['v11', 'v7'])
+info: ('Main', 'test(II)V', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,98412281)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v4 +1 = 0
+info: ('Main', 'test(II)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,98412281)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v10 +1FrameRegisterv(0,98412281)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v4 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,98412281)v1ⁱⁿ -2 >= 0
+info: ('Main', 'test(II)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,98412281)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v10 +1FrameRegisterv(0,98412281)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v4 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,98412281)v1ⁱⁿ -2 >= 0
+info: ('Main', 'test(II)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,98412281)v9 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,98412281)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v10 +1FrameRegisterv(0,98412281)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v4 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,98412281)v1ⁱⁿ -2 >= 0
+info: ('Main', 'test(II)V', 'BB9', 'I23')
+vcon: 	    1FrameParameterv(0,98412281)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v4 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v9 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,98412281)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v10 +1FrameRegisterv(0,98412281)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v11 = 0
+info: ('Main', 'test(II)V', 'BB6', 'I12')
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v4 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v10 +1FrameRegisterv(0,98412281)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,98412281)v7 = 0
+vcon: 	 ∧  1FrameRegisterv(0,98412281)v9 -1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,98412281)v1ⁱⁿ -2 >= 0
+info: ('Main', 'test(II)V', 'BB9', 'I23')
+vcon: 	    -1FrameRegisterv(0,98412281)v10 +1FrameRegisterv(0,98412281)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,98412281)v7 = 0
+vcon: 	 ∧  -1FrameParameterv(0,98412281)v1ⁱⁿ +1FrameRegisterv(0,98412281)v9 >= 0
+vcon: 	 ∧  1FrameParameterv(0,98412281)v1ⁱⁿ -2 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v4 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,98412281)v11 = 0
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB2', 'I7', '716', ['v6', 'v5'])
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB3', 'I12', '716', ['v8', 'v9'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB2', 'I5', '3030', ['v4', 'v5'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB8', 'I17', '3036', ['v7', 'v5'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB1', 'I2', '1536', ['v1', 'v2'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB3', 'I7', '1539', ['v1', 'v4'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB6', 'I14', '1542', ['v6', 'v7'])
+('Ljava/util/Collections', 'unmodifiableList(Ljava/util/List;)Ljava/util/List;', 'BB1', 'I3', '1190', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB2', 'I3', '781', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB4', 'I7', '781', ['v5', 'v4'])
+('LMain$List', 'insert(I)V', 'BB2', 'I3', '19', ['v2', 'v4'])
+info: ('Main$List', 'insert(I)V', 'BB2', 'I3')
+vcon: 	 ∧  1FrameAccessPath(0,1940601516)1771040801 < Application, LMain$List, x, <Primordial,I> > -1FrameRegisterv(0,1940601516)v4 = 0
+info: ('Main$List', 'insert(I)V', 'BB2', 'I3')
+vcon: 	 ∧  1FrameAccessPath(0,1940601516)1771040801 < Application, LMain$List, x, <Primordial,I> > -1FrameRegisterv(0,1940601516)v4 = 0
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/ yes
+info: 
+Main.java:33
+(= (+ (- var2) 1 ) 0),
+(= (+ (- var2) 1 ) 0)
+Main.java:33
+[(= (+ (- var2) 1 ) 0)]
+info: 
+Main.java:37
+(>= (+ var2 (- 2) ) 0),
+(>= (+ var2 (- 2) ) 0)
+Main.java:37
+[(>= (+ var2 (- 2) ) 0)]
+info: 
+Main.java:41
+(= (+ (- var1)) 0),
+(= (+ (- var1)) 0)
+Main.java:41
+[(= (+ (- var1)) 0)]
+info: 
+Main$List.java:19
+(= (+ 1FrameAccessPath1771040801 < Application, LMain$List, x, <Primordial,I> > (- var2)) 0),
+(= (+ 1FrameAccessPath1771040801 < Application
+ LMain$List
+ x
+ <Primordial
+I> > (- var2)) 0)
+Main$List.java:19
+[(= (+ 1FrameAccessPath1771040801 < Application,  LMain$List,  x,  <Primordial, I> > (- var2)) 0)]
+SourceLine = Main$List.java:19, Cons = [(= (+ 1FrameAccessPath1771040801 < Application,  LMain$List,  x,  <Primordial, I> > (- var2)) 0)]
+SourceLine = Main.java:33, Cons = [(= (+ (- var2) 1 ) 0)]
+SourceLine = Main.java:41, Cons = [(= (+ (- var1)) 0)]
+SourceLine = Main.java:37, Cons = [(>= (+ var2 (- 2) ) 0)]
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/Main.java
+Class Name: Main
+N <= 1
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/Main.java:33)
+(declare-fun N () Int)
+(assert (<= N 1))
+(check-sat)
+
+Constraint solving time: 0.003251083
+Model counting time: 0.006762488
+Branch model count: 2147483650
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 3.42181E-4
+Model counting time: 5.42716E-4
+Branch domain count:4294967296
+True branch probability: 0.5000000004656613
+False branch probability: 0.4999999995343387
+i < N
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01/Main.java:37)
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (< i N))
+(assert (>= (+ N (- 2) ) 0))
+(check-sat)
+
+Constraint solving time: 7.68859E-4
+Model counting time: 0.001396272
+Branch model count: 6917529022272372735
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (>= (+ N (- 2) ) 0))
+(assert true)
+(check-sat)
+Constraint solving time: 5.01586E-4
+Model counting time: 8.30547E-4
+Branch domain count:9223372028264841216
+True branch probability: 0.7500000001164153
+False branch probability: 0.24999999988358468
+----------------------------------------------------
+Total processing time: 0 seconds
+----------------------------------------------------
+
+('Analysis time without Interval analysis: ', 0.859529972076416)
+('Analysis time: ', 4.450868844985962)
+SMDEBUG::collect-branch-probability.py::4.45343613625 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 5s
+Constructing heap graph: 0s
+Call graph stats:
+  Nodes: 3330
+  Edges: 10719
+  Methods: 3299
+  Bytecode Bytes: 195085
+Root --> #Classes : 1  #Methods : 2
+#Classes : 1   #Methods : 2
+ABC library loaded properly
+LMain.main([Ljava/lang/String;)V
+LMain.test(II)V
+Number of Classes: 1
+Number of Methods: 2
+Dependency analysis started ...
+
+=============================
+
+10 = phi  9,7
+conditional branch(ge, to iindex=21) 10,1
+ifv10>
+
+=============================
+
+6:
+10 = phi  9,7 if v10 >= v1 
+
+=============================
+
+conditional branch(gt, to iindex=4) 1,4
+
+=============================
+
+1:
+if v1 > v4 
+Branch condition:1
+FALSE node: 2
+14
+
+6:
+10 = phi  9,7 if v10 >= v1 
+Bytecode : conditional branch(gt, to iindex=4) 1,4
+Source line number = 33
+invokespecial < Application, LMain$List, <init>()V > 5 @10 exception:6
+5 = new <Application,LMain$List>@6
+conditional branch(ge, to iindex=21) 10,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 34
+throw 12
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @42 exception:13
+return
+Source line number = 42
+goto (from iindex= 20 to iindex = 10)
+invokevirtual < Application, LMain$List, insert(I)V > 5,2 @23 exception:8
+12 = new <Application,Ljava/lang/AssertionError>@38
+conditional branch(ne, to iindex=28) 11,7
+Bytecode : conditional branch(ge, to iindex=21) 10,1
+Source line number = 37
+invokespecial < Application, LMain$List, <init>()V > 5 @10 exception:6
+5 = new <Application,LMain$List>@6
+conditional branch(ge, to iindex=21) 10,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 34
+throw 12
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @42 exception:13
+return
+Source line number = 42
+goto (from iindex= 20 to iindex = 10)
+invokevirtual < Application, LMain$List, insert(I)V > 5,2 @23 exception:8
+12 = new <Application,Ljava/lang/AssertionError>@38
+conditional branch(ne, to iindex=28) 11,7
+
+=============================
+
+invokevirtual < Application, LMain$List, insert(I)V > 5,2 @23 exception:8
+
+=============================
+
+1:
+if v1 > v4 
+Branch condition:1
+FALSE node: 2
+14
+
+6:
+10 = phi  9,7 if v10 >= v1 
+Bytecode : conditional branch(gt, to iindex=4) 1,4
+Source line number = 33
+invokespecial < Application, LMain$List, <init>()V > 5 @10 exception:6
+5 = new <Application,LMain$List>@6
+conditional branch(ge, to iindex=21) 10,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 34
+throw 12
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @42 exception:13
+return
+Source line number = 42
+goto (from iindex= 20 to iindex = 10)
+invokevirtual < Application, LMain$List, insert(I)V > 5,2 @23 exception:8
+12 = new <Application,Ljava/lang/AssertionError>@38
+conditional branch(ne, to iindex=28) 11,7
+Bytecode : conditional branch(ge, to iindex=21) 10,1
+Source line number = 37
+invokespecial < Application, LMain$List, <init>()V > 5 @10 exception:6
+5 = new <Application,LMain$List>@6
+conditional branch(ge, to iindex=21) 10,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 34
+throw 12
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 12 @42 exception:13
+return
+Source line number = 42
+goto (from iindex= 20 to iindex = 10)
+invokevirtual < Application, LMain$List, insert(I)V > 5,2 @23 exception:8
+12 = new <Application,Ljava/lang/AssertionError>@38
+conditional branch(ne, to iindex=28) 11,7
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/SortedListInsert-FunUnsat01//branch_probability.txt
+LMain$List.insert(I)V
+[ { "id" : "[ testLMPIPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1" : "Implicit" } },
+{ "id" : "[ testLMPIPI#1 ] LocalLoad(I,0) Constant(I,1) ConditionalBranch(I,gt,4) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 > v4", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#3" : "TRUE", "testLMPIPI#2" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#2 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPI#3 ] New(LMain$List;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#4" : "Implicit" } },
+{ "id" : "[ testLMPIPI#4 ] Dup(1,0) Invoke(SPECIAL,LMain$List;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#5" : "Invoke" } },
+{ "id" : "[ testLMPIPI#5 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#6" : "Implicit" } },
+{ "id" : "[ testLMPIPI#6 ] LocalStore(Ljava/lang/Object;,2) Constant(I,0) LocalStore(I,3) LocalLoad(I,3) LocalLoad(I,0) ConditionalBranch(I,ge,21) ", "instruction_count" : "6", "cost" : "6", "secret_dependent_branch" : "true", "ins_to_translate" : "if v10 >= v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#9" : "TRUE", "testLMPIPI#7" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#7 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,1) Invoke(VIRTUAL,LMain$List;,insert,(I)V) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#8" : "Invoke" } },
+{ "id" : "[ testLMPIPI#8 ] LocalLoad(I,3) Constant(I,1) BinaryOp(I,add) LocalStore(I,3) Goto(10) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#6" : "Jump" } },
+{ "id" : "[ testLMPIPI#9 ] Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,28) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v11 != v7", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#13" : "TRUE", "testLMPIPI#10" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#10 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#11" : "Implicit" } },
+{ "id" : "[ testLMPIPI#11 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#12" : "Invoke" } },
+{ "id" : "[ testLMPIPI#12 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Implicit"} } },
+{ "id" : "[ testLMPIPI#13 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+Instruction to translate: if v1 > v4
+[ifv10>, v1, v2]
+(declare-fun v1() Int)
+(declare-fun v4() Int)
+(assert (> v1 1 ))
+(check-sat)
+Constraint solving time: 0.003660572
+Model counting time: 0.005309277
+Constraint solving time: 3.39491E-4
+Model counting time: 5.23096E-4
+Probability of true branch: 0.499969482421875
+Probability of false branch: 0.500030517578125
+Instruction to translate: if v10 >= v1
+[ifv10>, v1, v2]
+(declare-fun v10() Int)
+(declare-fun v1() Int)
+(assert (>= v10 v1))
+(check-sat)
+Constraint solving time: 5.90444E-4
+Model counting time: 8.83936E-4
+Constraint solving time: 1.52146E-4
+Model counting time: 2.49014E-4
+Probability of true branch: 0.5000076293945312
+Probability of false branch: 0.49999237060546875
+testLMPIPI#9
+ "testLMPIPI#10" : "FALSE"
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "0.4999999995343387"];
+	1 -> 3[label= "0.5000000004656613"];
+	3 -> 4[label= "1.0"];
+	2 -> 5[label= "1.0"];
+	5 -> 6[label= "1.0"];
+	6 -> 7[label= "1.0"];
+	7 -> 8[label= "0.24999999988358468"];
+	7 -> 9[label= "0.7500000001164153"];
+	9 -> 10[label= "1.0"];
+	10 -> 7[label= "1.0"];
+	8 -> 11[label= "0.0"];
+	8 -> 12[label= "1.0"];
+	12 -> 13[label= "1.0"];
+	13 -> 14[label= "1.0"];
+	14 -> 4[label= "1.0"];
+	11 -> 4[label= "1.0"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..15] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 0.4999999995343387 : (s' = 2) + 0.5000000004656613 : (s' = 3);
+	[] s = 3 -> 1.0 : (s' = 4);
+	[] s = 2 -> 1.0 : (s' = 5);
+	[] s = 5 -> 1.0 : (s' = 6);
+	[] s = 6 -> 1.0 : (s' = 7);
+	[] s = 7 -> 0.24999999988358468 : (s' = 8) + 0.7500000001164153 : (s' = 9);
+	[] s = 9 -> 1.0 : (s' = 10);
+	[] s = 10 -> 1.0 : (s' = 7);
+	[] s = 8 -> 0.0 : (s' = 11) + 1.0 : (s' = 12);
+	[] s = 12 -> 1.0 : (s' = 13);
+	[] s = 13 -> 1.0 : (s' = 14);
+	[] s = 14 -> 1.0 : (s' = 4);
+	[] s = 11 -> 1.0 : (s' = 4);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 12]
+PRISM
+=====
+
+Version: 4.5
+Date: Tue Dec 27 14:23:50 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=12 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=12 ]
+
+Building model...
+
+Warning: Update 1 of command 10 of module "LMain_test" doesn't do anything ("(s'=11)", line 16, column 27)
+
+Computing reachable states...
+
+Reachability (BFS): 10 iterations in 0.00 seconds (average 0.000100, setup 0.00)
+
+Time for model construction: 0.016 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      14 (1 initial)
+Transitions: 16
+
+Transition matrix: 47 nodes (6 terminal), 16 minterms, vars: 4r/4c
+
+Prob0: 8 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Prob1: 3 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+yes = 8, no = 4, maybe = 2
+
+Computing remaining probabilities...
+Engine: Hybrid
+
+Building hybrid MTBDD matrix... [levels=4, nodes=14] [0.7 KB]
+Adding explicit sparse matrices... [levels=4, num=1, compact] [0.0 KB]
+Creating vector for diagonals... [dist=1, compact] [0.0 KB]
+Creating vector for RHS... [dist=2, compact] [0.0 KB]
+Allocating iteration vectors... [2 x 0.1 KB]
+TOTAL: [1.0 KB]
+
+Starting iterations...
+
+Jacobi: 3 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Value in the initial state: 0.4999999995343387
+
+Time for model checking: 0.003 seconds.
+
+Result: 0.4999999995343387 (value in the initial state)
+Probability for assertion reachability: 0.4999999995343387
+Dependency analysis time: 5ms
+Execution time for probabilistic analysis: 399ms
+Total Execution time: 404ms
+
+real	0m13.806s
+user	0m50.526s
+sys	0m3.267s

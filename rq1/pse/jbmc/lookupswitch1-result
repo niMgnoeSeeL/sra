@@ -1,0 +1,684 @@
+=========================== code ==============================
+package sampling.svcomp.jbmc;
+
+import gov.nasa.jpf.symbc.Debug;
+
+public class lookupswitch1 {
+    public static void main(String[] args) {
+        test();
+    }
+
+    public static void test() {
+        int i = Debug.makeSymbolicInteger("i");
+        int j;
+        switch (i) {
+            case 1:
+                j = 2;
+                break;
+            case 10:
+                j = 11;
+                break;
+            case 100:
+                j = 101;
+                break;
+            case 1000:
+                j = 1001;
+                break;
+            case 10000:
+                j = 10001;
+                break;
+            case 100000:
+                j = 100001;
+                break;
+            default:
+                j = -1;
+        }
+
+        if (i == 1 || i == 10 || i == 100 || i == 1000 || i == 10000 || i == 100000)
+            System.out.println("here i am");
+        // assert j == i + 1;
+        // else
+        // assert j == -1;
+    }
+}
+------------------------------------------------------------------
+
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.SamplingAnalysis$Builder build
+INFO: Using state caching implemented by class: edu.cmu.sv.isstac.canopy.exploration.cache.TrieCache
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.SamplingAnalysis$Builder build
+INFO: State cache does not support CG optimization. Disabling CG optimization
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.quantification.ModelCounterFactory getInstance
+INFO: Using lazy model counter that creates uniform UP from variables of PC at model count invocation. This may not be what you want!
+symbolic.min_int=-2147483648
+symbolic.min_long=-9223372036854775808
+symbolic.min_short=-32768
+symbolic.min_byte=-128
+symbolic.min_char=0
+symbolic.max_int=2147483647
+symbolic.max_long=9223372036854775807
+symbolic.max_short=32767
+symbolic.max_byte=127
+symbolic.max_char=65535
+symbolic.min_double=4.9E-324
+symbolic.max_double=1.7976931348623157E308
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch <init>
+INFO: *NOT* using incremental solving
+JavaPathfinder core system v8.0 (rev 45a4450cd0bd1193df5419f7c9d9b89807d00db6) - (C) 2005-2014 United States Government. All rights reserved.
+
+
+====================================================== system under test
+sampling.svcomp.jbmc.lookupswitch1.main()
+
+====================================================== search started: 1/12/23 2:13 PM
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: null
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: null
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i==1
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+here i am
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i==1
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator getModelCounterInstance
+INFO: Creating model counter for symbolic vars: i
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator createUniformProblemSetting
+WARNING: Defaulting to lower bound for *ALL* integers in model counter: -1073741824
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator createUniformProblemSetting
+WARNING: Defaulting to upper bound for *ALL* integers in model counter: 1073741823
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:i==1
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 1, termType:SUCCESS, path volume: 1
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i==1
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i==10
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1&&i==10
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+here i am
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1&&i==10
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:i!=1&&i==10
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 2, termType:SUCCESS, path volume: 1
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1&&i==10
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i==100
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1&&i==100
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=10&&i!=1&&i==100
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+here i am
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=10&&i!=1&&i==100
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:i!=10&&i!=1&&i==100
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 3, termType:SUCCESS, path volume: 1
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=10&&i!=1&&i==100
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:17 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i==1000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1&&i==1000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=10&&i!=1&&i==1000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100&&i!=10&&i!=1&&i==1000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+here i am
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100&&i!=10&&i!=1&&i==1000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:i!=100&&i!=10&&i!=1&&i==1000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 4, termType:SUCCESS, path volume: 1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100&&i!=10&&i!=1&&i==1000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i==10000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1&&i==10000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=10&&i!=1&&i==10000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100&&i!=10&&i!=1&&i==10000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1000&&i!=100&&i!=10&&i!=1&&i==10000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+here i am
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1000&&i!=100&&i!=10&&i!=1&&i==10000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:i!=1000&&i!=100&&i!=10&&i!=1&&i==10000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 5, termType:SUCCESS, path volume: 1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1000&&i!=100&&i!=10&&i!=1&&i==10000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i==100000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1&&i==100000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=10&&i!=1&&i==100000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100&&i!=10&&i!=1&&i==100000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=1000&&i!=100&&i!=10&&i!=1&&i==100000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1&&i==100000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+here i am
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1&&i==100000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1&&i==100000
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 6, termType:SUCCESS, path volume: 1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 7, termType:SUCCESS, path volume: 2147483642
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: i!=100000&&i!=10000&&i!=1000&&i!=100&&i!=10&&i!=1
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: null
+SampleStatisticsOutputter{min. reward=3.0, max. reward=8, max. reward sample #=6, max. reward time=0, # same max. rewards=2, total samples=7, total unique samples=7, total analysis time=0, avg. throughput=12.589928057553957, reward mean=5.857142857142857, reward variance=3.8095238095238098, reward stddev=1.9518001458970664, final result=SamplingResult{Max succ state=ResultContainer{reward=8, samplesNumber=6, path=[0,5,0,0,0,0,0,0], pc=constraint # = 6
+i != CONST_10000 &&
+i != CONST_1000 &&
+i != CONST_100 &&
+i != CONST_10 &&
+i != CONST_1 &&
+i == CONST_100000}, Max fail state=, Max grey state=}}
+
+====================================================== results
+no errors detected
+
+====================================================== statistics
+elapsed time:       00:00:00
+states:             new=62,visited=0,backtracked=62,end=7
+search:             maxDepth=8,constraints=0
+choice generators:  thread=1 (signal=0,lock=1,sharedRef=0,threadApi=0,reschedule=0), data=28
+heap:               new=467,released=67,maxLive=451,gcCycles=8
+instructions:       6529
+max memory:         981MB
+loaded code:        classes=82,methods=1665
+
+====================================================== search finished: 1/12/23 2:13 PM
+Jan 12, 2023 2:13:18 PM edu.cmu.sv.isstac.canopy.quantification.ModelCounterFactory cleanUpTempFiles
+INFO: Removing model counter tmp dir: /tmp/modelcounter
+
+real	0m1.032s
+user	0m2.607s
+sys	0m0.338s

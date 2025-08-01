@@ -1,0 +1,32 @@
+]633;C]633;E;\x2E\x2Frun\x2DPReach\x2Esh\x20\x2FPReach\x2Fpreach\x2Dbenchmarks\x2Fsv\x2Dcomp\x2Fjbmc\x2Dregression\x2Dmodified\x2FTokenTest02\x2F\x20\x2FPReach\x2Fpreach\x2Dbenchmarks\x2Fsv\x2Dcomp\x2Fjbmc\x2Dregression\x2Dmodified\x2FTokenTest02\x2FMain\x2Eclass\x20POLY\x20\x27LMain\x2Etest\x28Ljava\x2Flang\x2FString\x3B\x29V\x27\x20v1\x20\x2FPReach\x2Fprism\x2D4\x2E5\x2Dlinux64\x2Fbin\x2Fprism$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/TokenTest02/
+$class_files: /PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/TokenTest02/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(Ljava/lang/String;)V
+$input_params: v1
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/TokenTest02//branch_probability.txt
+/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/TokenTest02/
+POLY
+LMain.test(Ljava/lang/String;)V
+/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/TokenTest02/
+source in command: "Main.test.*"
+method info: "Main.test(Ljava/lang/String;)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/TokenTest02/ -S"Main.test.*" "Main.test(Ljava/lang/String;)V"
+Traceback (most recent call last):
+  File "collect-branch-probability.py", line 159, in <module>
+    processAllBenchmarksInThisDirectory(sys.argv[1], sys.argv[2], sys.argv[3])
+  File "collect-branch-probability.py", line 74, in processAllBenchmarksInThisDirectory
+    result = process.communicate()[0].decode('utf-8')
+  File "/usr/lib/python2.7/subprocess.py", line 475, in communicate
+    stdout = _eintr_retry_call(self.stdout.read)
+  File "/usr/lib/python2.7/subprocess.py", line 125, in _eintr_retry_call
+    return func(*args)
+KeyboardInterrupt
+
+
+real	4m19.411s
+user	0m0.068s
+sys	0m0.088s

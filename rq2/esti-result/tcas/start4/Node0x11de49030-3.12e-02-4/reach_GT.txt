@@ -1,0 +1,6 @@
+total_obs: 16844924.0
+target_obs: 9048.0
+GT: 0.0005371351037262026
+total_remaining: 52066086.0
+target_remaining: 3265286.0
+prob remaining: 0.06271425895159471

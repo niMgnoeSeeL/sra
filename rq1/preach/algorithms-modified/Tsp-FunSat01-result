@@ -1,0 +1,1664 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/
+$class_files: /PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(II)V
+$input_params: v1,v2
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01//branch_probability.txt
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/
+POLY
+LMain.test(II)V
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/
+source in command: "Main.test.*"
+method info: "Main.test(II)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/ -S"Main.test.*" "Main.test(II)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt solve.txt bound.txt search.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+('copy', 'solve.txt')
+('copy', 'bound.txt')
+('copy', 'search.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt solve.txt bound.txt search.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(II)V', 'BB1', 'I2', '61', ['v1', 'v4'])
+('LMain', 'test(II)V', 'BB5', 'I12', '66', ['v11', 'v1'])
+('LMain', 'test(II)V', 'BB7', 'I17', '67', ['v9', 'v1'])
+('LMain', 'test(II)V', 'BB8', 'I22', '69', ['v2', 'v4'])
+('LMain', 'test(II)V', 'BB17', 'I51', '78', ['v17', 'v4'])
+info: ('Main', 'test(II)V', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v4 = 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	    -1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v11 +1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1 >= 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	    -1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v11 +1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+info: ('Main', 'test(II)V', 'BB8', 'I22')
+vcon: 	    1FrameParameterv(0,201392112)v1ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v11 +1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 -1FrameRegisterv(0,201392112)v9 = 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	    -1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v8 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+info: ('Main', 'test(II)V', 'BB8', 'I22')
+vcon: 	    1FrameParameterv(0,201392112)v1ⁱⁿ -2 >= 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v8 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	    -1FrameRegisterv(0,201392112)v10 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v8 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v10 -1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	    1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v8 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -2 >= 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+info: ('Main', 'test(II)V', 'BB17', 'I51')
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v10 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v9 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v16 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v17 = 0
+info: ('Main', 'test(II)V', 'BB8', 'I22')
+vcon: 	    1FrameParameterv(0,201392112)v1ⁱⁿ -3 >= 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v8 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	    -1FrameRegisterv(0,201392112)v10 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v8 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v10 -1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v10 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v8 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v10 -1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 -1FrameRegisterv(0,201392112)v9 = 0
+info: ('Main', 'test(II)V', 'BB8', 'I22')
+vcon: 	    -1FrameRegisterv(0,201392112)v10 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v8 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v10 -1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	    -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v9 >= 0
+info: ('Main', 'test(II)V', 'BB8', 'I22')
+vcon: 	    1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	    -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v10 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v11 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 -1 >= 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	    -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v12 -1FrameRegisterv(0,201392112)v9 >= 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	    1FrameRegisterv(0,201392112)v10 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v11 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameParameterv(0,201392112)v1ⁱⁿ +1FrameRegisterv(0,201392112)v8 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -2 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+info: ('Main', 'test(II)V', 'BB8', 'I22')
+vcon: 	    1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 +1FrameRegisterv(0,201392112)v9 -2 >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v8 +1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ +1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v8 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 +1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 >= 0
+vcon: 	 ∧  2FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 -2 >= 0
+vcon: 	 ∧  2FrameParameterv(0,201392112)v1ⁱⁿ -2FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	    -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 >= 0
+info: ('Main', 'test(II)V', 'BB8', 'I22')
+vcon: 	    1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	    -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v10 -1FrameRegisterv(0,201392112)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v11 +1FrameRegisterv(0,201392112)v12 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,201392112)v1ⁱⁿ +1FrameRegisterv(0,201392112)v9 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 >= 0
+info: ('Main', 'test(II)V', 'BB7', 'I17')
+vcon: 	    1FrameRegisterv(0,201392112)v10 -1FrameRegisterv(0,201392112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  -1FrameParameterv(0,201392112)v1ⁱⁿ +1FrameRegisterv(0,201392112)v8 >= 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v10 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v10 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+info: ('Main', 'test(II)V', 'BB8', 'I22')
+vcon: 	    -1FrameHeapRegister(-1,-1)-1514337444 +1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v10 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v1ⁱⁿ -1FrameRegisterv(0,201392112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameParameterv(0,201392112)v1ⁱⁿ +1FrameRegisterv(0,201392112)v8 >= 0
+info: ('Main', 'test(II)V', 'BB17', 'I51')
+vcon: 	    -1FrameRegisterv(0,201392112)v7 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,201392112)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v10 +1FrameRegisterv(0,201392112)v12 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v11 -1FrameRegisterv(0,201392112)v12 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v8 -1FrameRegisterv(0,201392112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,201392112)v1ⁱⁿ +1FrameRegisterv(0,201392112)v9 >= 0
+vcon: 	 ∧  -1FrameParameterv(0,201392112)v1ⁱⁿ +1FrameRegisterv(0,201392112)v12 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v12 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v9 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,201392112)v16 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,201392112)v17 = 0
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB2', 'I7', '716', ['v6', 'v5'])
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB3', 'I12', '716', ['v8', 'v9'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB2', 'I5', '3030', ['v4', 'v5'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB8', 'I17', '3036', ['v7', 'v5'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB1', 'I2', '1536', ['v1', 'v2'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB3', 'I7', '1539', ['v1', 'v4'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB6', 'I14', '1542', ['v6', 'v7'])
+('Ljava/util/Collections', 'unmodifiableList(Ljava/util/List;)Ljava/util/List;', 'BB1', 'I3', '1190', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB2', 'I3', '781', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB4', 'I7', '781', ['v5', 'v4'])
+('LMain$TspSolver', 'solve()I', 'BB4', 'I8', '21', ['v9', 'v5'])
+info: ('Main$TspSolver', 'solve()I', 'BB4', 'I8')
+vcon: 	 ∧  1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,1705904476)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v3 +2147483647 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, best, <Primordial,I> > +1FrameRegisterv(0,1705904476)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v4 -1FrameRegisterv(0,1705904476)v9 = 0
+info: ('Main$TspSolver', 'solve()I', 'BB4', 'I8')
+vcon: 	    -1FrameRegisterv(0,1705904476)v3 +2147483647 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, best, <Primordial,I> > +1FrameRegisterv(0,1705904476)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v7 +1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,1705904476)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v4 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1932333018 +1FrameRegisterv(0,1705904476)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v8 -1FrameRegisterv(0,1705904476)v9 = 0
+info: ('Main$TspSolver', 'solve()I', 'BB4', 'I8')
+vcon: 	    1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,1705904476)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v3 +2147483647 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, best, <Primordial,I> > +1FrameRegisterv(0,1705904476)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v4 -1FrameRegisterv(0,1705904476)v9 = 0
+info: ('Main$TspSolver', 'solve()I', 'BB4', 'I8')
+vcon: 	    -1FrameRegisterv(0,1705904476)v3 +2147483647 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, best, <Primordial,I> > +1FrameRegisterv(0,1705904476)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v7 +1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,1705904476)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v4 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1932333018 +1FrameRegisterv(0,1705904476)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v8 -1FrameRegisterv(0,1705904476)v9 = 0
+info: ('Main$TspSolver', 'solve()I', 'BB4', 'I8')
+vcon: 	 ∧  1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,1705904476)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v3 +2147483647 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, best, <Primordial,I> > +1FrameRegisterv(0,1705904476)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v8 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v8 -1FrameRegisterv(0,1705904476)v9 = 0
+info: ('Main$TspSolver', 'solve()I', 'BB4', 'I8')
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v4 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v8 -1FrameRegisterv(0,1705904476)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1705904476)v9 -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,1705904476)v9 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1705904476)1947199063 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,1705904476)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1705904476)v3 +2147483647 = 0
+('LMain$TspSolver', 'search(III)V', 'BB3', 'I8', '37', ['v4', 'v9'])
+('LMain$TspSolver', 'search(III)V', 'BB8', 'I19', '38', ['v29', 'v30'])
+('LMain$TspSolver', 'search(III)V', 'BB16', 'I38', '43', ['v11', 'v12'])
+('LMain$TspSolver', 'search(III)V', 'BB20', 'I45', '46', ['v25', 'v13'])
+('LMain$TspSolver', 'search(III)V', 'BB23', 'I51', '47', ['v15', 'v9'])
+info: ('Main$TspSolver', 'search(III)V', 'BB3', 'I8')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB16', 'I38')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v13 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameRegisterv(0,118504112)v15 +1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameRegisterv(0,118504112)v21 -2 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v19 +1FrameRegisterv(0,118504112)v20 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v20 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB3', 'I8')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ >= 0
+vcon: 	 ∧  1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB16', 'I38')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameParameterv(0,118504112)v4ⁱⁿ +1 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB8', 'I19')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v30 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v28 +1FrameRegisterv(0,118504112)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v29 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameParameterv(0,118504112)v4ⁱⁿ +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameParameterv(0,118504112)v4ⁱⁿ +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v13 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameRegisterv(0,118504112)v15 +1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameParameterv(0,118504112)v4ⁱⁿ +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameRegisterv(0,118504112)v21 -2 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameParameterv(0,118504112)v4ⁱⁿ +1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v19 +1FrameRegisterv(0,118504112)v20 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v20 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB3', 'I8')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB16', 'I38')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB8', 'I19')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v30 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v28 +1FrameRegisterv(0,118504112)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v29 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v13 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameRegisterv(0,118504112)v15 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v13 -2 >= 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1FrameRegisterv(0,118504112)v25 +1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > +1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1FrameRegisterv(0,118504112)v25 +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > +1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB3', 'I8')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB16', 'I38')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB8', 'I19')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v30 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v28 +1FrameRegisterv(0,118504112)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v29 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v13 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameRegisterv(0,118504112)v15 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v13 -2 >= 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1FrameRegisterv(0,118504112)v25 +1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > +1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1FrameRegisterv(0,118504112)v25 +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > +1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB3', 'I8')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB16', 'I38')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB8', 'I19')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v30 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, nCalls, <Primordial,I> > +1FrameRegisterv(0,118504112)v8 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v28 +1FrameRegisterv(0,118504112)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v29 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v25 +1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > +1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    -1FrameRegisterv(0,118504112)v15 +1 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameRegisterv(0,118504112)v24 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > +1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1 = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1FrameRegisterv(0,118504112)v25 +1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > +1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 -1FrameRegisterv(0,118504112)v25 +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+info: ('Main$TspSolver', 'search(III)V', 'BB20', 'I45')
+vcon: 	    1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+info: ('Main$TspSolver', 'search(III)V', 'BB23', 'I51')
+vcon: 	    -1FrameParameterv(0,118504112)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,118504112)v3ⁱⁿ = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v8 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v11 = 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, best, <Primordial,I> > -1FrameRegisterv(0,118504112)v12 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v12 +2147483647 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v12 -1 >= 0
+vcon: 	 ∧  -1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > +1FrameRegisterv(0,118504112)v13 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v24 -1FrameRegisterv(0,118504112)v25 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,118504112)786578161 < Application, LMain$TspSolver, N, <Primordial,I> > -1FrameRegisterv(0,118504112)v25 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,118504112)v15 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,118504112)v15 +1 >= 0
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/ yes
+info: 
+Main.java:61
+(= (+ (- var2)) 0),
+(= (+ (- var2)) 0)
+Main.java:61
+[(= (+ (- var2)) 0)]
+info: 
+Main.java:78
+(= (+ (- var1)) 0),
+(= (+ (- var1)) 0)
+Main.java:78
+[(= (+ (- var1)) 0)]
+info: 
+Main.java:66
+(= (+ (- var1) 1 ) 0),(or (or (>= (+ var2 (- 1) ) 0) (= (+ var2 (- 2) ) 0) ) (= (+ var2 (- 1) ) 0) ),
+(= (+ (- var1) 1 ) 0)
+(or (or (>= (+ var2 (- 1) ) 0) (= (+ var2 (- 2) ) 0) ) (= (+ var2 (- 1) ) 0) )
+Main.java:66
+[(= (+ (- var1) 1 ) 0), (or (or (>= (+ var2 (- 1) ) 0) (= (+ var2 (- 2) ) 0) ) (= (+ var2 (- 1) ) 0) )]
+info: 
+Main.java:67
+(>= (+ var1 (- 1) ) 0), (>= (+ var2 (- var1)) 0),(or (or (or (>= (+ var2 (- 1) ) 0) (>= (+ var2 (- 2) ) 0) ) (= (+ var2 (- 2) ) 0) ) (>= (+ var2 (- 2) ) 0) ), (>= (+ var2 (- var1)) 0),
+(>= (+ var1 (- 1) ) 0)
+ (>= (+ var2 (- var1)) 0)
+(or (or (or (>= (+ var2 (- 1) ) 0) (>= (+ var2 (- 2) ) 0) ) (= (+ var2 (- 2) ) 0) ) (>= (+ var2 (- 2) ) 0) )
+ (>= (+ var2 (- var1)) 0)
+Main.java:67
+[(>= (+ var1 (- 1) ) 0),  (>= (+ var2 (- var1)) 0), (or (or (or (>= (+ var2 (- 1) ) 0) (>= (+ var2 (- 2) ) 0) ) (= (+ var2 (- 2) ) 0) ) (>= (+ var2 (- 2) ) 0) )]
+info: 
+Main.java:69
+(or (or (= (+ (- var2)) 0) (= (+ var2) 0) ) (= (+ var2) 0) ),
+(or (or (= (+ (- var2)) 0) (= (+ var2) 0) ) (= (+ var2) 0) )
+Main.java:69
+[(or (or (= (+ (- var2)) 0) (= (+ var2) 0) ) (= (+ var2) 0) )]
+info: 
+Main$TspSolver.java:21
+(>= (+ var1 (- 1) ) 0),
+(>= (+ var1 (- 1) ) 0)
+Main$TspSolver.java:21
+[(>= (+ var1 (- 1) ) 0)]
+info: 
+Main$TspSolver.java:38
+(>= (+ var1) 0),
+(>= (+ var1) 0)
+Main$TspSolver.java:38
+[(>= (+ var1) 0)]
+info: 
+Main$TspSolver.java:47
+(or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (>= (+ var1) 0) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ),(or (or (or (or (or (or (or (or (or (or (or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ),
+(or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (>= (+ var1) 0) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) )
+(or (or (or (or (or (or (or (or (or (or (or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) )
+Main$TspSolver.java:47
+[(or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (>= (+ var1) 0) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ), (or (or (or (or (or (or (or (or (or (or (or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) )]
+info: 
+Main$TspSolver.java:46
+(>= (+ var1 (- 1) ) 0),
+(>= (+ var1 (- 1) ) 0)
+Main$TspSolver.java:46
+[(>= (+ var1 (- 1) ) 0)]
+info: 
+Main$TspSolver.java:43
+info: 
+Main$TspSolver.java:37
+(or (or (or (or (= (+ (- var1) (- 1) ) 0) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1)) 0) ) (>= (+ var1 1 ) 0) ) (>= (+ (- var1)) 0) ),(or (or (or (or (or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ),
+(or (or (or (or (= (+ (- var1) (- 1) ) 0) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1)) 0) ) (>= (+ var1 1 ) 0) ) (>= (+ (- var1)) 0) )
+(or (or (or (or (or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) )
+Main$TspSolver.java:37
+[(or (or (or (or (= (+ (- var1) (- 1) ) 0) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1)) 0) ) (>= (+ var1 1 ) 0) ) (>= (+ (- var1)) 0) ), (or (or (or (or (or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) )]
+SourceLine = Main.java:61, Cons = [(= (+ (- var2)) 0)]
+SourceLine = Main$TspSolver.java:38, Cons = [(>= (+ var1) 0)]
+SourceLine = Main$TspSolver.java:47, Cons = [(or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (or (>= (+ var1) 0) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (= (+ var1 (- 1) ) 0) ) (= (+ var1 (- 1) ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1) 1 ) 0) ), (or (or (or (or (or (or (or (or (or (or (or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) )]
+SourceLine = Main.java:66, Cons = [(= (+ (- var1) 1 ) 0), (or (or (>= (+ var2 (- 1) ) 0) (= (+ var2 (- 2) ) 0) ) (= (+ var2 (- 1) ) 0) )]
+SourceLine = Main$TspSolver.java:37, Cons = [(or (or (or (or (= (+ (- var1) (- 1) ) 0) (>= (+ (- var1) 1 ) 0) ) (>= (+ (- var1)) 0) ) (>= (+ var1 1 ) 0) ) (>= (+ (- var1)) 0) ), (or (or (or (or (or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) ) (= (+ (- var2)) 0) )]
+SourceLine = Main$TspSolver.java:46, Cons = [(>= (+ var1 (- 1) ) 0)]
+SourceLine = Main.java:69, Cons = [(or (or (= (+ (- var2)) 0) (= (+ var2) 0) ) (= (+ var2) 0) )]
+SourceLine = Main$TspSolver.java:21, Cons = [(>= (+ var1 (- 1) ) 0)]
+SourceLine = Main$TspSolver.java:43, Cons = null
+SourceLine = Main.java:78, Cons = [(= (+ (- var1)) 0)]
+SourceLine = Main.java:67, Cons = [(>= (+ var1 (- 1) ) 0),  (>= (+ var2 (- var1)) 0), (or (or (or (>= (+ var2 (- 1) ) 0) (>= (+ var2 (- 2) ) 0) ) (= (+ var2 (- 2) ) 0) ) (>= (+ var2 (- 2) ) 0) )]
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/Main.java
+Class Name: Main
+N <= 0
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/Main.java:61)
+(declare-fun N () Int)
+(assert (<= N 0))
+(check-sat)
+
+Constraint solving time: 0.003849826
+Model counting time: 0.007735642
+Branch model count: 2147483649
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 3.87319E-4
+Model counting time: 5.88374E-4
+Branch domain count:4294967296
+True branch probability: 0.5000000002328306
+False branch probability: 0.49999999976716936
+next < 0
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/Main.java:69)
+(declare-fun next () Int)
+(assert (< next 0))
+(check-sat)
+
+Constraint solving time: 5.75335E-4
+Model counting time: 0.001025222
+Branch model count: 2147483648
+(declare-fun next () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.15284E-4
+Model counting time: 4.25769E-4
+Branch domain count:4294967296
+True branch probability: 0.5
+False branch probability: 0.5
+i < N
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/Main.java:66)
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (< i N))
+(assert (= (+ (- i) 1 ) 0))
+(assert (or (or (>= (+ N (- 1) ) 0) (= (+ N (- 2) ) 0) ) (= (+ N (- 1) ) 0) ))
+(check-sat)
+
+Constraint solving time: 0.001736754
+Model counting time: 0.002163472
+Branch model count: 2147483646
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (= (+ (- i) 1 ) 0))
+(assert (or (or (>= (+ N (- 1) ) 0) (= (+ N (- 2) ) 0) ) (= (+ N (- 1) ) 0) ))
+(assert true)
+(check-sat)
+Constraint solving time: 0.001451661
+Model counting time: 0.001944067
+Branch domain count:2147483647
+True branch probability: 0.9999999995343387
+False branch probability: 4.6566128730773926E-10
+j < N
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01/Main.java:67)
+(declare-fun N () Int)
+(declare-fun j () Int)
+(assert (< j N))
+(assert (>= (+ j (- 1) ) 0))
+(assert  (>= (+ N (- j)) 0))
+(assert (or (or (or (>= (+ N (- 1) ) 0) (>= (+ N (- 2) ) 0) ) (= (+ N (- 2) ) 0) ) (>= (+ N (- 2) ) 0) ))
+(check-sat)
+
+Constraint solving time: 0.001802251
+Model counting time: 0.002294048
+Branch model count: 2305843005992468481
+(declare-fun N () Int)
+(declare-fun j () Int)
+(assert (>= (+ j (- 1) ) 0))
+(assert  (>= (+ N (- j)) 0))
+(assert (or (or (or (>= (+ N (- 1) ) 0) (>= (+ N (- 2) ) 0) ) (= (+ N (- 2) ) 0) ) (>= (+ N (- 2) ) 0) ))
+(assert true)
+(check-sat)
+Constraint solving time: 0.001630726
+Model counting time: 0.002005116
+Branch domain count:2305843008139952128
+True branch probability: 0.9999999990686774
+False branch probability: 9.313225746154785E-10
+----------------------------------------------------
+Total processing time: 0 seconds
+----------------------------------------------------
+
+('Analysis time without Interval analysis: ', 0.7484471797943115)
+('Analysis time: ', 4.8004090785980225)
+SMDEBUG::collect-branch-probability.py::4.80489301682 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 5s
+Constructing heap graph: 1s
+Call graph stats:
+  Nodes: 3330
+  Edges: 10719
+  Methods: 3299
+  Bytecode Bytes: 195126
+Root --> #Classes : 1  #Methods : 2
+#Classes : 1   #Methods : 2
+ABC library loaded properly
+LMain.test(II)V
+LMain.main([Ljava/lang/String;)V
+Number of Classes: 1
+Number of Methods: 2
+Dependency analysis started ...
+
+=============================
+
+11 = phi  10,4
+conditional branch(ge, to iindex=40) 11,1
+ifv11>
+
+=============================
+
+5:
+11 = phi  10,4 if v11 >= v1 
+
+=============================
+
+conditional branch(gt, to iindex=4) 1,4
+
+=============================
+
+1:
+if v1 > v4 
+Branch condition:1
+FALSE node: 2
+22
+
+5:
+11 = phi  10,4 if v11 >= v1 
+
+=============================
+
+12 = phi  12,11
+9 = phi  8,4
+conditional branch(ge, to iindex=35) 9,1
+ifv9>
+
+=============================
+
+7:
+12 = phi  12,11 9 = phi  8,4 if v9 >= v1 
+1:
+if v1 > v4 
+Branch condition:1
+FALSE node: 2
+22
+
+5:
+11 = phi  10,4 if v11 >= v1 
+
+=============================
+
+invokespecial < Application, LMain$TspSolver, <init>(I[[I)V > 13,1,5 @63 exception:14
+
+=============================
+
+7:
+12 = phi  12,11 9 = phi  8,4 if v9 >= v1 
+1:
+if v1 > v4 
+Branch condition:1
+FALSE node: 2
+22
+
+5:
+11 = phi  10,4 if v11 >= v1 
+Bytecode : conditional branch(ge, to iindex=35) 9,1
+Source line number = 67
+5 = new <Primordial,[[I>@71 1 
+conditional branch(ge, to iindex=40) 11,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 62
+goto (from iindex= 34 to iindex = 15)
+arraystore 6[9] = 2
+goto (from iindex= 39 to iindex = 10)
+13 = new <Application,LMain$TspSolver>@57
+conditional branch(ge, to iindex=24) 2,4
+conditional branch(ge, to iindex=35) 9,1
+6 = arrayload 5[12]
+return
+Source line number = 70
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @83 exception:19
+throw 18
+return
+Source line number = 79
+invokespecial < Application, LMain$TspSolver, <init>(I[[I)V > 13,1,5 @63 exception:14
+16 = invokevirtual < Application, LMain$TspSolver, solve()I > 13 @68 exception:15
+conditional branch(ne, to iindex=56) 17,4
+18 = new <Application,Ljava/lang/AssertionError>@79
+Bytecode : conditional branch(gt, to iindex=4) 1,4
+Source line number = 61
+5 = new <Primordial,[[I>@71 1 
+conditional branch(ge, to iindex=40) 11,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 62
+goto (from iindex= 34 to iindex = 15)
+arraystore 6[9] = 2
+goto (from iindex= 39 to iindex = 10)
+13 = new <Application,LMain$TspSolver>@57
+conditional branch(ge, to iindex=24) 2,4
+conditional branch(ge, to iindex=35) 9,1
+6 = arrayload 5[12]
+return
+Source line number = 70
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @83 exception:19
+throw 18
+return
+Source line number = 79
+invokespecial < Application, LMain$TspSolver, <init>(I[[I)V > 13,1,5 @63 exception:14
+16 = invokevirtual < Application, LMain$TspSolver, solve()I > 13 @68 exception:15
+conditional branch(ne, to iindex=56) 17,4
+18 = new <Application,Ljava/lang/AssertionError>@79
+Bytecode : conditional branch(ge, to iindex=40) 11,1
+Source line number = 66
+5 = new <Primordial,[[I>@71 1 
+conditional branch(ge, to iindex=40) 11,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 62
+goto (from iindex= 34 to iindex = 15)
+arraystore 6[9] = 2
+goto (from iindex= 39 to iindex = 10)
+13 = new <Application,LMain$TspSolver>@57
+conditional branch(ge, to iindex=24) 2,4
+conditional branch(ge, to iindex=35) 9,1
+6 = arrayload 5[12]
+return
+Source line number = 70
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @83 exception:19
+throw 18
+return
+Source line number = 79
+invokespecial < Application, LMain$TspSolver, <init>(I[[I)V > 13,1,5 @63 exception:14
+16 = invokevirtual < Application, LMain$TspSolver, solve()I > 13 @68 exception:15
+conditional branch(ne, to iindex=56) 17,4
+18 = new <Application,Ljava/lang/AssertionError>@79
+
+=============================
+
+conditional branch(ge, to iindex=24) 2,4
+
+=============================
+
+7:
+12 = phi  12,11 9 = phi  8,4 if v9 >= v1 
+8:
+if v2 >= v4 
+Branch condition:8
+FALSE node: 9
+22
+
+1:
+if v1 > v4 
+Branch condition:1
+FALSE node: 2
+22
+
+5:
+11 = phi  10,4 if v11 >= v1 
+Bytecode : conditional branch(ge, to iindex=35) 9,1
+Source line number = 67
+5 = new <Primordial,[[I>@71 1 
+conditional branch(ge, to iindex=40) 11,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 62
+goto (from iindex= 34 to iindex = 15)
+arraystore 6[9] = 2
+goto (from iindex= 39 to iindex = 10)
+13 = new <Application,LMain$TspSolver>@57
+conditional branch(ge, to iindex=24) 2,4
+conditional branch(ge, to iindex=35) 9,1
+6 = arrayload 5[12]
+return
+Source line number = 70
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @83 exception:19
+throw 18
+return
+Source line number = 79
+invokespecial < Application, LMain$TspSolver, <init>(I[[I)V > 13,1,5 @63 exception:14
+16 = invokevirtual < Application, LMain$TspSolver, solve()I > 13 @68 exception:15
+conditional branch(ne, to iindex=56) 17,4
+18 = new <Application,Ljava/lang/AssertionError>@79
+Bytecode : conditional branch(ge, to iindex=24) 2,4
+Source line number = 69
+5 = new <Primordial,[[I>@71 1 
+conditional branch(ge, to iindex=40) 11,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 62
+goto (from iindex= 34 to iindex = 15)
+arraystore 6[9] = 2
+goto (from iindex= 39 to iindex = 10)
+13 = new <Application,LMain$TspSolver>@57
+conditional branch(ge, to iindex=24) 2,4
+conditional branch(ge, to iindex=35) 9,1
+6 = arrayload 5[12]
+return
+Source line number = 70
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @83 exception:19
+throw 18
+return
+Source line number = 79
+invokespecial < Application, LMain$TspSolver, <init>(I[[I)V > 13,1,5 @63 exception:14
+16 = invokevirtual < Application, LMain$TspSolver, solve()I > 13 @68 exception:15
+conditional branch(ne, to iindex=56) 17,4
+18 = new <Application,Ljava/lang/AssertionError>@79
+Bytecode : conditional branch(gt, to iindex=4) 1,4
+Source line number = 61
+5 = new <Primordial,[[I>@71 1 
+conditional branch(ge, to iindex=40) 11,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 62
+goto (from iindex= 34 to iindex = 15)
+arraystore 6[9] = 2
+goto (from iindex= 39 to iindex = 10)
+13 = new <Application,LMain$TspSolver>@57
+conditional branch(ge, to iindex=24) 2,4
+conditional branch(ge, to iindex=35) 9,1
+6 = arrayload 5[12]
+return
+Source line number = 70
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @83 exception:19
+throw 18
+return
+Source line number = 79
+invokespecial < Application, LMain$TspSolver, <init>(I[[I)V > 13,1,5 @63 exception:14
+16 = invokevirtual < Application, LMain$TspSolver, solve()I > 13 @68 exception:15
+conditional branch(ne, to iindex=56) 17,4
+18 = new <Application,Ljava/lang/AssertionError>@79
+Bytecode : conditional branch(ge, to iindex=40) 11,1
+Source line number = 66
+5 = new <Primordial,[[I>@71 1 
+conditional branch(ge, to iindex=40) 11,1
+conditional branch(gt, to iindex=4) 1,4
+return
+Source line number = 62
+goto (from iindex= 34 to iindex = 15)
+arraystore 6[9] = 2
+goto (from iindex= 39 to iindex = 10)
+13 = new <Application,LMain$TspSolver>@57
+conditional branch(ge, to iindex=24) 2,4
+conditional branch(ge, to iindex=35) 9,1
+6 = arrayload 5[12]
+return
+Source line number = 70
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @83 exception:19
+throw 18
+return
+Source line number = 79
+invokespecial < Application, LMain$TspSolver, <init>(I[[I)V > 13,1,5 @63 exception:14
+16 = invokevirtual < Application, LMain$TspSolver, solve()I > 13 @68 exception:15
+conditional branch(ne, to iindex=56) 17,4
+18 = new <Application,Ljava/lang/AssertionError>@79
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/Tsp-FunSat01//branch_probability.txt
+LMain$TspSolver.solve()I
+[ { "id" : "[ testLMPIPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1" : "Implicit" } },
+{ "id" : "[ testLMPIPI#1 ] LocalLoad(I,0) Constant(I,0) ConditionalBranch(I,gt,4) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 > v4", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#3" : "TRUE", "testLMPIPI#2" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#2 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPI#3 ] LocalLoad(I,0) LocalLoad(I,0) New([[I,2) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#4" : "Implicit" } },
+{ "id" : "[ testLMPIPI#4 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#5" : "Implicit" } },
+{ "id" : "[ testLMPIPI#5 ] LocalStore(Ljava/lang/Object;,2) Constant(I,0) LocalStore(I,3) LocalLoad(I,3) LocalLoad(I,0) ConditionalBranch(I,ge,40) ", "instruction_count" : "6", "cost" : "6", "secret_dependent_branch" : "true", "ins_to_translate" : "if v11 >= v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#14" : "TRUE", "testLMPIPI#6" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#6 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#7" : "Implicit" } },
+{ "id" : "[ testLMPIPI#7 ] Constant(I,0) LocalStore(I,4) LocalLoad(I,4) LocalLoad(I,0) ConditionalBranch(I,ge,35) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "true", "ins_to_translate" : "if v9 >= v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#13" : "TRUE", "testLMPIPI#8" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#8 ] LocalLoad(I,1) LocalStore(I,5) LocalLoad(I,5) Constant(I,0) ConditionalBranch(I,ge,24) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "true", "ins_to_translate" : "if v2 >= v4", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#10" : "TRUE", "testLMPIPI#9" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#9 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPI#10 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,3) ArrayLoad(Ljava/lang/Object;) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#11" : "Implicit" } },
+{ "id" : "[ testLMPIPI#11 ] LocalLoad(I,4) LocalLoad(I,5) ArrayStore(I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#12" : "Implicit" } },
+{ "id" : "[ testLMPIPI#12 ] LocalLoad(I,4) Constant(I,1) BinaryOp(I,add) LocalStore(I,4) Goto(15) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#7" : "Jump" } },
+{ "id" : "[ testLMPIPI#13 ] LocalLoad(I,3) Constant(I,1) BinaryOp(I,add) LocalStore(I,3) Goto(10) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#5" : "Jump" } },
+{ "id" : "[ testLMPIPI#14 ] New(LMain$TspSolver;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#15" : "Implicit" } },
+{ "id" : "[ testLMPIPI#15 ] Dup(1,0) LocalLoad(I,0) LocalLoad(Ljava/lang/Object;,2) Invoke(SPECIAL,LMain$TspSolver;,<init>,(I[[I)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#16" : "Invoke" } },
+{ "id" : "[ testLMPIPI#16 ] LocalStore(Ljava/lang/Object;,3) LocalLoad(Ljava/lang/Object;,3) Invoke(VIRTUAL,LMain$TspSolver;,solve,()I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#17" : "Invoke" } },
+{ "id" : "[ testLMPIPI#17 ] LocalStore(I,4) Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,56) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v17 != v4", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#21" : "TRUE", "testLMPIPI#18" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#18 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#19" : "Implicit" } },
+{ "id" : "[ testLMPIPI#19 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#20" : "Invoke" } },
+{ "id" : "[ testLMPIPI#20 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Implicit"} } },
+{ "id" : "[ testLMPIPI#21 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+Instruction to translate: if v1 > v4
+[ifv11>, ifv9>, v1, v2]
+(declare-fun v1() Int)
+(declare-fun v4() Int)
+(assert (> v1 0 ))
+(check-sat)
+Constraint solving time: 0.003737199
+Model counting time: 0.005283488
+Constraint solving time: 3.02572E-4
+Model counting time: 5.09837E-4
+Probability of true branch: 0.4999847412109375
+Probability of false branch: 0.5000152587890625
+Instruction to translate: if v11 >= v1
+[ifv11>, ifv9>, v1, v2]
+(declare-fun v11() Int)
+(declare-fun v1() Int)
+(assert (>= v11 v1))
+(check-sat)
+Constraint solving time: 5.79304E-4
+Model counting time: 8.97146E-4
+Constraint solving time: 1.66675E-4
+Model counting time: 2.61653E-4
+Probability of true branch: 0.5000076293945312
+Probability of false branch: 0.49999237060546875
+Instruction to translate: if v9 >= v1
+[ifv11>, ifv9>, v1, v2]
+(declare-fun v9() Int)
+(declare-fun v1() Int)
+(assert (>= v9 v1))
+(check-sat)
+Constraint solving time: 5.57405E-4
+Model counting time: 9.07366E-4
+Constraint solving time: 1.77815E-4
+Model counting time: 2.82092E-4
+Probability of true branch: 0.5000076293945312
+Probability of false branch: 0.49999237060546875
+Instruction to translate: if v2 >= v4
+[ifv11>, ifv9>, v1, v2]
+(declare-fun v2() Int)
+(declare-fun v4() Int)
+(assert (>= v2 0 ))
+(check-sat)
+Constraint solving time: 5.50315E-4
+Model counting time: 8.04249E-4
+Constraint solving time: 1.91255E-4
+Model counting time: 2.91922E-4
+Probability of true branch: 0.5
+Probability of false branch: 0.5
+testLMPIPI#17
+ "testLMPIPI#18" : "FALSE"
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "0.49999999976716936"];
+	1 -> 3[label= "0.5000000002328306"];
+	3 -> 4[label= "1.0"];
+	2 -> 5[label= "1.0"];
+	5 -> 6[label= "1.0"];
+	6 -> 7[label= "4.6566128730773926E-10"];
+	6 -> 8[label= "0.9999999995343387"];
+	8 -> 9[label= "1.0"];
+	9 -> 10[label= "9.313225746154785E-10"];
+	9 -> 11[label= "0.9999999990686774"];
+	11 -> 12[label= "0.5"];
+	11 -> 13[label= "0.5"];
+	13 -> 4[label= "1.0"];
+	12 -> 14[label= "1.0"];
+	14 -> 15[label= "1.0"];
+	15 -> 9[label= "1.0"];
+	10 -> 6[label= "1.0"];
+	7 -> 16[label= "1.0"];
+	16 -> 17[label= "1.0"];
+	17 -> 18[label= "1.0"];
+	18 -> 19[label= "0.0"];
+	18 -> 20[label= "1.0"];
+	20 -> 21[label= "1.0"];
+	21 -> 22[label= "1.0"];
+	22 -> 4[label= "1.0"];
+	19 -> 4[label= "1.0"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..23] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 0.49999999976716936 : (s' = 2) + 0.5000000002328306 : (s' = 3);
+	[] s = 3 -> 1.0 : (s' = 4);
+	[] s = 2 -> 1.0 : (s' = 5);
+	[] s = 5 -> 1.0 : (s' = 6);
+	[] s = 6 -> 4.6566128730773926E-10 : (s' = 7) + 0.9999999995343387 : (s' = 8);
+	[] s = 8 -> 1.0 : (s' = 9);
+	[] s = 9 -> 9.313225746154785E-10 : (s' = 10) + 0.9999999990686774 : (s' = 11);
+	[] s = 11 -> 0.5 : (s' = 12) + 0.5 : (s' = 13);
+	[] s = 13 -> 1.0 : (s' = 4);
+	[] s = 12 -> 1.0 : (s' = 14);
+	[] s = 14 -> 1.0 : (s' = 15);
+	[] s = 15 -> 1.0 : (s' = 9);
+	[] s = 10 -> 1.0 : (s' = 6);
+	[] s = 7 -> 1.0 : (s' = 16);
+	[] s = 16 -> 1.0 : (s' = 17);
+	[] s = 17 -> 1.0 : (s' = 18);
+	[] s = 18 -> 0.0 : (s' = 19) + 1.0 : (s' = 20);
+	[] s = 20 -> 1.0 : (s' = 21);
+	[] s = 21 -> 1.0 : (s' = 22);
+	[] s = 22 -> 1.0 : (s' = 4);
+	[] s = 19 -> 1.0 : (s' = 4);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 20]
+PRISM
+=====
+
+Version: 4.5
+Date: Tue Dec 27 14:24:35 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=20 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=20 ]
+
+Building model...
+
+Warning: Update 1 of command 18 of module "LMain_test" doesn't do anything ("(s'=19)", line 24, column 28)
+
+Computing reachable states...
+
+Reachability (BFS): 12 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Time for model construction: 0.019 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      22 (1 initial)
+Transitions: 26
+
+Transition matrix: 81 nodes (9 terminal), 26 minterms, vars: 5r/5c
+
+Prob0: 12 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Prob1: 7 iterations in 0.00 seconds (average 0.000143, setup 0.00)
+
+yes = 5, no = 5, maybe = 12
+
+Computing remaining probabilities...
+Engine: Hybrid
+
+Building hybrid MTBDD matrix... [levels=5, nodes=59] [2.8 KB]
+Adding explicit sparse matrices... [levels=5, num=1, compact] [0.1 KB]
+Creating vector for diagonals... [dist=1, compact] [0.1 KB]
+Creating vector for RHS... [dist=2, compact] [0.1 KB]
+Allocating iteration vectors... [2 x 0.2 KB]
+TOTAL: [3.4 KB]
+
+Starting iterations...
+
+Jacobi: 98 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Value in the initial state: 2.3283064397912863E-10
+
+Time for model checking: 0.004 seconds.
+
+Result: 2.3283064397912863E-10 (value in the initial state)
+Probability for assertion reachability: 2.3283064397912863E-10
+Dependency analysis time: 10ms
+Execution time for probabilistic analysis: 417ms
+Total Execution time: 427ms
+
+real	0m15.174s
+user	0m56.508s
+sys	0m3.670s

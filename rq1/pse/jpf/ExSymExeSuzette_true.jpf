@@ -1,0 +1,15 @@
+@using canopy
+
+shell=edu.cmu.sv.isstac.canopy.exhaustive.ExhaustiveShell
+symbolic.dp=z3
+
+target=sampling.svcomp.jpf.ExSymExeSuzette_true
+target.test_method=test
+
+canopy.stats=true
+canopy.livestats=false
+
+canopy.modelcounting.amplifyrewards=true
+canopy.modelcounting.lattePath=/tools/latte/bin/count
+canopy.modelcounting.omegaPath=/tools/the-omega-project/omega_calc/obj/oc
+canopy.modelcounting.tmpDir=/tmp/modelcounter

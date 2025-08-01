@@ -1,0 +1,391 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/
+$class_files: /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(I)V
+$input_params: v1
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true//branch_probability.txt
+/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/
+POLY
+LMain.test(I)V
+/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/
+source in command: "Main.test.*"
+method info: "Main.test(I)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/ -S"Main.test.*" "Main.test(I)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt testOrig.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+('copy', 'testOrig.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt testOrig.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(I)V', 'BB1', 'I2', '8', ['v1', 'v3'])
+info: ('Main', 'test(I)V', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,939254952)v3 = 0
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB2', 'I7', '716', ['v6', 'v5'])
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB3', 'I12', '716', ['v8', 'v9'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB2', 'I5', '3030', ['v4', 'v5'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB8', 'I17', '3036', ['v7', 'v5'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB1', 'I2', '1536', ['v1', 'v2'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB3', 'I7', '1539', ['v1', 'v4'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB6', 'I14', '1542', ['v6', 'v7'])
+('Ljava/util/Collections', 'unmodifiableList(Ljava/util/List;)Ljava/util/List;', 'BB1', 'I3', '1190', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB2', 'I3', '781', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB4', 'I7', '781', ['v5', 'v4'])
+('LMain', 'testOrig(II)V', 'BB2', 'I17', '24', ['v8', 'v9'])
+('LMain', 'testOrig(II)V', 'BB4', 'I23', '26', ['v16', 'v17'])
+('LMain', 'testOrig(II)V', 'BB9', 'I33', '29', ['v9', 'v8'])
+info: ('Main', 'testOrig(II)V', 'BB2', 'I17')
+vcon: 	    1FrameParameterv(0,45795770)v1ⁱⁿ -1FrameRegisterv(0,45795770)v9 -3 = 0
+vcon: 	 ∧  -1FrameParameterv(0,45795770)v2ⁱⁿ +1FrameRegisterv(0,45795770)v9 +3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,45795770)v8 +2FrameRegisterv(0,45795770)v9 +6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,45795770)v9 +3 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,45795770)v7 +3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,45795770)v17 = 0
+info: ('Main', 'testOrig(II)V', 'BB9', 'I33')
+vcon: 	    -1FrameRegisterv(0,45795770)v17 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,45795770)v7 +3 = 0
+vcon: 	 ∧  1FrameParameterv(0,45795770)v1ⁱⁿ -1FrameRegisterv(0,45795770)v9 -3 = 0
+vcon: 	 ∧  -1FrameParameterv(0,45795770)v2ⁱⁿ +1FrameRegisterv(0,45795770)v9 +3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,45795770)v8 +2FrameRegisterv(0,45795770)v9 +6 = 0
+vcon: 	 ∧  1FrameRegisterv(0,45795770)v9 +3 >= 0
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/ yes
+info: 
+Main.java:8
+(or (= (+ (- var2)) 0) (= (+ (- var2)) 0) ),
+(or (= (+ (- var2)) 0) (= (+ (- var2)) 0) )
+Main.java:8
+[(or (= (+ (- var2)) 0) (= (+ (- var2)) 0) )]
+info: 
+Main.java:24
+(>= (+ var2 3 ) 0),
+(>= (+ var2 3 ) 0)
+Main.java:24
+[(>= (+ var2 3 ) 0)]
+info: 
+Main.java:29
+(>= (+ var1 3 ) 0),
+(>= (+ var1 3 ) 0)
+Main.java:29
+[(>= (+ var1 3 ) 0)]
+SourceLine = Main.java:29, Cons = [(>= (+ var1 3 ) 0)]
+SourceLine = Main.java:8, Cons = [(or (= (+ (- var2)) 0) (= (+ (- var2)) 0) )]
+SourceLine = Main.java:24, Cons = [(>= (+ var2 3 ) 0)]
+/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/Main.java
+Class Name: Main
+arg < 0
+(/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/Main.java:8)
+(declare-fun arg () Int)
+(assert (< arg 0))
+(check-sat)
+
+Constraint solving time: 0.003457585
+Model counting time: 0.006774863
+Branch model count: 2147483648
+(declare-fun arg () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 3.50031E-4
+Model counting time: 5.51576E-4
+Branch domain count:4294967296
+True branch probability: 0.5
+False branch probability: 0.5
+z <= x
+(/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/Main.java:24)
+(declare-fun x () Int)
+(declare-fun z () Int)
+(assert (<= z x))
+(assert (>= (+ x 3 ) 0))
+(check-sat)
+
+Constraint solving time: 7.59552E-4
+Model counting time: 0.00164531
+Branch model count: 6917529035157274621
+(declare-fun x () Int)
+(declare-fun z () Int)
+(assert (>= (+ x 3 ) 0))
+(assert true)
+(check-sat)
+Constraint solving time: 5.10248E-4
+Model counting time: 8.96098E-4
+Branch domain count:9223372049739677696
+True branch probability: 0.7499999997671694
+False branch probability: 0.25000000023283064
+x <= r
+(/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true/Main.java:29)
+(declare-fun r () Int)
+(declare-fun x () Int)
+(assert (<= x r))
+(assert (>= (+ x 3 ) 0))
+(check-sat)
+
+Constraint solving time: 6.68194E-4
+Model counting time: 0.001428015
+Branch model count: 2305843016729886726
+(declare-fun r () Int)
+(declare-fun x () Int)
+(assert (>= (+ x 3 ) 0))
+(assert true)
+(check-sat)
+Constraint solving time: 4.86208E-4
+Model counting time: 8.63369E-4
+Branch domain count:9223372049739677696
+True branch probability: 0.2500000004656613
+False branch probability: 0.7499999995343387
+----------------------------------------------------
+Total processing time: 0 seconds
+----------------------------------------------------
+
+('Analysis time without Interval analysis: ', 0.69936203956604)
+('Analysis time: ', 3.5629780292510986)
+SMDEBUG::collect-branch-probability.py::3.56586313248 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 4s
+Constructing heap graph: 1s
+Call graph stats:
+  Nodes: 3331
+  Edges: 10721
+  Methods: 3300
+  Bytecode Bytes: 195129
+Root --> #Classes : 1  #Methods : 3
+#Classes : 1   #Methods : 3
+ABC library loaded properly
+LMain.test(I)V
+LMain.testOrig(II)V
+LMain.main([Ljava/lang/String;)V
+Number of Classes: 1
+Number of Methods: 3
+Dependency analysis started ...
+
+=============================
+
+invokestatic < Application, LMain, testOrig(II)V > 1,1 @9 exception:4
+
+=============================
+
+
+=============================
+
+conditional branch(ge, to iindex=4) 1,3
+
+=============================
+
+1:
+if v1 >= v3 
+Branch condition:1
+FALSE node: 2
+5
+
+Bytecode : conditional branch(ge, to iindex=4) 1,3
+Source line number = 8
+invokestatic < Application, LMain, testOrig(II)V > 1,1 @9 exception:4
+return
+Source line number = 12
+conditional branch(ge, to iindex=4) 1,3
+return
+Source line number = 9
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe14_true//branch_probability.txt
+LMain.testOrig(II)V
+Ljava/io/PrintStream.println(Ljava/lang/String;)V
+Ljava/io/PrintStream.println(Ljava/lang/String;)V
+Ljava/io/PrintStream.println(Ljava/lang/String;)V
+Ljava/io/PrintStream.println(Ljava/lang/String;)V
+Ljava/io/PrintStream.println(Ljava/lang/String;)V
+[ { "id" : "[ testLMPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1" : "Implicit" } },
+{ "id" : "[ testLMPI#1 ] LocalLoad(I,0) Constant(I,0) ConditionalBranch(I,ge,4) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 >= v3", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#3" : "TRUE", "testLMPI#2" : "FALSE" }} },
+{ "id" : "[ testLMPI#2 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Return" } },
+{ "id" : "[ testLMPI#3 ] LocalLoad(I,0) LocalStore(I,1) LocalLoad(I,1) LocalLoad(I,0) Invoke(STATIC,LMain;,testOrig,(II)V) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#0" : "Invoke"} },
+{ "id" : "[ testOrigLMPIPI#1#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#1" : "Implicit" } },
+{ "id" : "[ testOrigLMPIPI#1#1 ] Get(Ljava/io/PrintStream;,STATIC,Ljava/lang/System;,out) Constant(Ljava/lang/String;,'Testing ExSymExe14') Invoke(VIRTUAL,Ljava/io/PrintStream;,println,(Ljava/lang/String;)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#2" : "Invoke" } },
+{ "id" : "[ testOrigLMPIPI#1#2 ] Constant(I,3) LocalStore(I,2) LocalLoad(I,0) LocalLoad(I,1) BinaryOp(I,add) LocalStore(I,3) LocalLoad(I,1) LocalLoad(I,2) BinaryOp(I,sub) LocalStore(I,0) LocalLoad(I,3) LocalStore(I,1) LocalLoad(I,1) LocalLoad(I,0) ConditionalBranch(I,gt,28) ", "instruction_count" : "15", "cost" : "17", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v8 > v9", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#8" : "TRUE", "testOrigLMPIPI#1#3" : "FALSE" }} },
+{ "id" : "[ testOrigLMPIPI#1#3 ] Get(Ljava/io/PrintStream;,STATIC,Ljava/lang/System;,out) Constant(Ljava/lang/String;,'branch FOO1') Invoke(VIRTUAL,Ljava/io/PrintStream;,println,(Ljava/lang/String;)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#4" : "Invoke" } },
+{ "id" : "[ testOrigLMPIPI#1#4 ] Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,31) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v16 != v17", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#9" : "TRUE", "testOrigLMPIPI#1#5" : "FALSE" }} },
+{ "id" : "[ testOrigLMPIPI#1#5 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#6" : "Implicit" } },
+{ "id" : "[ testOrigLMPIPI#1#6 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#7" : "Invoke" } },
+{ "id" : "[ testOrigLMPIPI#1#7 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#1001001" : "Implicit"} } },
+{ "id" : "[ testOrigLMPIPI#1#8 ] Get(Ljava/io/PrintStream;,STATIC,Ljava/lang/System;,out) Constant(Ljava/lang/String;,'branch FOO2') Invoke(VIRTUAL,Ljava/io/PrintStream;,println,(Ljava/lang/String;)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#9" : "Invoke" } },
+{ "id" : "[ testOrigLMPIPI#1#9 ] LocalLoad(I,0) LocalLoad(I,3) ConditionalBranch(I,gt,38) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v9 > v8", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#12" : "TRUE", "testOrigLMPIPI#1#10" : "FALSE" }} },
+{ "id" : "[ testOrigLMPIPI#1#10 ] Get(Ljava/io/PrintStream;,STATIC,Ljava/lang/System;,out) Constant(Ljava/lang/String;,'branch BOO1') Invoke(VIRTUAL,Ljava/io/PrintStream;,println,(Ljava/lang/String;)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#11" : "Invoke" } },
+{ "id" : "[ testOrigLMPIPI#1#11 ] Goto(41) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#13" : "Jump" } },
+{ "id" : "[ testOrigLMPIPI#1#12 ] Get(Ljava/io/PrintStream;,STATIC,Ljava/lang/System;,out) Constant(Ljava/lang/String;,'branch BOO2') Invoke(VIRTUAL,Ljava/io/PrintStream;,println,(Ljava/lang/String;)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#13" : "Invoke" } },
+{ "id" : "[ testOrigLMPIPI#1#13 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testOrigLMPIPI#1#1001001" : "Return" } },
+{ "id" : "[ testOrigLMPIPI#1#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#4" : "Implicit" } } },
+{ "id" : "[ testLMPI#4 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Return" } },
+{ "id" : "[ testLMPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+Instruction to translate: if v1 >= v3
+[v1]
+(declare-fun v1() Int)
+(declare-fun v3() Int)
+(assert (>= v1 0 ))
+(check-sat)
+Constraint solving time: 0.003556162
+Model counting time: 0.005005706
+Constraint solving time: 2.94223E-4
+Model counting time: 4.52709E-4
+Probability of true branch: 0.5
+Probability of false branch: 0.5
+testOrigLMPIPI#1#2
+ "testOrigLMPIPI#1#3" : "FALSE"
+testOrigLMPIPI#1#4
+ "testOrigLMPIPI#1#5" : "FALSE"
+testOrigLMPIPI#1#9
+ "testOrigLMPIPI#1#10" : "FALSE"
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "0.5"];
+	1 -> 3[label= "0.5"];
+	3 -> 4[label= "1.0"];
+	2 -> 5[label= "1.0"];
+	5 -> 6[label= "1.0"];
+	6 -> 7[label= "1.0"];
+	7 -> 8[label= "1.0"];
+	7 -> 9[label= "1.0"];
+	9 -> 10[label= "1.0"];
+	10 -> 11[label= "0.0"];
+	10 -> 12[label= "1.0"];
+	12 -> 13[label= "1.0"];
+	13 -> 14[label= "1.0"];
+	14 -> 15[label= "1.0"];
+	8 -> 11[label= "1.0"];
+	11 -> 16[label= "1.0"];
+	11 -> 17[label= "1.0"];
+	17 -> 18[label= "1.0"];
+	18 -> 19[label= "1.0"];
+	16 -> 19[label= "1.0"];
+	19 -> 15[label= "1.0"];
+	15 -> 20[label= "1.0"];
+	20 -> 4[label= "1.0"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..21] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 0.5 : (s' = 2) + 0.5 : (s' = 3);
+	[] s = 3 -> 1.0 : (s' = 4);
+	[] s = 2 -> 1.0 : (s' = 5);
+	[] s = 5 -> 1.0 : (s' = 6);
+	[] s = 6 -> 1.0 : (s' = 7);
+	[] s = 7 -> 1.0 : (s' = 8);
+	[] s = 7 -> 1.0 : (s' = 9);
+	[] s = 9 -> 1.0 : (s' = 10);
+	[] s = 10 -> 0.0 : (s' = 11) + 1.0 : (s' = 12);
+	[] s = 12 -> 1.0 : (s' = 13);
+	[] s = 13 -> 1.0 : (s' = 14);
+	[] s = 14 -> 1.0 : (s' = 15);
+	[] s = 8 -> 1.0 : (s' = 11);
+	[] s = 11 -> 1.0 : (s' = 16);
+	[] s = 11 -> 1.0 : (s' = 17);
+	[] s = 17 -> 1.0 : (s' = 18);
+	[] s = 18 -> 1.0 : (s' = 19);
+	[] s = 16 -> 1.0 : (s' = 19);
+	[] s = 19 -> 1.0 : (s' = 15);
+	[] s = 15 -> 1.0 : (s' = 20);
+	[] s = 20 -> 1.0 : (s' = 4);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 12]
+PRISM
+=====
+
+Version: 4.5
+Date: Tue Dec 27 09:35:14 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=12 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=12 ]
+
+Building model...
+
+Warning: Update 1 of command 10 of module "LMain_test" doesn't do anything ("(s'=11)", line 16, column 28)
+
+Warning: Guard for command 8 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 16 of module "LMain_test" overlaps with previous commands.
+
+Computing reachable states...
+
+Reachability (BFS): 12 iterations in 0.00 seconds (average 0.000083, setup 0.00)
+
+Time for model construction: 0.013 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      21 (1 initial)
+Transitions: 24
+
+Transition matrix: 60 nodes (3 terminal), 24 minterms, vars: 5r/5c
+
+Prob0: 9 iterations in 0.00 seconds (average 0.000111, setup 0.00)
+
+Prob1: 5 iterations in 0.00 seconds (average 0.000200, setup 0.00)
+
+yes = 3, no = 12, maybe = 6
+
+Computing remaining probabilities...
+Engine: Hybrid
+
+Building hybrid MTBDD matrix... [levels=5, nodes=27] [1.3 KB]
+Adding explicit sparse matrices... [levels=5, num=1, compact] [0.1 KB]
+Creating vector for diagonals... [dist=1, compact] [0.0 KB]
+Creating vector for RHS... [dist=2, compact] [0.1 KB]
+Allocating iteration vectors... [2 x 0.2 KB]
+TOTAL: [1.8 KB]
+
+Starting iterations...
+
+Jacobi: 7 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Value in the initial state: 0.25
+
+Time for model checking: 0.002 seconds.
+
+Result: 0.25 (value in the initial state)
+Probability for assertion reachability: 0.25
+Dependency analysis time: 1ms
+Execution time for probabilistic analysis: 286ms
+Total Execution time: 287ms
+
+real	0m11.918s
+user	0m46.535s
+sys	0m3.165s

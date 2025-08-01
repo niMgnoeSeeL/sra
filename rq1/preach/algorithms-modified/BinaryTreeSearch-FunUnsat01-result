@@ -1,0 +1,559 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/
+$class_files: /PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(II)V
+$input_params: v1,v2
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01//branch_probability.txt
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/
+POLY
+LMain.test(II)V
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/
+source in command: "Main.test.*"
+method info: "Main.test(II)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/ -S"Main.test.*" "Main.test(II)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt insert.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+('copy', 'insert.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt insert.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(II)V', 'BB4', 'I9', '78', ['v11', 'v1'])
+('LMain', 'test(II)V', 'BB5', 'I12', '79', ['v2', 'v8'])
+('LMain', 'test(II)V', 'BB8', 'I23', '84', ['v12', 'v8'])
+info: ('Main', 'test(II)V', 'BB4', 'I9')
+vcon: 	    -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v11 +1FrameRegisterv(0,268599241)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+info: ('Main', 'test(II)V', 'BB8', 'I23')
+vcon: 	    -1FrameParameterv(0,268599241)v1ⁱⁿ +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v11 +1FrameRegisterv(0,268599241)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v12 = 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	    1FrameParameterv(0,268599241)v1ⁱⁿ -2 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v11 +1FrameRegisterv(0,268599241)v7 = 0
+info: ('Main', 'test(II)V', 'BB4', 'I9')
+vcon: 	    -1FrameRegisterv(0,268599241)v10 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v2ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -2 >= 0
+info: ('Main', 'test(II)V', 'BB8', 'I23')
+vcon: 	    1FrameParameterv(0,268599241)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v2ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v10 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v12 = 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	    1FrameParameterv(0,268599241)v1ⁱⁿ -3 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  -1FrameParameterv(0,268599241)v2ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v10 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+info: ('Main', 'test(II)V', 'BB4', 'I9')
+vcon: 	    -1FrameRegisterv(0,268599241)v10 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -2 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1218979647 +1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+info: ('Main', 'test(II)V', 'BB8', 'I23')
+vcon: 	    1FrameParameterv(0,268599241)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1218979647 +1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v10 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v12 = 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	    1FrameParameterv(0,268599241)v1ⁱⁿ -3 >= 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1218979647 +1FrameParameterv(0,268599241)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v10 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+info: ('Main', 'test(II)V', 'BB4', 'I9')
+vcon: 	    -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v11 -2 >= 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1FrameRegisterv(0,268599241)v11 >= 0
+info: ('Main', 'test(II)V', 'BB8', 'I23')
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1FrameRegisterv(0,268599241)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v11 -2 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v12 = 0
+info: ('Main', 'test(II)V', 'BB5', 'I12')
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v10 -1FrameRegisterv(0,268599241)v11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v7 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,268599241)v11 -2 >= 0
+vcon: 	 ∧  1FrameParameterv(0,268599241)v1ⁱⁿ -1FrameRegisterv(0,268599241)v11 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,268599241)v8 = 0
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB2', 'I7', '716', ['v6', 'v5'])
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB3', 'I12', '716', ['v8', 'v9'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB2', 'I5', '3030', ['v4', 'v5'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB8', 'I17', '3036', ['v7', 'v5'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB1', 'I2', '1536', ['v1', 'v2'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB3', 'I7', '1539', ['v1', 'v4'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB6', 'I14', '1542', ['v6', 'v7'])
+('Ljava/util/Collections', 'unmodifiableList(Ljava/util/List;)Ljava/util/List;', 'BB1', 'I3', '1190', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB2', 'I3', '781', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB4', 'I7', '781', ['v5', 'v4'])
+('LMain$BinaryTree', 'insert(I)V', 'BB2', 'I3', '26', ['v4', 'v5'])
+('LMain$BinaryTree', 'insert(I)V', 'BB10', 'I19', '33', ['v7', 'v2'])
+('LMain$BinaryTree', 'insert(I)V', 'BB12', 'I23', '34', ['v8', 'v5'])
+('LMain$BinaryTree', 'insert(I)V', 'BB20', 'I40', '40', ['v11', 'v2'])
+('LMain$BinaryTree', 'insert(I)V', 'BB22', 'I44', '41', ['v12', 'v5'])
+info: ('Main$BinaryTree', 'insert(I)V', 'BB2', 'I3')
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ >= 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB10', 'I19')
+vcon: 	 ∧  1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ >= 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB20', 'I40')
+vcon: 	 ∧  1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v11 = 0
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ = 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB12', 'I23')
+vcon: 	    1FrameParameterv(0,1235686146)v2ⁱⁿ -1 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB2', 'I3')
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1218979647 +1FrameParameterv(0,1235686146)v2ⁱⁿ >= 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB10', 'I19')
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1218979647 +1FrameParameterv(0,1235686146)v2ⁱⁿ >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB20', 'I40')
+vcon: 	    1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979564 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979607 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1218979647 +1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameRegisterv(0,1235686146)v7 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v11 = 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB12', 'I23')
+vcon: 	    1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979564 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979607 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979647 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ -1FrameRegisterv(0,1235686146)v7 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,1235686146)v7 >= 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB2', 'I3')
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ >= 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB10', 'I19')
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB20', 'I40')
+vcon: 	    1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979564 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979607 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979647 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameParameterv(0,1235686146)v2ⁱⁿ +1FrameRegisterv(0,1235686146)v7 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v11 = 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB12', 'I23')
+vcon: 	    1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979564 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979607 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979647 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ -1FrameRegisterv(0,1235686146)v7 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,1235686146)v7 >= 0
+info: ('Main$BinaryTree', 'insert(I)V', 'BB22', 'I44')
+vcon: 	    1FrameAccessPath(0,1235686146)-1480695179 < Application, LMain$BinaryTree$Node, value, <Primordial,I> > -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979564 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979607 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)1218979647 -1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1235686146)v11 +1FrameRegisterv(0,1235686146)v7 = 0
+vcon: 	 ∧  -1FrameParameterv(0,1235686146)v2ⁱⁿ +1FrameRegisterv(0,1235686146)v7 -1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,1235686146)v2ⁱⁿ >= 0
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/ yes
+info: 
+Main.java:84
+(= (+ (- var1)) 0),(= (+ (- var2)) 0),
+(= (+ (- var1)) 0)
+(= (+ (- var2)) 0)
+Main.java:84
+[(= (+ (- var1)) 0), (= (+ (- var2)) 0)]
+info: 
+Main.java:78
+(>= (+ var1 (- 2) ) 0), (>= (+ var2 (- var1)) 0),(>= (+ var2 (- 2) ) 0), (>= (+ var2 (- var1)) 0),
+(>= (+ var1 (- 2) ) 0)
+ (>= (+ var2 (- var1)) 0)
+(>= (+ var2 (- 2) ) 0)
+ (>= (+ var2 (- var1)) 0)
+Main.java:78
+[(>= (+ var1 (- 2) ) 0),  (>= (+ var2 (- var1)) 0), (>= (+ var2 (- 2) ) 0)]
+info: 
+Main.java:79
+(>= (+ (- var1) (- 1) ) 0),(= (+ (- var2)) 0),
+(>= (+ (- var1) (- 1) ) 0)
+(= (+ (- var2)) 0)
+Main.java:79
+[(>= (+ (- var1) (- 1) ) 0), (= (+ (- var2)) 0)]
+info: 
+Main$BinaryTree.java:26
+info: 
+Main$BinaryTree.java:41
+info: 
+Main$BinaryTree.java:40
+(>= (+ var2) 0),
+(>= (+ var2) 0)
+Main$BinaryTree.java:40
+[(>= (+ var2) 0)]
+info: 
+Main$BinaryTree.java:33
+(>= (+ var2) 0),
+(>= (+ var2) 0)
+Main$BinaryTree.java:33
+[(>= (+ var2) 0)]
+info: 
+Main$BinaryTree.java:34
+SourceLine = Main$BinaryTree.java:34, Cons = null
+SourceLine = Main$BinaryTree.java:33, Cons = [(>= (+ var2) 0)]
+SourceLine = Main$BinaryTree.java:41, Cons = null
+SourceLine = Main.java:84, Cons = [(= (+ (- var1)) 0), (= (+ (- var2)) 0)]
+SourceLine = Main$BinaryTree.java:40, Cons = [(>= (+ var2) 0)]
+SourceLine = Main$BinaryTree.java:26, Cons = null
+SourceLine = Main.java:78, Cons = [(>= (+ var1 (- 2) ) 0),  (>= (+ var2 (- var1)) 0), (>= (+ var2 (- 2) ) 0)]
+SourceLine = Main.java:79, Cons = [(>= (+ (- var1) (- 1) ) 0), (= (+ (- var2)) 0)]
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/Main.java
+Class Name: Main
+n >= 0
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/Main.java:79)
+(declare-fun n () Int)
+(assert (>= n 0))
+(assert (>= (+ (- n) (- 1) ) 0))
+(check-sat)
+
+Constraint solving time: 0.003661822
+Unsatisfiable
+Branch model count: 0
+(declare-fun n () Int)
+(assert (>= (+ (- n) (- 1) ) 0))
+(assert true)
+(check-sat)
+Constraint solving time: 6.66182E-4
+Model counting time: 0.001720783
+Branch domain count:2147483648
+True branch probability: 1.0E-10
+False branch probability: 0.9999999999
+i < N
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01/Main.java:78)
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (< i N))
+(assert (>= (+ i (- 2) ) 0))
+(assert  (>= (+ N (- i)) 0))
+(assert (>= (+ N (- 2) ) 0))
+(check-sat)
+
+Constraint solving time: 0.001131159
+Model counting time: 0.001684965
+Branch model count: 2305843003844984835
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (>= (+ i (- 2) ) 0))
+(assert  (>= (+ N (- i)) 0))
+(assert (>= (+ N (- 2) ) 0))
+(assert true)
+(check-sat)
+Constraint solving time: 8.98746E-4
+Model counting time: 0.001352314
+Branch domain count:2305843005992468481
+True branch probability: 0.9999999990686774
+False branch probability: 9.313225746154785E-10
+----------------------------------------------------
+Total processing time: 0 seconds
+----------------------------------------------------
+
+('Analysis time without Interval analysis: ', 0.729417085647583)
+('Analysis time: ', 4.563858985900879)
+SMDEBUG::collect-branch-probability.py::4.56738400459 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 5s
+Constructing heap graph: 1s
+Call graph stats:
+  Nodes: 3330
+  Edges: 10719
+  Methods: 3299
+  Bytecode Bytes: 195084
+Root --> #Classes : 1  #Methods : 2
+#Classes : 1   #Methods : 2
+ABC library loaded properly
+LMain.main([Ljava/lang/String;)V
+LMain.test(II)V
+Number of Classes: 1
+Number of Methods: 2
+Dependency analysis started ...
+
+=============================
+
+11 = phi  10,7
+conditional branch(ge, to iindex=21) 11,1
+ifv11>
+
+=============================
+
+4:
+11 = phi  10,7 if v11 >= v1 
+Bytecode : conditional branch(ge, to iindex=21) 11,1
+Source line number = 78
+conditional branch(ge, to iindex=21) 11,1
+invokevirtual < Application, LMain$BinaryTree, insert(I)V > 4,2 @22 exception:9
+conditional branch(lt, to iindex=16) 2,8
+4 = new <Application,LMain$BinaryTree>@0
+invokespecial < Application, LMain$BinaryTree, <init>(LMain$1;)V > 4,5 @5 exception:6
+return
+Source line number = 85
+throw 13
+conditional branch(ne, to iindex=28) 12,8
+goto (from iindex= 20 to iindex = 7)
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @41 exception:14
+13 = new <Application,Ljava/lang/AssertionError>@37
+
+=============================
+
+invokevirtual < Application, LMain$BinaryTree, insert(I)V > 4,2 @22 exception:9
+
+=============================
+
+4:
+11 = phi  10,7 if v11 >= v1 
+
+=============================
+
+conditional branch(lt, to iindex=16) 2,8
+
+=============================
+
+4:
+11 = phi  10,7 if v11 >= v1 
+5:
+if v2 < v8 
+Branch condition:5
+FALSE node: 6
+7
+v10 = v11 + v7 goto (from iindex= 20 to iindex = 7) 
+4
+11 = phi  10,7 if v11 >= v1 
+8
+v12 = LMain.$assertionsDisabled if v12 != v8 
+12
+return 
+13
+
+9
+13 = new <Application,Ljava/lang/AssertionError>@37 
+10
+v13.<init>() 
+11
+throw 13 
+5
+if v2 < v8 
+7
+v10 = v11 + v7 goto (from iindex= 20 to iindex = 7) 
+6
+v4.insert(v2) 
+Bytecode : conditional branch(ge, to iindex=21) 11,1
+Source line number = 78
+conditional branch(ge, to iindex=21) 11,1
+invokevirtual < Application, LMain$BinaryTree, insert(I)V > 4,2 @22 exception:9
+conditional branch(lt, to iindex=16) 2,8
+4 = new <Application,LMain$BinaryTree>@0
+invokespecial < Application, LMain$BinaryTree, <init>(LMain$1;)V > 4,5 @5 exception:6
+return
+Source line number = 85
+throw 13
+conditional branch(ne, to iindex=28) 12,8
+goto (from iindex= 20 to iindex = 7)
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @41 exception:14
+13 = new <Application,Ljava/lang/AssertionError>@37
+Bytecode : conditional branch(lt, to iindex=16) 2,8
+Source line number = 79
+conditional branch(ge, to iindex=21) 11,1
+invokevirtual < Application, LMain$BinaryTree, insert(I)V > 4,2 @22 exception:9
+conditional branch(lt, to iindex=16) 2,8
+4 = new <Application,LMain$BinaryTree>@0
+invokespecial < Application, LMain$BinaryTree, <init>(LMain$1;)V > 4,5 @5 exception:6
+return
+Source line number = 85
+throw 13
+conditional branch(ne, to iindex=28) 12,8
+goto (from iindex= 20 to iindex = 7)
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @41 exception:14
+13 = new <Application,Ljava/lang/AssertionError>@37
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/BinaryTreeSearch-FunUnsat01//branch_probability.txt
+LMain$BinaryTree.insert(I)V
+[ { "id" : "[ testLMPIPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1" : "Implicit" } },
+{ "id" : "[ testLMPIPI#1 ] New(LMain$BinaryTree;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#2" : "Implicit" } },
+{ "id" : "[ testLMPIPI#2 ] Dup(1,0) Constant(L;,null) Invoke(SPECIAL,LMain$BinaryTree;,<init>,(LMain$1;)V) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#3" : "Invoke" } },
+{ "id" : "[ testLMPIPI#3 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#4" : "Implicit" } },
+{ "id" : "[ testLMPIPI#4 ] LocalStore(Ljava/lang/Object;,2) Constant(I,1) LocalStore(I,3) LocalLoad(I,3) LocalLoad(I,0) ConditionalBranch(I,ge,21) ", "instruction_count" : "6", "cost" : "6", "secret_dependent_branch" : "true", "ins_to_translate" : "if v11 >= v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#8" : "TRUE", "testLMPIPI#5" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#5 ] LocalLoad(I,1) Constant(I,0) ConditionalBranch(I,lt,16) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v2 < v8", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#7" : "TRUE", "testLMPIPI#6" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#6 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,1) Invoke(VIRTUAL,LMain$BinaryTree;,insert,(I)V) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#7" : "Invoke" } },
+{ "id" : "[ testLMPIPI#7 ] LocalLoad(I,3) Constant(I,1) BinaryOp(I,add) LocalStore(I,3) Goto(7) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#4" : "Jump" } },
+{ "id" : "[ testLMPIPI#8 ] Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,28) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v12 != v8", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#12" : "TRUE", "testLMPIPI#9" : "FALSE" }} },
+{ "id" : "[ testLMPIPI#9 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#10" : "Implicit" } },
+{ "id" : "[ testLMPIPI#10 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#11" : "Invoke" } },
+{ "id" : "[ testLMPIPI#11 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Implicit"} } },
+{ "id" : "[ testLMPIPI#12 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+Instruction to translate: if v11 >= v1
+[ifv11>, v1, v2]
+(declare-fun v11() Int)
+(declare-fun v1() Int)
+(assert (>= v11 v1))
+(check-sat)
+Constraint solving time: 0.003983053
+Model counting time: 0.005671767
+Constraint solving time: 3.79279E-4
+Model counting time: 6.48132E-4
+Probability of true branch: 0.5000076293945312
+Probability of false branch: 0.49999237060546875
+Instruction to translate: if v2 < v8
+[ifv11>, v1, v2]
+(declare-fun v8() Int)
+(declare-fun v2() Int)
+(assert (< v2 0 ))
+(check-sat)
+Constraint solving time: 7.19191E-4
+Model counting time: 0.001061072
+Constraint solving time: 2.15394E-4
+Model counting time: 3.4665E-4
+Probability of true branch: 0.5
+Probability of false branch: 0.5
+testLMPIPI#8
+ "testLMPIPI#9" : "FALSE"
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "1.0"];
+	2 -> 3[label= "1.0"];
+	3 -> 4[label= "1.0"];
+	4 -> 5[label= "9.313225746154785E-10"];
+	4 -> 6[label= "0.9999999990686774"];
+	6 -> 7[label= "0.9999999999"];
+	6 -> 8[label= "1.000000082740371E-10"];
+	8 -> 7[label= "1.0"];
+	7 -> 4[label= "1.0"];
+	5 -> 9[label= "0.0"];
+	5 -> 10[label= "1.0"];
+	10 -> 11[label= "1.0"];
+	11 -> 12[label= "1.0"];
+	12 -> 13[label= "1.0"];
+	9 -> 13[label= "1.0"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..14] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 1.0 : (s' = 2);
+	[] s = 2 -> 1.0 : (s' = 3);
+	[] s = 3 -> 1.0 : (s' = 4);
+	[] s = 4 -> 9.313225746154785E-10 : (s' = 5) + 0.9999999990686774 : (s' = 6);
+	[] s = 6 -> 0.9999999999 : (s' = 7) + 1.000000082740371E-10 : (s' = 8);
+	[] s = 8 -> 1.0 : (s' = 7);
+	[] s = 7 -> 1.0 : (s' = 4);
+	[] s = 5 -> 0.0 : (s' = 9) + 1.0 : (s' = 10);
+	[] s = 10 -> 1.0 : (s' = 11);
+	[] s = 11 -> 1.0 : (s' = 12);
+	[] s = 12 -> 1.0 : (s' = 13);
+	[] s = 9 -> 1.0 : (s' = 13);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 10]
+PRISM
+=====
+
+Version: 4.5
+Date: Tue Dec 27 14:20:55 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=10 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=10 ]
+
+Building model...
+
+Warning: Update 1 of command 9 of module "LMain_test" doesn't do anything ("(s'=9)", line 15, column 27)
+
+Computing reachable states...
+
+Reachability (BFS): 10 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Time for model construction: 0.018 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      13 (1 initial)
+Transitions: 15
+
+Transition matrix: 46 nodes (6 terminal), 15 minterms, vars: 4r/4c
+
+Prob0: 7 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Prob1: 1 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+yes = 10, no = 3, maybe = 0
+
+Value in the initial state: 1.0
+
+Time for model checking: 0.003 seconds.
+
+Result: 1.0 (value in the initial state)
+Probability for assertion reachability: 1.0
+Dependency analysis time: 4ms
+Execution time for probabilistic analysis: 408ms
+Total Execution time: 412ms
+
+real	0m14.918s
+user	1m0.724s
+sys	0m3.974s

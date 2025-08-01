@@ -1,0 +1,1298 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/
+$class_files: /PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(III)V
+$input_params: v1,v2,v3
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02//branch_probability.txt
+Traceback (most recent call last):
+  File "collect-interval-analysis.py", line 311, in <module>
+    main(sys.argv[1], arg_list)
+  File "collect-interval-analysis.py", line 178, in main
+    var2 = vars[1]
+IndexError: list index out of range
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/
+POLY
+LMain.test(III)V
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/
+source in command: "Main.test.*"
+method info: "Main.test(III)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/ -S"Main.test.*" "Main.test(III)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt sort.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+('copy', 'sort.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt sort.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(III)V', 'BB1', 'I2', '23', ['v1', 'v5'])
+('LMain', 'test(III)V', 'BB5', 'I11', '27', ['v10', 'v1'])
+('LMain', 'test(III)V', 'BB9', 'I27', '33', ['v5'])
+('LMain', 'test(III)V', 'BB10', 'I30', '33', ['v3', 'v1'])
+('LMain', 'test(III)V', 'BB12', 'I34', '35', ['v2', 'v3'])
+('LMain', 'test(III)V', 'BB14', 'I38', '38', ['v12', 'v5'])
+info: ('Main', 'test(III)V', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v5 = 0
+info: ('Main', 'test(III)V', 'BB5', 'I11')
+vcon: 	    -1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1812313233 +1FrameParameterv(0,2100771791)v1ⁱⁿ = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameArrayLengthAccessPath(0,2100771791)1252424392.length +1FrameParameterv(0,2100771791)v1ⁱⁿ = 0
+info: ('Main', 'test(III)V', 'BB5', 'I11')
+vcon: 	    -1FrameRegisterv(0,2100771791)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  -1FrameArrayLengthAccessPath(0,2100771791)1252424392.length +1FrameRegisterv(0,2100771791)v7 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1812313233 +1FrameRegisterv(0,2100771791)v7 = 0
+vcon: 	 ∧  -1FrameParameterv(0,2100771791)v1ⁱⁿ +1FrameRegisterv(0,2100771791)v7 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1875828777 +1FrameRegisterv(0,2100771791)v7 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+info: ('Main', 'test(III)V', 'BB9', 'I27')
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v9 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+info: ('Main', 'test(III)V', 'BB10', 'I30')
+vcon: 	    1FrameParameterv(0,2100771791)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v9 +1 = 0
+info: ('Main', 'test(III)V', 'BB5', 'I11')
+vcon: 	    -1FrameRegisterv(0,2100771791)v9 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  -1FrameArrayLengthAccessPath(0,2100771791)1252424392.length +1FrameRegisterv(0,2100771791)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-1812313233 +1FrameRegisterv(0,2100771791)v7 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,2100771791)v1ⁱⁿ +1FrameRegisterv(0,2100771791)v7 +1 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1875828777 +1FrameRegisterv(0,2100771791)v7 +1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+info: ('Main', 'test(III)V', 'BB12', 'I34')
+vcon: 	    -1FrameParameterv(0,2100771791)v3ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v9 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v2ⁱⁿ >= 0
+info: ('Main', 'test(III)V', 'BB9', 'I27')
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v9 +2 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+info: ('Main', 'test(III)V', 'BB10', 'I30')
+vcon: 	    1FrameParameterv(0,2100771791)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v9 +2 = 0
+info: ('Main', 'test(III)V', 'BB5', 'I11')
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  1FrameArrayLengthAccessPath(0,2100771791)1252424392.length -1FrameRegisterv(0,2100771791)v7 -1FrameRegisterv(0,2100771791)v9 +1 = 0
+vcon: 	 ∧  1FrameHeapRegister(-1,-1)-1812313233 -1FrameRegisterv(0,2100771791)v7 -1FrameRegisterv(0,2100771791)v9 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -1FrameRegisterv(0,2100771791)v7 -1FrameRegisterv(0,2100771791)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 >= 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)1875828777 +1FrameRegisterv(0,2100771791)v7 +1FrameRegisterv(0,2100771791)v9 -1 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v9 -1 >= 0
+info: ('Main', 'test(III)V', 'BB12', 'I34')
+vcon: 	    -1FrameParameterv(0,2100771791)v3ⁱⁿ +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v9 +2 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v2ⁱⁿ >= 0
+info: ('Main', 'test(III)V', 'BB14', 'I38')
+vcon: 	    1FrameParameterv(0,2100771791)v2ⁱⁿ = 0
+vcon: 	 ∧  -1FrameParameterv(0,2100771791)v3ⁱⁿ +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v10 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v12 = 0
+info: ('Main', 'test(III)V', 'BB9', 'I27')
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,2100771791)v1ⁱⁿ +1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v10 -1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v9 -1 >= 0
+info: ('Main', 'test(III)V', 'BB10', 'I30')
+vcon: 	    1FrameParameterv(0,2100771791)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameParameterv(0,2100771791)v1ⁱⁿ +1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v10 -1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v9 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+info: ('Main', 'test(III)V', 'BB12', 'I34')
+vcon: 	    -1FrameParameterv(0,2100771791)v1ⁱⁿ +1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v10 -1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v9 -1 >= 0
+vcon: 	 ∧  -1FrameParameterv(0,2100771791)v3ⁱⁿ +1FrameRegisterv(0,2100771791)v9 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v2ⁱⁿ >= 0
+info: ('Main', 'test(III)V', 'BB14', 'I38')
+vcon: 	    -1FrameParameterv(0,2100771791)v1ⁱⁿ +1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v10 -1FrameRegisterv(0,2100771791)v9 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v5 = 0
+vcon: 	 ∧  1FrameRegisterv(0,2100771791)v7 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,2100771791)v2ⁱⁿ +1FrameParameterv(0,2100771791)v3ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameParameterv(0,2100771791)v3ⁱⁿ +1FrameRegisterv(0,2100771791)v9 -1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,2100771791)v2ⁱⁿ >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v8 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,2100771791)v12 = 0
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/ yes
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/Main.java
+Class Name: Main
+i < N
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/Main.java:5)
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (< i N))
+(check-sat)
+
+Constraint solving time: 0.004602816
+Model counting time: 0.009867104
+Branch model count: 9223372034707292160
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 5.88494E-4
+Model counting time: 8.70037E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+(j >= 0) && (a[j] > x)
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/Main.java:10)
+(declare-fun x () Int)
+(declare-fun aj () Int)
+(declare-fun j () Int)
+(assert (and (>= j 0) (> aj x)))
+(check-sat)
+
+Constraint solving time: 0.001387352
+Model counting time: 0.002140242
+Branch model count: 19807040623954398379958599680
+(declare-fun x () Int)
+(declare-fun aj () Int)
+(declare-fun j () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 3.4253E-4
+Model counting time: 5.25715E-4
+Branch domain count:79228162514264337593543950336
+True branch probability: 0.24999999994179234
+False branch probability: 0.7500000000582077
+N <= 0
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/Main.java:23)
+(declare-fun N () Int)
+(assert (<= N 0))
+(check-sat)
+
+Constraint solving time: 6.27843E-4
+Model counting time: 0.001533528
+Branch model count: 2147483649
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.45533E-4
+Model counting time: 3.94829E-4
+Branch domain count:4294967296
+True branch probability: 0.5000000002328306
+False branch probability: 0.49999999976716936
+(0 > i1) || (i2 >= N)
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/Main.java:33)
+(declare-fun i2 () Int)
+(declare-fun i1 () Int)
+(declare-fun N () Int)
+(assert (or (> 0 i1) (>= i2 N)))
+(check-sat)
+
+Constraint solving time: 0.001502689
+Model counting time: 0.002144912
+Branch model count: 79228162514264337593543950336
+(declare-fun i2 () Int)
+(declare-fun i1 () Int)
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 3.6965E-4
+Model counting time: 5.11956E-4
+Branch domain count:79228162514264337593543950336
+True branch probability: 0.9999999999
+False branch probability: 1.000000082740371E-10
+i1 >= i2
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/Main.java:35)
+(declare-fun i2 () Int)
+(declare-fun i1 () Int)
+(assert (>= i1 i2))
+(check-sat)
+
+Constraint solving time: 7.3273E-4
+Model counting time: 0.001225967
+Branch model count: 9223372039002259456
+(declare-fun i2 () Int)
+(declare-fun i1 () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.52854E-4
+Model counting time: 3.60971E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.5000000001164153
+False branch probability: 0.4999999998835847
+i < N
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02/Main.java:27)
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (< i N))
+(check-sat)
+
+Constraint solving time: 6.06394E-4
+Model counting time: 0.00110006
+Branch model count: 9223372034707292160
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 2.47473E-4
+Model counting time: 3.7145E-4
+Branch domain count:18446744073709551616
+True branch probability: 0.4999999998835847
+False branch probability: 0.5000000001164153
+----------------------------------------------------
+Total processing time: 0 seconds
+----------------------------------------------------
+
+('Analysis time without Interval analysis: ', 1.0445568561553955)
+('Analysis time: ', 4.447607040405273)
+SMDEBUG::collect-branch-probability.py::4.45419597626 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 5s
+Constructing heap graph: 1s
+Call graph stats:
+  Nodes: 3331
+  Edges: 10721
+  Methods: 3300
+  Bytecode Bytes: 195167
+Root --> #Classes : 1  #Methods : 3
+#Classes : 1   #Methods : 3
+ABC library loaded properly
+LMain.main([Ljava/lang/String;)V
+LMain.sort([I)V
+LMain.test(III)V
+Number of Classes: 1
+Number of Methods: 3
+Dependency analysis started ...
+
+=============================
+
+conditional branch(lt, to iindex=32) 3,1
+
+=============================
+
+10:
+if v3 < v1 
+Branch condition:10
+FALSE node: 11
+19
+
+
+=============================
+
+10 = phi  9,5
+conditional branch(ge, to iindex=23) 10,1
+ifv10>
+
+=============================
+
+5:
+10 = phi  9,5 if v10 >= v1 
+10:
+if v3 < v1 
+Branch condition:10
+FALSE node: 11
+19
+
+
+=============================
+
+7 = binaryop(sub) 1 , 10
+v7
+arraystore 6[10] = 7
+
+=============================
+
+5:
+10 = phi  9,5 if v10 >= v1 
+10:
+if v3 < v1 
+Branch condition:10
+FALSE node: 11
+19
+
+
+=============================
+
+conditional branch(gt, to iindex=4) 1,5
+
+=============================
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+5:
+10 = phi  9,5 if v10 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+19
+
+10:
+if v3 < v1 
+Branch condition:10
+FALSE node: 11
+19
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(ge, to iindex=23) 10,1
+Source line number = 27
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(gt, to iindex=4) 1,5
+Source line number = 23
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(lt, to iindex=32) 3,1
+Source line number = 33
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+
+=============================
+
+conditional branch(lt, to iindex=36) 2,3
+
+=============================
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+5:
+10 = phi  9,5 if v10 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+19
+
+12:
+if v2 < v3 
+Branch condition:12
+FALSE node: 13
+19
+
+10:
+if v3 < v1 
+Branch condition:10
+FALSE node: 11
+19
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+
+=============================
+
+conditional branch(gt, to iindex=31) 5,2
+
+=============================
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+5:
+10 = phi  9,5 if v10 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+19
+
+12:
+if v2 < v3 
+Branch condition:12
+FALSE node: 13
+19
+
+10:
+if v3 < v1 
+Branch condition:10
+FALSE node: 11
+19
+
+9:
+if v5 > v2 
+Branch condition:9
+FALSE node: 10
+12
+if v2 < v3 
+14
+v12 = LMain.$assertionsDisabled if v12 != v5 
+18
+return 
+19
+
+15
+13 = new <Application,Ljava/lang/AssertionError>@59 
+16
+v13.<init>() 
+17
+throw 13 
+13
+return 
+19
+
+11
+return 
+19
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(ge, to iindex=23) 10,1
+Source line number = 27
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(gt, to iindex=4) 1,5
+Source line number = 23
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(lt, to iindex=36) 2,3
+Source line number = 35
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(lt, to iindex=32) 3,1
+Source line number = 33
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(gt, to iindex=31) 5,2
+Source line number = 33
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+
+=============================
+
+conditional branch(lt, to iindex=36) 2,3
+
+=============================
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+5:
+10 = phi  9,5 if v10 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+19
+
+12:
+if v2 < v3 
+Branch condition:12
+FALSE node: 13
+19
+
+10:
+if v3 < v1 
+Branch condition:10
+FALSE node: 11
+19
+
+9:
+if v5 > v2 
+Branch condition:9
+FALSE node: 10
+12
+if v2 < v3 
+14
+v12 = LMain.$assertionsDisabled if v12 != v5 
+18
+return 
+19
+
+15
+13 = new <Application,Ljava/lang/AssertionError>@59 
+16
+v13.<init>() 
+17
+throw 13 
+13
+return 
+19
+
+11
+return 
+19
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+
+=============================
+
+conditional branch(lt, to iindex=32) 3,1
+
+=============================
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+5:
+10 = phi  9,5 if v10 >= v1 
+1:
+if v1 > v5 
+Branch condition:1
+FALSE node: 2
+19
+
+12:
+if v2 < v3 
+Branch condition:12
+FALSE node: 13
+19
+
+10:
+if v3 < v1 
+Branch condition:10
+FALSE node: 11
+19
+
+9:
+if v5 > v2 
+Branch condition:9
+FALSE node: 10
+12
+if v2 < v3 
+14
+v12 = LMain.$assertionsDisabled if v12 != v5 
+18
+return 
+19
+
+15
+13 = new <Application,Ljava/lang/AssertionError>@59 
+16
+v13.<init>() 
+17
+throw 13 
+13
+return 
+19
+
+11
+return 
+19
+
+6:
+v7 = v1 - v10 arraystore 6[10] = 7 
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(ge, to iindex=23) 10,1
+Source line number = 27
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(gt, to iindex=4) 1,5
+Source line number = 23
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(lt, to iindex=36) 2,3
+Source line number = 35
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(lt, to iindex=32) 3,1
+Source line number = 33
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Bytecode : conditional branch(gt, to iindex=31) 5,2
+Source line number = 33
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 13 @63 exception:14
+throw 13
+return
+Source line number = 39
+conditional branch(lt, to iindex=36) 2,3
+return
+Source line number = 36
+conditional branch(ne, to iindex=43) 12,5
+13 = new <Application,Ljava/lang/AssertionError>@59
+conditional branch(gt, to iindex=31) 5,2
+invokestatic < Application, LMain, sort([I)V > 6 @33 exception:11
+conditional branch(lt, to iindex=32) 3,1
+return
+Source line number = 34
+conditional branch(ge, to iindex=23) 10,1
+goto (from iindex= 22 to iindex = 9)
+arraystore 6[10] = 7
+conditional branch(gt, to iindex=4) 1,5
+6 = new <Primordial,[I>@61 
+return
+Source line number = 24
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/InsertionSort-FunSat02//branch_probability.txt
+LMain.sort([I)V
+[ { "id" : "[ testLMPIPIPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#1 ] LocalLoad(I,0) Constant(I,0) ConditionalBranch(I,gt,4) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 > v5", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#3" : "TRUE", "testLMPIPIPI#2" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#2 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPIPI#3 ] LocalLoad(I,0) New([I,1) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#4" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#4 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#5" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#5 ] LocalStore(Ljava/lang/Object;,3) Constant(I,0) LocalStore(I,4) LocalLoad(I,4) LocalLoad(I,0) ConditionalBranch(I,ge,23) ", "instruction_count" : "6", "cost" : "6", "secret_dependent_branch" : "true", "ins_to_translate" : "if v10 >= v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#8" : "TRUE", "testLMPIPIPI#6" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#6 ] LocalLoad(Ljava/lang/Object;,3) LocalLoad(I,4) LocalLoad(I,0) LocalLoad(I,4) BinaryOp(I,sub) ArrayStore(I) ", "instruction_count" : "6", "cost" : "7", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#7" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#7 ] LocalLoad(I,4) Constant(I,1) BinaryOp(I,add) LocalStore(I,4) Goto(9) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#5" : "Jump" } },
+{ "id" : "[ testLMPIPIPI#8 ] LocalLoad(Ljava/lang/Object;,3) Invoke(STATIC,LMain;,sort,([I)V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#0" : "Invoke"} },
+{ "id" : "[ sortLMPI#1#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#1" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#1 ] LocalLoad(Ljava/lang/Object;,0) ArrayLength() ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#2" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#2 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#3" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#3 ] LocalStore(I,1) Constant(I,1) LocalStore(I,2) LocalLoad(I,2) LocalLoad(I,1) ConditionalBranch(I,ge,48) ", "instruction_count" : "6", "cost" : "6", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v16 >= v3", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#14" : "TRUE", "sortLMPI#1#4" : "FALSE" }} },
+{ "id" : "[ sortLMPI#1#4 ] LocalLoad(I,2) Constant(I,1) BinaryOp(I,sub) LocalStore(I,3) LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,2) ArrayLoad(I) ", "instruction_count" : "7", "cost" : "8", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#5" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#5 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#6" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#6 ] LocalStore(I,4) LocalLoad(I,3) Constant(I,0) ConditionalBranch(I,lt,37) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v13 < v7", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#12" : "TRUE", "sortLMPI#1#7" : "FALSE" }} },
+{ "id" : "[ sortLMPI#1#7 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,3) ArrayLoad(I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#8" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#8 ] LocalLoad(I,4) ConditionalBranch(I,le,37) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v8 <= v6", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#12" : "TRUE", "sortLMPI#1#9" : "FALSE" }} },
+{ "id" : "[ sortLMPI#1#9 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,3) Constant(I,1) BinaryOp(I,add) LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,3) ArrayLoad(I) ", "instruction_count" : "7", "cost" : "8", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#10" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#10 ] ArrayStore(I) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#11" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#11 ] LocalLoad(I,3) Constant(I,-1) BinaryOp(I,add) LocalStore(I,3) Goto(16) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#6" : "Jump" } },
+{ "id" : "[ sortLMPI#1#12 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(I,3) Constant(I,1) BinaryOp(I,add) LocalLoad(I,4) ArrayStore(I) ", "instruction_count" : "6", "cost" : "7", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#13" : "Implicit" } },
+{ "id" : "[ sortLMPI#1#13 ] LocalLoad(I,2) Constant(I,1) BinaryOp(I,add) LocalStore(I,2) Goto(5) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#3" : "Jump" } },
+{ "id" : "[ sortLMPI#1#14 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "sortLMPI#1#1001001" : "Return" } },
+{ "id" : "[ sortLMPI#1#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#9" : "Implicit" } } },
+{ "id" : "[ testLMPIPIPI#9 ] Constant(I,0) LocalLoad(I,1) ConditionalBranch(I,gt,31) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v5 > v2", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#11" : "TRUE", "testLMPIPIPI#10" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#10 ] LocalLoad(I,2) LocalLoad(I,0) ConditionalBranch(I,lt,32) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v3 < v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#12" : "TRUE", "testLMPIPIPI#11" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#11 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPIPI#12 ] LocalLoad(I,1) LocalLoad(I,2) ConditionalBranch(I,lt,36) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v2 < v3", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#14" : "TRUE", "testLMPIPIPI#13" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#13 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPIPI#14 ] Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,43) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v12 != v5", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#18" : "TRUE", "testLMPIPIPI#15" : "FALSE" }} },
+{ "id" : "[ testLMPIPIPI#15 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#16" : "Implicit" } },
+{ "id" : "[ testLMPIPIPI#16 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#17" : "Invoke" } },
+{ "id" : "[ testLMPIPIPI#17 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Implicit"} } },
+{ "id" : "[ testLMPIPIPI#18 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPIPIPI#1001001" : "Return" } },
+{ "id" : "[ testLMPIPIPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+Instruction to translate: if v1 > v5
+[v7, ifv10>, v1, v2, v3]
+(declare-fun v1() Int)
+(declare-fun v5() Int)
+(assert (> v1 0 ))
+(check-sat)
+Constraint solving time: 0.004471539
+Model counting time: 0.006601611
+Constraint solving time: 4.55558E-4
+Model counting time: 6.46752E-4
+Probability of true branch: 0.4999847412109375
+Probability of false branch: 0.5000152587890625
+Instruction to translate: if v10 >= v1
+[v7, ifv10>, v1, v2, v3]
+(declare-fun v10() Int)
+(declare-fun v1() Int)
+(assert (>= v10 v1))
+(check-sat)
+Constraint solving time: 8.84426E-4
+Model counting time: 0.001327104
+Constraint solving time: 2.64903E-4
+Model counting time: 3.8709E-4
+Probability of true branch: 0.5000076293945312
+Probability of false branch: 0.49999237060546875
+sortLMPI#1#3
+ "sortLMPI#1#4" : "FALSE"
+sortLMPI#1#6
+ "sortLMPI#1#7" : "FALSE"
+sortLMPI#1#8
+ "sortLMPI#1#9" : "FALSE"
+Instruction to translate: if v2 < v3
+[v7, ifv10>, v1, v2, v3]
+(declare-fun v2() Int)
+(declare-fun v3() Int)
+(assert (< v2 v3))
+(check-sat)
+Constraint solving time: 7.65989E-4
+Model counting time: 0.001178978
+Constraint solving time: 2.20294E-4
+Model counting time: 3.4586E-4
+Probability of true branch: 0.49999237060546875
+Probability of false branch: 0.5000076293945312
+testLMPIPIPI#14
+ "testLMPIPIPI#15" : "FALSE"
+Instruction to translate: not (if v5 > v2) and not (if v3 < v1)
+[v7, ifv10>, v1, v2, v3]
+(declare-fun v1() Int)
+(declare-fun v2() Int)
+(declare-fun v3() Int)
+(declare-fun v5() Int)
+(assert (not (> 0 v2)))
+(assert (not (< v3 v1)))
+(check-sat)
+Constraint solving time: 0.001150249
+Model counting time: 0.001712954
+Constraint solving time: 2.89102E-4
+Model counting time: 4.33398E-4
+Probability of true branch: 0.7499961853027344
+Probability of false branch: 0.2500038146972656
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "0.49999999976716936"];
+	1 -> 3[label= "0.5000000002328306"];
+	3 -> 4[label= "1.0"];
+	2 -> 5[label= "1.0"];
+	5 -> 6[label= "1.0"];
+	6 -> 7[label= "0.5000000001164153"];
+	6 -> 8[label= "0.4999999998835847"];
+	8 -> 9[label= "1.0"];
+	9 -> 6[label= "1.0"];
+	7 -> 10[label= "1.0"];
+	10 -> 11[label= "1.0"];
+	11 -> 12[label= "1.0"];
+	12 -> 13[label= "1.0"];
+	13 -> 14[label= "1.0"];
+	13 -> 15[label= "1.0"];
+	15 -> 16[label= "1.0"];
+	16 -> 17[label= "1.0"];
+	17 -> 18[label= "1.0"];
+	17 -> 19[label= "1.0"];
+	19 -> 20[label= "1.0"];
+	20 -> 18[label= "1.0"];
+	20 -> 21[label= "1.0"];
+	21 -> 22[label= "1.0"];
+	22 -> 23[label= "1.0"];
+	23 -> 17[label= "1.0"];
+	18 -> 24[label= "1.0"];
+	24 -> 13[label= "1.0"];
+	14 -> 25[label= "1.0"];
+	25 -> 26[label= "1.0"];
+	27 -> 4[label= "1.0"];
+	28 -> 29[label= "0.4999999998835847"];
+	28 -> 30[label= "0.5000000001164153"];
+	30 -> 4[label= "1.0"];
+	29 -> 31[label= "0.0"];
+	29 -> 32[label= "1.0"];
+	32 -> 33[label= "1.0"];
+	33 -> 34[label= "1.0"];
+	34 -> 4[label= "1.0"];
+	31 -> 4[label= "1.0"];
+	26 -> 28[label= "1.000000082740371E-10"];
+	26 -> 27[label= "0.9999999999"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..36] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 0.49999999976716936 : (s' = 2) + 0.5000000002328306 : (s' = 3);
+	[] s = 3 -> 1.0 : (s' = 4);
+	[] s = 2 -> 1.0 : (s' = 5);
+	[] s = 5 -> 1.0 : (s' = 6);
+	[] s = 6 -> 0.5000000001164153 : (s' = 7) + 0.4999999998835847 : (s' = 8);
+	[] s = 8 -> 1.0 : (s' = 9);
+	[] s = 9 -> 1.0 : (s' = 6);
+	[] s = 7 -> 1.0 : (s' = 10);
+	[] s = 10 -> 1.0 : (s' = 11);
+	[] s = 11 -> 1.0 : (s' = 12);
+	[] s = 12 -> 1.0 : (s' = 13);
+	[] s = 13 -> 1.0 : (s' = 14);
+	[] s = 13 -> 1.0 : (s' = 15);
+	[] s = 15 -> 1.0 : (s' = 16);
+	[] s = 16 -> 1.0 : (s' = 17);
+	[] s = 17 -> 1.0 : (s' = 18);
+	[] s = 17 -> 1.0 : (s' = 19);
+	[] s = 19 -> 1.0 : (s' = 20);
+	[] s = 20 -> 1.0 : (s' = 18);
+	[] s = 20 -> 1.0 : (s' = 21);
+	[] s = 21 -> 1.0 : (s' = 22);
+	[] s = 22 -> 1.0 : (s' = 23);
+	[] s = 23 -> 1.0 : (s' = 17);
+	[] s = 18 -> 1.0 : (s' = 24);
+	[] s = 24 -> 1.0 : (s' = 13);
+	[] s = 14 -> 1.0 : (s' = 25);
+	[] s = 25 -> 1.0 : (s' = 26);
+	[] s = 27 -> 1.0 : (s' = 4);
+	[] s = 28 -> 0.4999999998835847 : (s' = 29) + 0.5000000001164153 : (s' = 30);
+	[] s = 30 -> 1.0 : (s' = 4);
+	[] s = 29 -> 0.0 : (s' = 31) + 1.0 : (s' = 32);
+	[] s = 32 -> 1.0 : (s' = 33);
+	[] s = 33 -> 1.0 : (s' = 34);
+	[] s = 34 -> 1.0 : (s' = 4);
+	[] s = 31 -> 1.0 : (s' = 4);
+	[] s = 26 -> 1.000000082740371E-10 : (s' = 28) + 0.9999999999 : (s' = 27);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 32]
+PRISM
+=====
+
+Version: 4.5
+Date: Tue Dec 27 14:21:26 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=32 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=32 ]
+
+Building model...
+
+Warning: Update 1 of command 32 of module "LMain_test" doesn't do anything ("(s'=31)", line 38, column 28)
+
+Warning: Guard for command 14 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 18 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 21 of module "LMain_test" overlaps with previous commands.
+
+Computing reachable states...
+
+Reachability (BFS): 18 iterations in 0.00 seconds (average 0.000056, setup 0.00)
+
+Time for model construction: 0.025 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      34 (1 initial)
+Transitions: 41
+
+Transition matrix: 131 nodes (9 terminal), 41 minterms, vars: 6r/6c
+
+Prob0: 16 iterations in 0.00 seconds (average 0.000125, setup 0.00)
+
+Prob1: 12 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+yes = 2, no = 6, maybe = 26
+
+Computing remaining probabilities...
+Engine: Hybrid
+
+Building hybrid MTBDD matrix... [levels=6, nodes=104] [4.9 KB]
+Adding explicit sparse matrices... [levels=6, num=1, compact] [0.2 KB]
+Creating vector for diagonals... [dist=1, compact] [0.1 KB]
+Creating vector for RHS... [dist=2, compact] [0.1 KB]
+Allocating iteration vectors... [2 x 0.3 KB]
+TOTAL: [5.8 KB]
+
+Starting iterations...
+
+Jacobi: 172 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Value in the initial state: 2.499980601105496E-11
+
+Time for model checking: 0.005 seconds.
+
+Result: 2.499980601105496E-11 (value in the initial state)
+Probability for assertion reachability: 2.499980601105496E-11
+Dependency analysis time: 18ms
+Execution time for probabilistic analysis: 451ms
+Total Execution time: 469ms
+
+real	0m15.837s
+user	0m56.335s
+sys	0m4.131s

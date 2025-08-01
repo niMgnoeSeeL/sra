@@ -1,0 +1,120 @@
+=========================== code ==============================
+package sampling.svcomp.jpf;
+
+    import gov.nasa.jpf.symbc.Debug;
+
+    import java.io.*;
+
+public class ExSymExe13_SMedition {
+  static int field;
+  static int field2;
+
+  public static void main(String[] args) throws IOException {
+    test();
+  }
+  /* we want to let the user specify that this method should be symbolic */
+
+  /*
+   * test IF_ICMPGE, IADD & ISUB  bytecodes
+   */
+  public static void test() throws NumberFormatException, IOException {
+        int x = Debug.makeSymbolicInteger("x");
+        int z = Debug.makeSymbolicInteger("z");
+    if(z < 0)
+      return;
+    System.out.println("Testing ExSymExe13");
+    String command = "bash /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExSymExe13_SMedition/test.sh";
+    int y = Integer.parseInt(new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(command).getInputStream())).readLine());
+    int r = x + z;
+    z = x - y - 4;
+    if (r < 99)
+      System.out.println("branch FOO1");
+    else
+      System.out.println("branch FOO2");
+    if (x < z) {
+      System.out.println("branch BOO1");
+      // assert false;
+    } else
+      System.out.println("branch BOO2");
+
+    
+  }
+}
+
+------------------------------------------------------------------
+
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.SamplingAnalysis$Builder build
+INFO: Using state caching implemented by class: edu.cmu.sv.isstac.canopy.exploration.cache.TrieCache
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.SamplingAnalysis$Builder build
+INFO: State cache does not support CG optimization. Disabling CG optimization
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.quantification.ModelCounterFactory getInstance
+INFO: Using lazy model counter that creates uniform UP from variables of PC at model count invocation. This may not be what you want!
+symbolic.min_int=-2147483648
+symbolic.min_long=-9223372036854775808
+symbolic.min_short=-32768
+symbolic.min_byte=-128
+symbolic.min_char=0
+symbolic.max_int=2147483647
+symbolic.max_long=9223372036854775807
+symbolic.max_short=32767
+symbolic.max_byte=127
+symbolic.max_char=65535
+symbolic.min_double=4.9E-324
+symbolic.max_double=1.7976931348623157E308
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch <init>
+INFO: *NOT* using incremental solving
+JavaPathfinder core system v8.0 (rev 45a4450cd0bd1193df5419f7c9d9b89807d00db6) - (C) 2005-2014 United States Government. All rights reserved.
+
+
+====================================================== system under test
+sampling.svcomp.jpf.ExSymExe13_SMedition.main()
+
+====================================================== search started: 1/12/23 12:36 PM
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: null
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: null
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: z<0
+Jan 12, 2023 12:36:26 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:27 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator getModelCounterInstance
+INFO: Creating model counter for symbolic vars: z
+Jan 12, 2023 12:36:27 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator createUniformProblemSetting
+WARNING: Defaulting to lower bound for *ALL* integers in model counter: -1073741824
+Jan 12, 2023 12:36:27 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator createUniformProblemSetting
+WARNING: Defaulting to upper bound for *ALL* integers in model counter: 1073741823
+Jan 12, 2023 12:36:27 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:z<0
+Jan 12, 2023 12:36:27 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 1, termType:SUCCESS, path volume: 1073741824
+Jan 12, 2023 12:36:27 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Testing ExSymExe13
+SampleStatisticsOutputter{min. reward=2.0, max. reward=2, max. reward sample #=1, max. reward time=0, # same max. rewards=1, total samples=1, total unique samples=1, total analysis time=0, avg. throughput=2.688172043010753, reward mean=2.0, reward variance=0.0, reward stddev=0.0, final result=SamplingResult{Max succ state=ResultContainer{reward=2, samplesNumber=1, path=[0,0], pc=constraint # = 1
+z < CONST_0}, Max fail state=, Max grey state=}}
+
+====================================================== results
+error #1: gov.nasa.jpf.vm.NoUncaughtExceptionsProperty "java.lang.UnsupportedOperationException: sun.misc...."
+
+====================================================== statistics
+elapsed time:       00:00:00
+states:             new=3,visited=0,backtracked=1,end=1
+search:             maxDepth=2,constraints=0
+choice generators:  thread=1 (signal=0,lock=1,sharedRef=0,threadApi=0,reschedule=0), data=1
+heap:               new=534,released=13,maxLive=453,gcCycles=2
+instructions:       11079
+max memory:         981MB
+loaded code:        classes=97,methods=1877
+
+====================================================== search finished: 1/12/23 12:36 PM
+Jan 12, 2023 12:36:27 PM edu.cmu.sv.isstac.canopy.quantification.ModelCounterFactory cleanUpTempFiles
+INFO: Removing model counter tmp dir: /tmp/modelcounter
+
+real	0m0.861s
+user	0m1.949s
+sys	0m0.243s

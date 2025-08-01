@@ -1,0 +1,15 @@
+# This is not a real Debian control file
+# It's project metadata for the shipper tool
+
+Package: gif2png
+
+Description: convert GIFs to PNGs
+ The gif2png program converts files from the Graphic Interchange Format
+ (GIF) to Portable Network Graphics (PNG).  This distribution also
+ supplies web2png, a Python front end for gif2png which automagically
+ converts entire web hierarchies (the graphics files themselves and
+ references to them in web pages).
+
+Homepage: http://www.catb.org/~esr/gif2png
+
+XBS-Project-Tag-List: GIF, PNG

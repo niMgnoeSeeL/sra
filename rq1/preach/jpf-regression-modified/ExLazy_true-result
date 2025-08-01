@@ -1,0 +1,65 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true/
+$class_files: /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(II)V
+$input_params: v1,v2
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true//branch_probability.txt
+Traceback (most recent call last):
+  File "collect-branch-probability.py", line 93, in processAllBenchmarksInThisDirectory
+    process.terminate()
+  File "/usr/lib/python2.7/subprocess.py", line 1274, in terminate
+    self.send_signal(signal.SIGTERM)
+  File "/usr/lib/python2.7/subprocess.py", line 1269, in send_signal
+    os.kill(self.pid, sig)
+OSError: [Errno 3] No such process
+/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true/
+POLY
+LMain.test(II)V
+/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true/
+source in command: "Main.test.*"
+method info: "Main.test(II)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true/ -S"Main.test.*" "Main.test(II)V"
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true/ -S"Main.test.*" "Main.test(LMain;I)V"
+[Errno 3] No such process
+Could not handle this benchmark!!!
+SMDEBUG::collect-branch-probability.py::5.36625385284 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 4s
+Constructing heap graph: 1s
+Call graph stats:
+  Nodes: 3331
+  Edges: 10721
+  Methods: 3300
+  Bytecode Bytes: 195080
+Root --> #Classes : 1  #Methods : 2
+#Classes : 1   #Methods : 2
+ABC library loaded properly
+LMain.main([Ljava/lang/String;)V
+LMain.test(LMain;I)V
+Number of Classes: 1
+Number of Methods: 2
+Dependency analysis started ...
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true//branch_probability.txt
+java.io.FileNotFoundException: /PReach/preach-benchmarks/sv-comp/jpf-regression-modified/ExLazy_true/branch_probability.txt (No such file or directory)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+	at java.io.FileReader.<init>(FileReader.java:58)
+	at gui.MainLogic.doMarkovChainAnalysis(MainLogic.java:462)
+	at PReach.doAnalysis(PReach.java:120)
+	at PReach.generateProgram(PReach.java:90)
+	at PReach.access$500(PReach.java:13)
+	at PReach$RunProgramGen.run(PReach.java:109)
+	at java.lang.Thread.run(Thread.java:750)
+Can not find the control flow graph with the provided method signtaure
+
+real	0m14.743s
+user	0m59.018s
+sys	0m4.113s

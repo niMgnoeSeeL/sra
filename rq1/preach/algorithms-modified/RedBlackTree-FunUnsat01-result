@@ -1,0 +1,680 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/
+$class_files: /PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(I)V
+$input_params: v1
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01//branch_probability.txt
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/
+POLY
+LMain.test(I)V
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/
+source in command: "Main.test.*"
+method info: "Main.test(I)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/ -S"Main.test.*" "Main.test(I)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt rightRotate.txt right.txt setBlack.txt key.txt root.txt setRed.txt treeSearch.txt treeInsert.txt parent.txt parentTo.txt leftTo.txt isRed.txt rightTo.txt left.txt leftRotate.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+('copy', 'rightRotate.txt')
+('copy', 'right.txt')
+('copy', 'setBlack.txt')
+('copy', 'key.txt')
+('copy', 'root.txt')
+('copy', 'setRed.txt')
+('copy', 'treeSearch.txt')
+('copy', 'treeInsert.txt')
+('copy', 'parent.txt')
+('copy', 'parentTo.txt')
+('copy', 'leftTo.txt')
+('copy', 'isRed.txt')
+('copy', 'rightTo.txt')
+('copy', 'left.txt')
+('copy', 'leftRotate.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt rightRotate.txt right.txt setBlack.txt key.txt root.txt setRed.txt treeSearch.txt treeInsert.txt parent.txt parentTo.txt leftTo.txt isRed.txt rightTo.txt left.txt leftRotate.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(I)V', 'BB1', 'I2', '10', ['v1', 'v3'])
+('LMain', 'test(I)V', 'BB6', 'I12', '15', ['v11', 'v1'])
+('LMain', 'test(I)V', 'BB13', 'I34', '21', ['v17', 'v3'])
+info: ('Main', 'test(I)V', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+info: ('Main', 'test(I)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v11 +1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  1FrameParameterv(0,973604791)v1ⁱⁿ -1 >= 0
+info: ('Main', 'test(I)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,973604791)v10 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v10 -1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameParameterv(0,973604791)v1ⁱⁿ -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v12 -1 = 0
+info: ('Main', 'test(I)V', 'BB13', 'I34')
+vcon: 	 ∧  1FrameParameterv(0,973604791)v1ⁱⁿ -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v10 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v17 = 0
+info: ('Main', 'test(I)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,973604791)v10 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v10 -1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameParameterv(0,973604791)v1ⁱⁿ -2 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+info: ('Main', 'test(I)V', 'BB13', 'I34')
+vcon: 	 ∧  1FrameParameterv(0,973604791)v1ⁱⁿ -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v10 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v11 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v17 = 0
+info: ('Main', 'test(I)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v10 -1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)-215330139 +1FrameRegisterv(0,973604791)v11 -1 >= 0
+vcon: 	 ∧  1FrameParameterv(0,973604791)v1ⁱⁿ -1FrameRegisterv(0,973604791)v11 >= 0
+info: ('Main', 'test(I)V', 'BB13', 'I34')
+vcon: 	 ∧  -1FrameParameterv(0,973604791)v1ⁱⁿ +1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v10 -1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v11 -1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v17 = 0
+info: ('Main', 'test(I)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v10 -1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  1FrameParameterv(0,973604791)v1ⁱⁿ -1FrameRegisterv(0,973604791)v11 >= 0
+info: ('Main', 'test(I)V', 'BB13', 'I34')
+vcon: 	 ∧  -1FrameParameterv(0,973604791)v1ⁱⁿ +1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v10 -1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v17 = 0
+info: ('Main', 'test(I)V', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v10 -1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  1FrameParameterv(0,973604791)v1ⁱⁿ -1FrameRegisterv(0,973604791)v11 >= 0
+info: ('Main', 'test(I)V', 'BB13', 'I34')
+vcon: 	    -1FrameParameterv(0,973604791)v1ⁱⁿ +1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v10 -1FrameRegisterv(0,973604791)v11 = 0
+vcon: 	 ∧  1FrameRegisterv(0,973604791)v3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v9 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v12 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,973604791)v17 = 0
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB2', 'I7', '716', ['v6', 'v5'])
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB3', 'I12', '716', ['v8', 'v9'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB2', 'I5', '3030', ['v4', 'v5'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB8'This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+This branch is not considered for model counting! Fifty fifty selectivity!
+, 'I17', '3036', ['v7', 'v5'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB1', 'I2', '1536', ['v1', 'v2'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB3', 'I7', '1539', ['v1', 'v4'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB6', 'I14', '1542', ['v6', 'v7'])
+('Ljava/util/Collections', 'unmodifiableList(Ljava/util/List;)Ljava/util/List;', 'BB1', 'I3', '1190', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB2', 'I3', '781', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB4', 'I7', '781', ['v5', 'v4'])
+('Lrbtree/RedBlackTree', 'rightRotate(Lrbtree/RedBlackTreeNode;)V', 'BB5', 'I10', '139', ['v10', 'v11'])
+('Lrbtree/RedBlackTree', 'rightRotate(Lrbtree/RedBlackTreeNode;)V', 'BB11', 'I22', '144', ['v19', 'v11'])
+('Lrbtree/RedBlackTree', 'rightRotate(Lrbtree/RedBlackTreeNode;)V', 'BB16', 'I31', '147', ['v2', 'v23'])
+('Lrbtree/RedBlackTree', 'treeSearch(Lrbtree/RedBlackTreeNode;I)Lrbtree/RedBlackTreeNode;', 'BB1', 'I2', '339', ['v2', 'v5'])
+('Lrbtree/RedBlackTree', 'treeSearch(Lrbtree/RedBlackTreeNode;I)Lrbtree/RedBlackTreeNode;', 'BB3', 'I6', '339', ['v3', 'v7'])
+('Lrbtree/RedBlackTree', 'treeSearch(Lrbtree/RedBlackTreeNode;I)Lrbtree/RedBlackTreeNode;', 'BB6', 'I12', '342', ['v3', 'v9'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB3', 'I7', '36', ['v13', 'v4'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB6', 'I14', '38', ['v7', 'v9'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB12', 'I28', '45', ['v12', 'v4'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB17', 'I37', '48', ['v18', 'v20'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB23', 'I50', '58', ['v59', 'v24'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB26', 'I55', '58', ['v28', 'v29'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB31', 'I62', '60', ['v31', 'v37'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB35', 'I70', '63', ['v43', 'v4'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB37', 'I74', '63', ['v45', 'v29'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB49', 'I93', '69', ['v59', 'v64'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB64', 'I120', '81', ['v87', 'v4'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB66', 'I124', '81', ['v89', 'v29'])
+('Lrbtree/RedBlackTree', 'treeInsert(Lrbtree/RedBlackTreeNode;)V', 'BB78', 'I143', '87', ['v59', 'v106'])
+('Lrbtree/RedBlackTreeNode', 'isRed()Z', 'BB2', 'I3', '179', ['v3', 'v4'])
+('Lrbtree/RedBlackTree', 'leftRotate(Lrbtree/RedBlackTreeNode;)V', 'BB5', 'I10', '111', ['v10', 'v11'])
+('Lrbtree/RedBlackTree', 'leftRotate(Lrbtree/RedBlackTreeNode;)V', 'BB11', 'I22', '116', ['v19', 'v11'])
+('Lrbtree/RedBlackTree', 'leftRotate(Lrbtree/RedBlackTreeNode;)V', 'BB16', 'I31', '119', ['v2', 'v23'])
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/ yes
+info: 
+Main.java:15
+(>= (+ var2 (- var1)) 0),(or (>= (+ var2 (- 1) ) 0) (>= (+ var2 (- 2) ) 0) ), (>= (+ var2 (- var1)) 0),
+(>= (+ var2 (- var1)) 0)
+(or (>= (+ var2 (- 1) ) 0) (>= (+ var2 (- 2) ) 0) )
+ (>= (+ var2 (- var1)) 0)
+Main.java:15
+[(>= (+ var2 (- var1)) 0), (or (>= (+ var2 (- 1) ) 0) (>= (+ var2 (- 2) ) 0) ),  (>= (+ var2 (- var1)) 0)]
+info: 
+Main.java:10
+(= (+ (- var2)) 0),
+(= (+ (- var2)) 0)
+Main.java:10
+[(= (+ (- var2)) 0)]
+info: 
+Main.java:21
+(= (+ (- var1)) 0),(= (+ (- var2)) 0),
+(= (+ (- var1)) 0)
+(= (+ (- var2)) 0)
+Main.java:21
+[(= (+ (- var1)) 0), (= (+ (- var2)) 0)]
+SourceLine = Main.java:10, Cons = [(= (+ (- var2)) 0)]
+SourceLine = Main.java:21, Cons = [(= (+ (- var1)) 0), (= (+ (- var2)) 0)]
+SourceLine = Main.java:15, Cons = [(>= (+ var2 (- var1)) 0), (or (>= (+ var2 (- 1) ) 0) (>= (+ var2 (- 2) ) 0) ),  (>= (+ var2 (- var1)) 0)]
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/Main.java
+Class Name: Main
+N <= 0
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/Main.java:10)
+(declare-fun N () Int)
+(assert (<= N 0))
+(check-sat)
+
+Constraint solving time: 0.003655742
+Model counting time: 0.007250485
+Branch model count: 2147483649
+(declare-fun N () Int)
+(assert true)
+(check-sat)
+Constraint solving time: 3.5147E-4
+Model counting time: 5.51475E-4
+Branch domain count:4294967296
+True branch probability: 0.5000000002328306
+False branch probability: 0.49999999976716936
+i < N
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/Main.java:15)
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (< i N))
+(assert (>= (+ N (- i)) 0))
+(assert (or (>= (+ N (- 1) ) 0) (>= (+ N (- 2) ) 0) ))
+(assert  (>= (+ N (- i)) 0))
+(check-sat)
+
+Constraint solving time: 0.001428841
+Model counting time: 0.001939178
+Branch model count: 6917529024419856384
+(declare-fun i () Int)
+(declare-fun N () Int)
+(assert (>= (+ N (- i)) 0))
+(assert (or (>= (+ N (- 1) ) 0) (>= (+ N (- 2) ) 0) ))
+(assert  (>= (+ N (- i)) 0))
+(assert true)
+(check-sat)
+Constraint solving time: 0.001059861
+Model counting time: 0.001544708
+Branch domain count:6917529026567340031
+True branch probability: 0.9999999996895591
+False branch probability: 3.1044089521259366E-10
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/Node.java
+Class Name: rbtree.Node
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTreeNode.java
+Class Name: rbtree.RedBlackTreeNode
+this.color == null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTreeNode.java:166)
+this.color == "r"
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTreeNode.java:179)
+(declare-fun thiscolor () String)
+(assert (= thiscolor "r"))
+(check-sat)
+
+Constraint solving time: 8.79816E-4
+Model counting time: 0.001377133
+Branch model count: 1
+(declare-fun thiscolor () String)
+(assert true)
+(check-sat)
+Constraint solving time: 2.25564E-4
+Model counting time: 4.29629E-4
+Branch domain count:454086624460063511464984254936031011189294057512315937409637584344757371137
+True branch probability: 2.2022229815490834E-75
+False branch probability: 1.0
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java
+Class Name: rbtree.RedBlackTree
+x == x.parent().left()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:236)
+w.isRed()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:239)
+((((w.left() == null) && (w.right() == null)) || (((w.left() == null) && (w.right() != null)) && w.right().isBlack())) || (((w.right() == null) && (w.left() != null)) && w.left().isBlack())) || ((((w.right() != null) && (w.left() != null)) && w.right().isBlack()) && w.left().isBlack())
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:245)
+(w.right() != null) && w.right().isBlack()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:254)
+x.parent().isBlack()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:260)
+w.right != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:266)
+w.isRed()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:275)
+((((w.left() == null) && (w.right() == null)) || (((w.left() == null) && (w.right() != null)) && w.right().isBlack())) || (((w.right() == null) && (w.left() != null)) && w.left().isBlack())) || ((((w.right() != null) && (w.left() != null)) && w.right().isBlack()) && w.left().isBlack())
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:281)
+(w.left() != null) && w.left().isBlack()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:290)
+x.parent().isBlack()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:296)
+w.left != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:302)
+(x != this.root) && x.isBlack()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:235)
+!(x == null)
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:321)
+k < x.key()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:360)
+(!(x == null)) && (k != x.key())
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:359)
+y.left() != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:111)
+x.parent() == null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:116)
+x == x.parent().left()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:119)
+y.right() != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:139)
+x.parent() == null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:144)
+x == x.parent().right()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:147)
+(z.left() == null) || (z.right() == null)
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:170)
+y.left() != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:177)
+y.right() != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:180)
+y.parent() == null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:189)
+y == y.parent().left()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:194)
+y != z
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:201)
+y.isBlack()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:205)
+this.root != sentinel
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:211)
+sentinel.parent().left() == sentinel
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:212)
+sentinel.parent().right() == sentinel
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:215)
+x.key() < z.key()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:38)
+y == null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:45)
+x.key() < y.key()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:48)
+x.parent() == x.parent().parent().left()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:60)
+(y != null) && y.isRed()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:63)
+x == x.parent().right()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:69)
+(y != null) && y.isRed()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:81)
+x == x.parent().left()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:87)
+z != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:36)
+(x != this.root) && x.parent().isRed()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:58)
+x.right() != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:393)
+x.left() != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:378)
+x.left() != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:428)
+(y != null) && x.equals(y.left())
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:432)
+(x == null) || (k == x.key())
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:339)
+k < x.key()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:342)
+x.right() != null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:408)
+(y != null) && x.equals(y.right())
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01/rbtree/RedBlackTree.java:412)
+----------------------------------------------------
+Total processing time: 0 seconds
+----------------------------------------------------
+
+('Analysis time without Interval analysis: ', 0.9852330684661865)
+('Analysis time: ', 4.570868015289307)
+SMDEBUG::collect-branch-probability.py::4.57388782501 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 4s
+Constructing heap graph: 0s
+Call graph stats:
+  Nodes: 3330
+  Edges: 10719
+  Methods: 3299
+  Bytecode Bytes: 195101
+Root --> #Classes : 1  #Methods : 2
+#Classes : 1   #Methods : 2
+ABC library loaded properly
+LMain.main([Ljava/lang/String;)V
+LMain.test(I)V
+Number of Classes: 1
+Number of Methods: 2
+Dependency analysis started ...
+
+=============================
+
+11 = phi  10,3
+conditional branch(ge, to iindex=24) 11,1
+ifv11>
+
+=============================
+
+6:
+11 = phi  10,3 if v11 >= v1 
+
+=============================
+
+conditional branch(gt, to iindex=4) 1,3
+
+=============================
+
+6:
+11 = phi  10,3 if v11 >= v1 
+1:
+if v1 > v3 
+Branch condition:1
+FALSE node: 2
+18
+
+Bytecode : conditional branch(ge, to iindex=24) 11,1
+Source line number = 15
+18 = new <Application,Ljava/lang/AssertionError>@56
+conditional branch(ne, to iindex=39) 17,3
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @60 exception:19
+throw 18
+return
+Source line number = 22
+conditional branch(ge, to iindex=24) 11,1
+invokespecial < Application, Lrbtree/RedBlackTreeNode, <init>(I)V > 6,11 @26 exception:7
+6 = new <Application,Lrbtree/RedBlackTreeNode>@21
+goto (from iindex= 23 to iindex = 10)
+invokevirtual < Application, Lrbtree/RedBlackTree, treeInsert(Lrbtree/RedBlackTreeNode;)V > 4,6 @29 exception:8
+16 = invokevirtual < Application, Lrbtree/RedBlackTree, treeSearch(Lrbtree/RedBlackTreeNode;I)Lrbtree/RedBlackTreeNode; > 4,14,12 @46 exception:15
+14 = invokevirtual < Application, Lrbtree/RedBlackTree, root()Lrbtree/RedBlackTreeNode; > 4 @42 exception:13
+4 = new <Application,Lrbtree/RedBlackTree>@5
+invokespecial < Application, Lrbtree/RedBlackTree, <init>()V > 4 @9 exception:5
+conditional branch(gt, to iindex=4) 1,3
+return
+Source line number = 11
+Bytecode : conditional branch(gt, to iindex=4) 1,3
+Source line number = 10
+18 = new <Application,Ljava/lang/AssertionError>@56
+conditional branch(ne, to iindex=39) 17,3
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 18 @60 exception:19
+throw 18
+return
+Source line number = 22
+conditional branch(ge, to iindex=24) 11,1
+invokespecial < Application, Lrbtree/RedBlackTreeNode, <init>(I)V > 6,11 @26 exception:7
+6 = new <Application,Lrbtree/RedBlackTreeNode>@21
+goto (from iindex= 23 to iindex = 10)
+invokevirtual < Application, Lrbtree/RedBlackTree, treeInsert(Lrbtree/RedBlackTreeNode;)V > 4,6 @29 exception:8
+16 = invokevirtual < Application, Lrbtree/RedBlackTree, treeSearch(Lrbtree/RedBlackTreeNode;I)Lrbtree/RedBlackTreeNode; > 4,14,12 @46 exception:15
+14 = invokevirtual < Application, Lrbtree/RedBlackTree, root()Lrbtree/RedBlackTreeNode; > 4 @42 exception:13
+4 = new <Application,Lrbtree/RedBlackTree>@5
+invokespecial < Application, Lrbtree/RedBlackTree, <init>()V > 4 @9 exception:5
+conditional branch(gt, to iindex=4) 1,3
+return
+Source line number = 11
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/RedBlackTree-FunUnsat01//branch_probability.txt
+Lrbtree/RedBlackTree.treeInsert(Lrbtree/RedBlackTreeNode;)V
+Lrbtree/RedBlackTree.root()Lrbtree/RedBlackTreeNode;
+Lrbtree/RedBlackTree.treeSearch(Lrbtree/RedBlackTreeNode;I)Lrbtree/RedBlackTreeNode;
+[ { "id" : "[ testLMPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1" : "Implicit" } },
+{ "id" : "[ testLMPI#1 ] LocalLoad(I,0) Constant(I,0) ConditionalBranch(I,gt,4) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 > v3", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#3" : "TRUE", "testLMPI#2" : "FALSE" }} },
+{ "id" : "[ testLMPI#2 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Return" } },
+{ "id" : "[ testLMPI#3 ] New(Lrbtree/RedBlackTree;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#4" : "Implicit" } },
+{ "id" : "[ testLMPI#4 ] Dup(1,0) Invoke(SPECIAL,Lrbtree/RedBlackTree;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#5" : "Invoke" } },
+{ "id" : "[ testLMPI#5 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#6" : "Implicit" } },
+{ "id" : "[ testLMPI#6 ] LocalStore(Ljava/lang/Object;,1) Constant(I,0) LocalStore(I,2) LocalLoad(I,2) LocalLoad(I,0) ConditionalBranch(I,ge,24) ", "instruction_count" : "6", "cost" : "6", "secret_dependent_branch" : "true", "ins_to_translate" : "if v11 >= v1", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#11" : "TRUE", "testLMPI#7" : "FALSE" }} },
+{ "id" : "[ testLMPI#7 ] LocalLoad(Ljava/lang/Object;,1) New(Lrbtree/RedBlackTreeNode;,0) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#8" : "Implicit" } },
+{ "id" : "[ testLMPI#8 ] Dup(1,0) LocalLoad(I,2) Invoke(SPECIAL,Lrbtree/RedBlackTreeNode;,<init>,(I)V) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Invoke" } },
+{ "id" : "[ testLMPI#9 ] Invoke(VIRTUAL,Lrbtree/RedBlackTree;,treeInsert,(Lrbtree/RedBlackTreeNode;)V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#10" : "Invoke" } },
+{ "id" : "[ testLMPI#10 ] LocalLoad(I,2) Constant(I,1) BinaryOp(I,add) LocalStore(I,2) Goto(10) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#6" : "Jump" } },
+{ "id" : "[ testLMPI#11 ] Constant(I,-1) LocalStore(I,2) LocalLoad(Ljava/lang/Object;,1) LocalLoad(Ljava/lang/Object;,1) Invoke(VIRTUAL,Lrbtree/RedBlackTree;,root,()Lrbtree/RedBlackTreeNode;) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#12" : "Invoke" } },
+{ "id" : "[ testLMPI#12 ] LocalLoad(I,2) Invoke(VIRTUAL,Lrbtree/RedBlackTree;,treeSearch,(Lrbtree/RedBlackTreeNode;I)Lrbtree/RedBlackTreeNode;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#13" : "Invoke" } },
+{ "id" : "[ testLMPI#13 ] LocalStore(Ljava/lang/Object;,3) Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,39) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v17 != v3", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#17" : "TRUE", "testLMPI#14" : "FALSE" }} },
+{ "id" : "[ testLMPI#14 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#15" : "Implicit" } },
+{ "id" : "[ testLMPI#15 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#16" : "Invoke" } },
+{ "id" : "[ testLMPI#16 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Implicit"} } },
+{ "id" : "[ testLMPI#17 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Return" } },
+{ "id" : "[ testLMPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+Instruction to translate: if v1 > v3
+[ifv11>, v1]
+(declare-fun v1() Int)
+(declare-fun v3() Int)
+(assert (> v1 0 ))
+(check-sat)
+Constraint solving time: 0.003471157
+Model counting time: 0.004920038
+Constraint solving time: 2.82583E-4
+Model counting time: 4.57728E-4
+Probability of true branch: 0.4999847412109375
+Probability of false branch: 0.5000152587890625
+Instruction to translate: if v11 >= v1
+[ifv11>, v1]
+(declare-fun v11() Int)
+(declare-fun v1() Int)
+(assert (>= v11 v1))
+(check-sat)
+Constraint solving time: 5.67304E-4
+Model counting time: 8.59467E-4
+Constraint solving time: 1.44236E-4
+Model counting time: 2.41054E-4
+Probability of true branch: 0.5000076293945312
+Probability of false branch: 0.49999237060546875
+testLMPI#13
+ "testLMPI#14" : "FALSE"
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "0.49999999976716936"];
+	1 -> 3[label= "0.5000000002328306"];
+	3 -> 4[label= "1.0"];
+	2 -> 5[label= "1.0"];
+	5 -> 6[label= "1.0"];
+	6 -> 7[label= "1.0"];
+	7 -> 8[label= "3.1044089521259366E-10"];
+	7 -> 9[label= "0.9999999996895591"];
+	9 -> 10[label= "1.0"];
+	10 -> 11[label= "1.0"];
+	11 -> 12[label= "1.0"];
+	12 -> 7[label= "1.0"];
+	8 -> 13[label= "1.0"];
+	13 -> 14[label= "1.0"];
+	14 -> 15[label= "0.0"];
+	14 -> 16[label= "1.0"];
+	16 -> 17[label= "1.0"];
+	17 -> 18[label= "1.0"];
+	18 -> 4[label= "1.0"];
+	15 -> 4[label= "1.0"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..19] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 0.49999999976716936 : (s' = 2) + 0.5000000002328306 : (s' = 3);
+	[] s = 3 -> 1.0 : (s' = 4);
+	[] s = 2 -> 1.0 : (s' = 5);
+	[] s = 5 -> 1.0 : (s' = 6);
+	[] s = 6 -> 1.0 : (s' = 7);
+	[] s = 7 -> 3.1044089521259366E-10 : (s' = 8) + 0.9999999996895591 : (s' = 9);
+	[] s = 9 -> 1.0 : (s' = 10);
+	[] s = 10 -> 1.0 : (s' = 11);
+	[] s = 11 -> 1.0 : (s' = 12);
+	[] s = 12 -> 1.0 : (s' = 7);
+	[] s = 8 -> 1.0 : (s' = 13);
+	[] s = 13 -> 1.0 : (s' = 14);
+	[] s = 14 -> 0.0 : (s' = 15) + 1.0 : (s' = 16);
+	[] s = 16 -> 1.0 : (s' = 17);
+	[] s = 17 -> 1.0 : (s' = 18);
+	[] s = 18 -> 1.0 : (s' = 4);
+	[] s = 15 -> 1.0 : (s' = 4);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 16]
+PRISM
+=====
+
+Version: 4.5
+Date: Tue Dec 27 14:23:07 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=16 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=16 ]
+
+Building model...
+
+Warning: Update 1 of command 14 of module "LMain_test" doesn't do anything ("(s'=15)", line 20, column 28)
+
+Computing reachable states...
+
+Reachability (BFS): 12 iterations in 0.00 seconds (average 0.000083, setup 0.00)
+
+Time for model construction: 0.019 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      18 (1 initial)
+Transitions: 20
+
+Transition matrix: 64 nodes (6 terminal), 20 minterms, vars: 5r/5c
+
+Prob0: 10 iterations in 0.00 seconds (average 0.000100, setup 0.00)
+
+Prob1: 3 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+yes = 12, no = 4, maybe = 2
+
+Computing remaining probabilities...
+Engine: Hybrid
+
+Building hybrid MTBDD matrix... [levels=5, nodes=16] [0.8 KB]
+Adding explicit sparse matrices... [levels=5, num=1, compact] [0.1 KB]
+Creating vector for diagonals... [dist=1, compact] [0.0 KB]
+Creating vector for RHS... [dist=2, compact] [0.1 KB]
+Allocating iteration vectors... [2 x 0.1 KB]
+TOTAL: [1.2 KB]
+
+Starting iterations...
+
+Jacobi: 3 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Value in the initial state: 0.49999999976716936
+
+Time for model checking: 0.003 seconds.
+
+Result: 0.49999999976716936 (value in the initial state)
+Probability for assertion reachability: 0.49999999976716936
+Dependency analysis time: 4ms
+Execution time for probabilistic analysis: 406ms
+Total Execution time: 410ms
+
+real	0m13.860s
+user	0m54.807s
+sys	0m3.744s

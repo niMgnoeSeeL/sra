@@ -1,0 +1,1191 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/
+$class_files: /PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(I)V
+$input_params: v1
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1//branch_probability.txt
+/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/
+POLY
+LMain.test(I)V
+/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/
+source in command: "Main.test.*"
+method info: "Main.test(I)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/ -S"Main.test.*" "Main.test(I)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(I)V', 'BB9', 'I24', '31', ['v1', 'v11'])
+('LMain', 'test(I)V', 'BB10', 'I27', '31', ['v1', 'v12'])
+('LMain', 'test(I)V', 'BB11', 'I30', '31', ['v1', 'v13'])
+('LMain', 'test(I)V', 'BB12', 'I33', '31', ['v1', 'v14'])
+('LMain', 'test(I)V', 'BB13', 'I36', '31', ['v1', 'v15'])
+('LMain', 'test(I)V', 'BB14', 'I39', '31', ['v1', 'v16'])
+('LMain', 'test(I)V', 'BB15', 'I42', '32', ['v17', 'v18'])
+info: ('Main', 'test(I)V', 'BB9', 'I24')
+vcon: 	    -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+info: ('Main', 'test(I)V', 'BB9', 'I24')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB9', 'I24')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB9', 'I24')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB9', 'I24')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB9', 'I24')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB9', 'I24')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB15', 'I42')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v17 = 0
+info: ('Main', 'test(I)V', 'BB10', 'I27')
+vcon: 	    -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB15', 'I42')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v17 = 0
+info: ('Main', 'test(I)V', 'BB11', 'I30')
+vcon: 	    -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+info: ('Main', 'test(I)V', 'BB15', 'I42')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v17 = 0
+info: ('Main', 'test(I)V', 'BB12', 'I33')
+vcon: 	    -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB15', 'I42')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v17 = 0
+info: ('Main', 'test(I)V', 'BB13', 'I36')
+vcon: 	    -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+info: ('Main', 'test(I)V', 'BB15', 'I42')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(03.27-31: syntax error, unexpected number, expecting )
+F20221229 16:43:13.619299 1311072 Driver.cpp:48] Check failed: 0 == res (0 vs. 1) Syntax error
+*** Check failure stack trace: ***
+    @     0x7f15c4fef724  google::LogMessage::Fail()
+    @     0x7f15c4fef670  google::LogMessage::SendToLog()
+    @     0x7f15c4feee9b  google::LogMessage::Flush()
+    @     0x7f15c4ff2882  google::LogMessageFatal::~LogMessageFatal()
+    @     0x7f15c551b6fc  Vlab::Driver::Parse()
+    @     0x7f15c552cb99  Java_vlab_cs_ucsb_edu_DriverProxy_isSatisfiable
+    @     0x7f176d017ec7  (unknown)
+timeout: the monitored command dumped core
+Aborted
+,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v17 = 0
+info: ('Main', 'test(I)V', 'BB14', 'I39')
+vcon: 	    -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+info: ('Main', 'test(I)V', 'BB15', 'I42')
+vcon: 	    -1FrameParameterv(0,1103017075)v1ⁱⁿ +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v18 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v15 +10000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v13 +100 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v8 +11 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v6 +1001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v4 +100001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v3 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v5 +10001 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v7 +101 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v9 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v12 +10 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v14 +1000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v16 +100000 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1103017075)v17 = 0
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB2', 'I7', '716', ['v6', 'v5'])
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB3', 'I12', '716', ['v8', 'v9'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB2', 'I5', '3030', ['v4', 'v5'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB8', 'I17', '3036', ['v7', 'v5'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB1', 'I2', '1536', ['v1', 'v2'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB3', 'I7', '1539', ['v1', 'v4'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB6', 'I14', '1542', ['v6', 'v7'])
+('Ljava/util/Collections', 'unmodifiableList(Ljava/util/List;)Ljava/util/List;', 'BB1', 'I3', '1190', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB2', 'I3', '781', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB4', 'I7', '781', ['v5', 'v4'])
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/ yes
+info: 
+Main.java:31
+(or (= (+ (- var2) 100000 ) 0) (= (+ (- var2) 100000 ) 0) ),
+(or (= (+ (- var2) 100000 ) 0) (= (+ (- var2) 100000 ) 0) )
+Main.java:31
+[(or (= (+ (- var2) 100000 ) 0) (= (+ (- var2) 100000 ) 0) )]
+info: 
+Main.java:32
+(= (+ (- var1)) 0),(= (+ (- var2)) 0),
+(= (+ (- var1)) 0)
+(= (+ (- var2)) 0)
+Main.java:32
+[(= (+ (- var1)) 0), (= (+ (- var2)) 0)]
+SourceLine = Main.java:32, Cons = [(= (+ (- var1)) 0), (= (+ (- var2)) 0)]
+SourceLine = Main.java:31, Cons = [(or (= (+ (- var2) 100000 ) 0) (= (+ (- var2) 100000 ) 0) )]
+/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/Main.java
+Class Name: Main
+(((((i == 1) || (i == 10)) || (i == 100)) || (i == 1000)) || (i == 10000)) || (i == 100000)
+(/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1/Main.java:31)
+(declare-fun i () Int)
+(assert (or (or (or (or (or (= i 1) (= i 10)) (= i 100)) (= i 1000)) (= i 10000)) ))
+(assert (or (= (+ (- i == 10000) 100000 ) 0) (= (+ (- i == 10000) 100000 ) 0) ))
+(check-sat)
+
+
+('Analysis time without Interval analysis: ', 0.895179033279419)
+('Analysis time: ', 3.5527899265289307)
+SMDEBUG::collect-branch-probability.py::3.55580401421 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 3s
+Constructing heap graph: 0s
+Call graph stats:
+  Nodes: 3330
+  Edges: 10719
+  Methods: 3299
+  Bytecode Bytes: 195187
+Root --> #Classes : 1  #Methods : 2
+#Classes : 1   #Methods : 2
+ABC library loaded properly
+LMain.test(I)V
+LMain.main([Ljava/lang/String;)V
+Number of Classes: 1
+Number of Methods: 2
+Dependency analysis started ...
+
+=============================
+
+conditional branch(ne, to iindex=47) 1,16
+ifv1!
+
+=============================
+
+14:
+if v1 != v16 
+Branch condition:14
+FALSE node: 15
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+
+=============================
+
+conditional branch(eq, to iindex=40) 1,15
+
+=============================
+
+13:
+if v1 == v15 
+Branch condition:13
+FALSE node: 14
+19
+return 
+20
+
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+14:
+if v1 != v16 
+Branch condition:14
+FALSE node: 15
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+
+=============================
+
+conditional branch(eq, to iindex=40) 1,12
+
+=============================
+
+13:
+if v1 == v15 
+Branch condition:13
+FALSE node: 14
+19
+return 
+20
+
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+10:
+if v1 == v12 
+Branch condition:10
+FALSE node: 11
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+12
+if v1 == v14 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+13
+if v1 == v15 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14:
+if v1 != v16 
+Branch condition:14
+FALSE node: 15
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+
+=============================
+
+conditional branch(eq, to iindex=40) 1,11
+
+=============================
+
+13:
+if v1 == v15 
+Branch condition:13
+FALSE node: 14
+19
+return 
+20
+
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+9:
+if v1 == v11 
+Branch condition:9
+FALSE node: 10
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+11
+if v1 == v13 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+12
+if v1 == v14 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+13
+if v1 == v15 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+10:
+if v1 == v12 
+Branch condition:10
+FALSE node: 11
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+12
+if v1 == v14 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+13
+if v1 == v15 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14:
+if v1 != v16 
+Branch condition:14
+FALSE node: 15
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+
+=============================
+
+conditional branch(eq, to iindex=40) 1,14
+
+=============================
+
+13:
+if v1 == v15 
+Branch condition:13
+FALSE node: 14
+19
+return 
+20
+
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+9:
+if v1 == v11 
+Branch condition:9
+FALSE node: 10
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+11
+if v1 == v13 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+12
+if v1 == v14 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+13
+if v1 == v15 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+10:
+if v1 == v12 
+Branch condition:10
+FALSE node: 11
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+12
+if v1 == v14 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+13
+if v1 == v15 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+12:
+if v1 == v14 
+Branch condition:12
+FALSE node: 13
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14:
+if v1 != v16 
+Branch condition:14
+FALSE node: 15
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+
+=============================
+
+conditional branch(eq, to iindex=40) 1,13
+
+=============================
+
+13:
+if v1 == v15 
+Branch condition:13
+FALSE node: 14
+19
+return 
+20
+
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+9:
+if v1 == v11 
+Branch condition:9
+FALSE node: 10
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+11
+if v1 == v13 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+12
+if v1 == v14 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+13
+if v1 == v15 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+10:
+if v1 == v12 
+Branch condition:10
+FALSE node: 11
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+12
+if v1 == v14 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+13
+if v1 == v15 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+12:
+if v1 == v14 
+Branch condition:12
+FALSE node: 13
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+11:
+if v1 == v13 
+Branch condition:11
+FALSE node: 12
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+13
+if v1 == v15 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14
+if v1 != v16 
+19
+return 
+15
+v17 = LMain.$assertionsDisabled if v17 != v18 
+14:
+if v1 != v16 
+Branch condition:14
+FALSE node: 15
+19
+return 
+20
+
+16
+19 = new <Application,Ljava/lang/AssertionError>@142 
+17
+v19.<init>() 
+18
+throw 19 
+Bytecode : conditional branch(eq, to iindex=40) 1,15
+Source line number = 31
+conditional branch(ne, to iindex=47) 1,16
+conditional branch(eq, to iindex=40) 1,15
+conditional branch(ne, to iindex=47) 17,18
+19 = new <Application,Ljava/lang/AssertionError>@142
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 19 @146 exception:20
+throw 19
+return
+Source line number = 36
+goto (from iindex= 16 to iindex = 22)
+goto (from iindex= 13 to iindex = 22)
+goto (from iindex= 19 to iindex = 22)
+conditional branch(eq, to iindex=40) 1,12
+conditional branch(eq, to iindex=40) 1,11
+conditional branch(eq, to iindex=40) 1,14
+conditional branch(eq, to iindex=40) 1,13
+goto (from iindex= 7 to iindex = 22)
+goto (from iindex= 10 to iindex = 22)
+switch 1 [1->2,10->5,100->8,1000->11,10000->14,100000->17]
+goto (from iindex= 4 to iindex = 22)
+Bytecode : conditional branch(eq, to iindex=40) 1,11
+Source line number = 31
+conditional branch(ne, to iindex=47) 1,16
+conditional branch(eq, to iindex=40) 1,15
+conditional branch(ne, to iindex=47) 17,18
+19 = new <Application,Ljava/lang/AssertionError>@142
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 19 @146 exception:20
+throw 19
+return
+Source line number = 36
+goto (from iindex= 16 to iindex = 22)
+goto (from iindex= 13 to iindex = 22)
+goto (from iindex= 19 to iindex = 22)
+conditional branch(eq, to iindex=40) 1,12
+conditional branch(eq, to iindex=40) 1,11
+conditional branch(eq, to iindex=40) 1,14
+conditional branch(eq, to iindex=40) 1,13
+goto (from iindex= 7 to iindex = 22)
+goto (from iindex= 10 to iindex = 22)
+switch 1 [1->2,10->5,100->8,1000->11,10000->14,100000->17]
+goto (from iindex= 4 to iindex = 22)
+Bytecode : conditional branch(eq, to iindex=40) 1,12
+Source line number = 31
+conditional branch(ne, to iindex=47) 1,16
+conditional branch(eq, to iindex=40) 1,15
+conditional branch(ne, to iindex=47) 17,18
+19 = new <Application,Ljava/lang/AssertionError>@142
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 19 @146 exception:20
+throw 19
+return
+Source line number = 36
+goto (from iindex= 16 to iindex = 22)
+goto (from iindex= 13 to iindex = 22)
+goto (from iindex= 19 to iindex = 22)
+conditional branch(eq, to iindex=40) 1,12
+conditional branch(eq, to iindex=40) 1,11
+conditional branch(eq, to iindex=40) 1,14
+conditional branch(eq, to iindex=40) 1,13
+goto (from iindex= 7 to iindex = 22)
+goto (from iindex= 10 to iindex = 22)
+switch 1 [1->2,10->5,100->8,1000->11,10000->14,100000->17]
+goto (from iindex= 4 to iindex = 22)
+Bytecode : conditional branch(eq, to iindex=40) 1,14
+Source line number = 31
+conditional branch(ne, to iindex=47) 1,16
+conditional branch(eq, to iindex=40) 1,15
+conditional branch(ne, to iindex=47) 17,18
+19 = new <Application,Ljava/lang/AssertionError>@142
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 19 @146 exception:20
+throw 19
+return
+Source line number = 36
+goto (from iindex= 16 to iindex = 22)
+goto (from iindex= 13 to iindex = 22)
+goto (from iindex= 19 to iindex = 22)
+conditional branch(eq, to iindex=40) 1,12
+conditional branch(eq, to iindex=40) 1,11
+conditional branch(eq, to iindex=40) 1,14
+conditional branch(eq, to iindex=40) 1,13
+goto (from iindex= 7 to iindex = 22)
+goto (from iindex= 10 to iindex = 22)
+switch 1 [1->2,10->5,100->8,1000->11,10000->14,100000->17]
+goto (from iindex= 4 to iindex = 22)
+Bytecode : conditional branch(eq, to iindex=40) 1,13
+Source line number = 31
+conditional branch(ne, to iindex=47) 1,16
+conditional branch(eq, to iindex=40) 1,15
+conditional branch(ne, to iindex=47) 17,18
+19 = new <Application,Ljava/lang/AssertionError>@142
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 19 @146 exception:20
+throw 19
+return
+Source line number = 36
+goto (from iindex= 16 to iindex = 22)
+goto (from iindex= 13 to iindex = 22)
+goto (from iindex= 19 to iindex = 22)
+conditional branch(eq, to iindex=40) 1,12
+conditional branch(eq, to iindex=40) 1,11
+conditional branch(eq, to iindex=40) 1,14
+conditional branch(eq, to iindex=40) 1,13
+goto (from iindex= 7 to iindex = 22)
+goto (from iindex= 10 to iindex = 22)
+switch 1 [1->2,10->5,100->8,1000->11,10000->14,100000->17]
+goto (from iindex= 4 to iindex = 22)
+Bytecode : conditional branch(ne, to iindex=47) 1,16
+Source line number = 31
+conditional branch(ne, to iindex=47) 1,16
+conditional branch(eq, to iindex=40) 1,15
+conditional branch(ne, to iindex=47) 17,18
+19 = new <Application,Ljava/lang/AssertionError>@142
+invokespecial < Application, Ljava/lang/AssertionError, <init>()V > 19 @146 exception:20
+throw 19
+return
+Source line number = 36
+goto (from iindex= 16 to iindex = 22)
+goto (from iindex= 13 to iindex = 22)
+goto (from iindex= 19 to iindex = 22)
+conditional branch(eq, to iindex=40) 1,12
+conditional branch(eq, to iindex=40) 1,11
+conditional branch(eq, to iindex=40) 1,14
+conditional branch(eq, to iindex=40) 1,13
+goto (from iindex= 7 to iindex = 22)
+goto (from iindex= 10 to iindex = 22)
+switch 1 [1->2,10->5,100->8,1000->11,10000->14,100000->17]
+goto (from iindex= 4 to iindex = 22)
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/jbmc-regression-modified/lookupswitch1//branch_probability.txt
+[ { "id" : "[ testLMPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1" : "Implicit" } },
+{ "id" : "[ testLMPI#1 ] LocalLoad(I,0) Switch(20,1,2,10,5,100,8,1000,11,10000,14,100000,17) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#3" : "Implicit" , "testLMPI#4" : "Implicit"  "testLMPI#5" : "Implicit"  "testLMPI#6" : "Implicit"  "testLMPI#7" : "Implicit"  "testLMPI#8" : "Implicit"  "testLMPI#2" : "Implicit" } },
+{ "id" : "[ testLMPI#2 ] Constant(I,2) LocalStore(I,1) Goto(22) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Jump" } },
+{ "id" : "[ testLMPI#3 ] Constant(I,11) LocalStore(I,1) Goto(22) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Jump" } },
+{ "id" : "[ testLMPI#4 ] Constant(I,101) LocalStore(I,1) Goto(22) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Jump" } },
+{ "id" : "[ testLMPI#5 ] Constant(I,1001) LocalStore(I,1) Goto(22) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Jump" } },
+{ "id" : "[ testLMPI#6 ] Constant(I,10001) LocalStore(I,1) Goto(22) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Jump" } },
+{ "id" : "[ testLMPI#7 ] Constant(I,100001) LocalStore(I,1) Goto(22) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Jump" } },
+{ "id" : "[ testLMPI#8 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Implicit" } },
+{ "id" : "[ testLMPI#9 ] Constant(I,-1) LocalStore(I,1) LocalLoad(I,0) Constant(I,1) ConditionalBranch(I,eq,40) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 == v11", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#15" : "TRUE", "testLMPI#10" : "FALSE" }} },
+{ "id" : "[ testLMPI#10 ] LocalLoad(I,0) Constant(I,10) ConditionalBranch(I,eq,40) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 == v12", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#15" : "TRUE", "testLMPI#11" : "FALSE" }} },
+{ "id" : "[ testLMPI#11 ] LocalLoad(I,0) Constant(I,100) ConditionalBranch(I,eq,40) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 == v13", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#15" : "TRUE", "testLMPI#12" : "FALSE" }} },
+{ "id" : "[ testLMPI#12 ] LocalLoad(I,0) Constant(I,1000) ConditionalBranch(I,eq,40) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 == v14", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#15" : "TRUE", "testLMPI#13" : "FALSE" }} },
+{ "id" : "[ testLMPI#13 ] LocalLoad(I,0) Constant(I,10000) ConditionalBranch(I,eq,40) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 == v15", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#15" : "TRUE", "testLMPI#14" : "FALSE" }} },
+{ "id" : "[ testLMPI#14 ] LocalLoad(I,0) Constant(I,100000) ConditionalBranch(I,ne,47) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "true", "ins_to_translate" : "if v1 != v16", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#19" : "TRUE", "testLMPI#15" : "FALSE" }} },
+{ "id" : "[ testLMPI#15 ] Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,47) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v17 != v18", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#19" : "TRUE", "testLMPI#16" : "FALSE" }} },
+{ "id" : "[ testLMPI#16 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#17" : "Implicit" } },
+{ "id" : "[ testLMPI#17 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#18" : "Invoke" } },
+{ "id" : "[ testLMPI#18 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Implicit"} } },
+{ "id" : "[ testLMPI#19 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Return" } },
+{ "id" : "[ testLMPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+testLMPI#15
+ "testLMPI#16" : "FALSE"
+Instruction to translate: not (not (not (not (not (if v1 == v11) and not (if v1 == v12)) and not (if v1 == v13)) and not (if v1 == v14)) and not (if v1 == v15)) and not (if v1 != v16)
+[v1, ifv1!]
+(declare-fun v12() Int)
+(declare-fun v11() Int)
+(declare-fun v14() Int)
+(declare-fun v13() Int)
+(declare-fun v16() Int)
+(declare-fun v1() Int)
+(declare-fun v15() Int)
+(assert (not (= v1 1 )))
+(assert (not (= v1 10 )))
+(assert (not (= v1 100 )))
+(assert (not (= v1 1000 )))
+(assert (not (= v1 10000 )))
+(assert (= v1 100000 ))
+(check-sat)
+Constraint solving time: 0.00259545
+Model counting time: 0.004930437
+Constraint solving time: 3.42301E-4
+Model counting time: 5.63335E-4
+Probability of true branch: 1.0
+Probability of false branch: 0.0
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "1.0"];
+	1 -> 2[label= "0.0"];
+	4 -> 5[label= "1.0"];
+	3 -> 5[label= "1.0"];
+	2 -> 5[label= "1.0"];
+	6 -> 5[label= "1.0"];
+	7 -> 5[label= "1.0"];
+	8 -> 5[label= "1.0"];
+	9 -> 5[label= "1.0"];
+	10 -> 11[label= "0.0"];
+	10 -> 12[label= "1.0"];
+	12 -> 13[label= "1.0"];
+	13 -> 14[label= "1.0"];
+	14 -> 15[label= "1.0"];
+	11 -> 15[label= "1.0"];
+	5 -> 11[label= "1.0"];
+	5 -> 10[label= "0.0"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..21] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 1.0 : (s' = 2) + 0.0 : (s' = 3);
+	[] s = 4 -> 1.0 : (s' = 5);
+	[] s = 3 -> 1.0 : (s' = 5);
+	[] s = 2 -> 1.0 : (s' = 5);
+	[] s = 6 -> 1.0 : (s' = 5);
+	[] s = 7 -> 1.0 : (s' = 5);
+	[] s = 8 -> 1.0 : (s' = 5);
+	[] s = 9 -> 1.0 : (s' = 5);
+	[] s = 10 -> 0.0 : (s' = 11) + 1.0 : (s' = 12);
+	[] s = 12 -> 1.0 : (s' = 13);
+	[] s = 13 -> 1.0 : (s' = 14);
+	[] s = 14 -> 1.0 : (s' = 15);
+	[] s = 11 -> 1.0 : (s' = 15);
+	[] s = 5 -> 1.0 : (s' = 11) + 0.0 : (s' = 10);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 12]
+PRISM
+=====
+
+Version: 4.5
+Date: Thu Dec 29 16:43:19 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=12 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=12 ]
+
+Building model...
+
+Warning: Update 2 of command 2 of module "LMain_test" doesn't do anything ("(s'=3)", line 8, column 44)
+
+Warning: Update 1 of command 10 of module "LMain_test" doesn't do anything ("(s'=11)", line 16, column 28)
+
+Warning: Update 2 of command 15 of module "LMain_test" doesn't do anything ("(s'=10)", line 21, column 45)
+
+Computing reachable states...
+
+Reachability (BFS): 6 iterations in 0.00 seconds (average 0.000000, setup 0.00)
+
+Time for model construction: 0.012 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      6 (1 initial)
+Transitions: 6
+
+Transition matrix: 24 nodes (2 terminal), 6 minterms, vars: 5r/5c
+
+yes = 0, no = 6, maybe = 0
+
+Value in the initial state: 0.0
+
+Time for model checking: 0.002 seconds.
+
+Result: 0.0 (value in the initial state)
+Probability for assertion reachability: 0.0
+Dependency analysis time: 11ms
+Execution time for probabilistic analysis: 278ms
+Total Execution time: 289ms
+
+real	0m11.852s
+user	0m47.314s
+sys	0m3.043s

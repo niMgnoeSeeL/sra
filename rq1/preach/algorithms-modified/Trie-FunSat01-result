@@ -1,0 +1,1124 @@
+$dir_of_source_code: /PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/
+$class_files: /PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/Main.class
+$lib_files: /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+$domain: POLY
+$method_sign: LMain.test(I)V
+$input_params: v1
+$prism_binary: /PReach/prism-4.5-linux64/bin/prism
+$branch_prob_file: /PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01//branch_probability.txt
+cp: cannot stat 'access.txt': No such file or directory
+cp: cannot stat 'accesssh.txt': No such file or directory
+cp: cannot stat 'access.txt': No such file or directory
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/
+POLY
+LMain.test(I)V
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/
+source in command: "Main.test.*"
+method info: "Main.test(I)V"
+cd /PReach/JANA/scala-tools && rm *.txt
+
+java -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib:/usr/local:/usr/local/lib -jar AInterp.jar -a inter-topdown --domain POLY --context 0-CFA --obj_rep ALLOCATION --out results --index 0 -D/PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/ -S"Main.test.*" "Main.test(I)V"
+filenames:  getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt set.txt put.txt access$100.txt length.txt access$000.txt access$002.txt put2.txt delete.txt get.txt
+('copy', 'getSecurityManager.txt')
+('copy', 'getClassLoader.txt')
+('copy', 'getName.txt')
+('copy', 'file_branch_interval.txt')
+('copy', 'checkClassLoaderPermission.txt')
+('copy', 'doubleToLongBits.txt')
+('copy', 'test.txt')
+('copy', 'floatToIntBits.txt')
+('copy', 'desiredAssertionStatus.txt')
+('copy', 'needsClassLoaderPermissionCheck.txt')
+('copy', 'unmodifiableList.txt')
+('copy', 'fillInStackTrace.txt')
+('copy', 'getClassLoader0.txt')
+('copy', 'set.txt')
+('copy', 'put.txt')
+('copy', 'access$100.txt')
+('copy', 'length.txt')
+('copy', 'access$000.txt')
+('copy', 'access$002.txt')
+('copy', 'put2.txt')
+('copy', 'delete.txt')
+('copy', 'get.txt')
+python collect-interval-analysis.py /PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/ getSecurityManager.txt getClassLoader.txt getName.txt checkClassLoaderPermission.txt doubleToLongBits.txt test.txt floatToIntBits.txt desiredAssertionStatus.txt needsClassLoaderPermissionCheck.txt unmodifiableList.txt fillInStackTrace.txt getClassLoader0.txt set.txt put.txt access$100.txt length.txt access$000.txt access$002.txt put2.txt delete.txt get.txt
+('Ljava/lang/ClassLoader', 'getClassLoader(Ljava/lang/Class;)Ljava/lang/ClassLoader;', 'BB1', 'I2', '1548', ['v1', 'v3'])
+('Ljava/lang/Class', 'getName()Ljava/lang/String;', 'BB2', 'I5', '581', ['v3', 'v4'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB2', 'I4', '1557', ['v5', 'v6'])
+('Ljava/lang/ClassLoader', 'checkClassLoaderPermission(Ljava/lang/ClassLoader;Ljava/lang/Class;)V', 'BB5', 'I12', '1560', ['v10', 'v11'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB2', 'I9', '811', ['v7', 'v8'])
+('Ljava/lang/Double', 'doubleToLongBits(D)J', 'BB3', 'I16', '811', ['v12', 'v8'])
+('LMain', 'test(I)V', 'BB14', 'I47', '230', ['v33', 'v8'])
+info: ('Main', 'test(I)V', 'BB14', 'I47')
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v29 +7 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v26 +6 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v23 +5 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v20 +4 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v17 +3 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v14 +2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v11 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v6 +8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v9 +83 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v12 +86 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v15 +67 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v18 +79 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v21 +77 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v24 +80 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v27 +50 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v30 +48 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,254918854)v33 = 0
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB2', 'I7', '716', ['v6', 'v5'])
+('Ljava/lang/Float', 'floatToIntBits(F)I', 'BB3', 'I12', '716', ['v8', 'v9'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB2', 'I5', '3030', ['v4', 'v5'])
+('Ljava/lang/Class', 'desiredAssertionStatus()Z', 'BB8', 'I17', '3036', ['v7', 'v5'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB1', 'I2', '1536', ['v1', 'v2'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB3', 'I7', '1539', ['v1', 'v4'])
+('Ljava/lang/ClassLoader', 'needsClassLoaderPermissionCheck(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z', 'BB6', 'I14', '1542', ['v6', 'v7'])
+('Ljava/util/Collections', 'unmodifiableList(Ljava/util/List;)Ljava/util/List;', 'BB1', 'I3', '1190', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB2', 'I3', '781', ['v3', 'v4'])
+('Ljava/lang/Throwable', 'fillInStackTrace()Ljava/lang/Throwable;', 'BB4', 'I7', '781', ['v5', 'v4'])
+('LMain$CharArray', 'set(IC)V', 'BB2', 'I3', '33', ['v2', 'v5'])
+info: ('Main$CharArray', 'set(IC)V', 'BB2', 'I3')
+vcon: 	 ∧  1FrameAccessPath(0,1582277082)453707749 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1582277082)v5 = 0
+vcon: 	 ∧  -1FrameParameterv(0,1582277082)v3ⁱⁿ +83 = 0
+vcon: 	 ∧  -1FrameParameterv(0,1582277082)v2ⁱⁿ = 0
+info: ('Main$CharArray', 'set(IC)V', 'BB2', 'I3')
+vcon: 	    3FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +83 = 0
+vcon: 	 ∧  -1FrameParameterv(0,1582277082)v3ⁱⁿ +86 >= 0
+vcon: 	 ∧  -3FrameHeapRegister(-1,-1)215184885 +83FrameParameterv(0,1582277082)v3ⁱⁿ -6889 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1582277082)453707749 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1582277082)v5 = 0
+info: ('Main$CharArray', 'set(IC)V', 'BB2', 'I3')
+vcon: 	    -19FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +105 >= 0
+vcon: 	 ∧  -11FrameHeapRegister(-1,-1)215184885 +793FrameParameterv(0,1582277082)v2ⁱⁿ +40FrameParameterv(0,1582277082)v3ⁱⁿ -3320 >= 0
+vcon: 	 ∧  8FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -83 >= 0
+vcon: 	 ∧  3FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +83 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1582277082)453707749 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1582277082)v5 = 0
+info: ('Main$CharArray', 'set(IC)V', 'BB2', 'I3')
+vcon: 	 ∧  -31FrameHeapRegister(-1,-1)215184885 +36FrameParameterv(0,1582277082)v2ⁱⁿ -3FrameParameterv(0,1582277082)v3ⁱⁿ +2795 >= 0
+vcon: 	 ∧  -12FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -43 >= 0
+vcon: 	 ∧  -7FrameParameterv(0,1582277082)v2ⁱⁿ -2FrameParameterv(0,1582277082)v3ⁱⁿ +179 >= 0
+vcon: 	 ∧  8FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -83 >= 0
+vcon: 	 ∧  -11FrameHeapRegister(-1,-1)215184885 +793FrameParameterv(0,1582277082)v2ⁱⁿ +40FrameParameterv(0,1582277082)v3ⁱⁿ -3320 >= 0
+vcon: 	 ∧  3FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +83 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1582277082)453707749 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1582277082)v5 = 0
+info: ('Main$CharArray', 'set(IC)V', 'BB2', 'I3')
+vcon: 	 ∧  -1FrameHeapRegister(-1,-1)215184885 -2FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +171 >= 0
+vcon: 	 ∧  -5FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -57 >= 0
+vcon: 	 ∧  -3FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +89 >= 0
+vcon: 	 ∧  8FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -83 >= 0
+vcon: 	 ∧  -31FrameHeapRegister(-1,-1)215184885 +36FrameParameterv(0,1582277082)v2ⁱⁿ -3FrameParameterv(0,1582277082)v3ⁱⁿ +2795 >= 0
+vcon: 	 ∧  3FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +83 >= 0
+vcon: 	 ∧  -11FrameHeapRegister(-1,-1)215184885 +793FrameParameterv(0,1582277082)v2ⁱⁿ +40FrameParameterv(0,1582277082)v3ⁱⁿ -3320 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1582277082)453707749 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1582277082)v5 = 0
+info: ('Main$CharArray', 'set(IC)V', 'BB2', 'I3')
+vcon: 	 ∧  -16FrameHeapRegister(-1,-1)215184885 +3FrameParameterv(0,1582277082)v2ⁱⁿ -6FrameParameterv(0,1582277082)v3ⁱⁿ +1841 >= 0
+vcon: 	 ∧  -13FrameParameterv(0,1582277082)v2ⁱⁿ +3FrameParameterv(0,1582277082)v3ⁱⁿ -175 >= 0
+vcon: 	 ∧  -3FrameParameterv(0,1582277082)v2ⁱⁿ -2FrameParameterv(0,1582277082)v3ⁱⁿ +175 >= 0
+vcon: 	 ∧  8FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -83 >= 0
+vcon: 	 ∧  -31FrameHeapRegister(-1,-1)215184885 +36FrameParameterv(0,1582277082)v2ⁱⁿ -3FrameParameterv(0,1582277082)v3ⁱⁿ +2795 >= 0
+vcon: 	 ∧  3FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +83 >= 0
+vcon: 	 ∧  -11FrameHeapRegister(-1,-1)215184885 +793FrameParameterv(0,1582277082)v2ⁱⁿ +40FrameParameterv(0,1582277082)v3ⁱⁿ -3320 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1582277082)453707749 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1582277082)v5 = 0
+info: ('Main$CharArray', 'set(IC)V', 'BB2', 'I3')
+vcon: 	 ∧  -30FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +230 >= 0
+vcon: 	 ∧  17FrameParameterv(0,1582277082)v2ⁱⁿ +4FrameParameterv(0,1582277082)v3ⁱⁿ -302 >= 0
+vcon: 	 ∧  -16FrameHeapRegister(-1,-1)215184885 +3FrameParameterv(0,1582277082)v2ⁱⁿ -6FrameParameterv(0,1582277082)v3ⁱⁿ +1841 >= 0
+vcon: 	 ∧  -3FrameParameterv(0,1582277082)v2ⁱⁿ -2FrameParameterv(0,1582277082)v3ⁱⁿ +175 >= 0
+vcon: 	 ∧  -31FrameHeapRegister(-1,-1)215184885 +36FrameParameterv(0,1582277082)v2ⁱⁿ -3FrameParameterv(0,1582277082)v3ⁱⁿ +2795 >= 0
+vcon: 	 ∧  8FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -83 >= 0
+vcon: 	 ∧  -11FrameHeapRegister(-1,-1)215184885 +793FrameParameterv(0,1582277082)v2ⁱⁿ +40FrameParameterv(0,1582277082)v3ⁱⁿ -3320 >= 0
+vcon: 	 ∧  3FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +83 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1582277082)453707749 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1582277082)v5 = 0
+info: ('Main$CharArray', 'set(IC)V', 'BB2', 'I3')
+vcon: 	 ∧  2FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -62 >= 0
+vcon: 	 ∧  -16FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +160 >= 0
+vcon: 	 ∧  -3FrameParameterv(0,1582277082)v2ⁱⁿ -2FrameParameterv(0,1582277082)v3ⁱⁿ +175 >= 0
+vcon: 	 ∧  8FrameParameterv(0,1582277082)v2ⁱⁿ +1FrameParameterv(0,1582277082)v3ⁱⁿ -83 >= 0
+vcon: 	 ∧  -16FrameHeapRegister(-1,-1)215184885 +3FrameParameterv(0,1582277082)v2ⁱⁿ -6FrameParameterv(0,1582277082)v3ⁱⁿ +1841 >= 0
+vcon: 	 ∧  3FrameParameterv(0,1582277082)v2ⁱⁿ -1FrameParameterv(0,1582277082)v3ⁱⁿ +83 >= 0
+vcon: 	 ∧  -31FrameHeapRegister(-1,-1)215184885 +36FrameParameterv(0,1582277082)v2ⁱⁿ -3FrameParameterv(0,1582277082)v3ⁱⁿ +2795 >= 0
+vcon: 	 ∧  17FrameParameterv(0,1582277082)v2ⁱⁿ +4FrameParameterv(0,1582277082)v3ⁱⁿ -302 >= 0
+vcon: 	 ∧  -11FrameHeapRegister(-1,-1)215184885 +793FrameParameterv(0,1582277082)v2ⁱⁿ +40FrameParameterv(0,1582277082)v3ⁱⁿ -3320 >= 0
+vcon: 	 ∧  1FrameAccessPath(0,1582277082)453707749 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1582277082)v5 = 0
+('LMain', 'put(LMain$CharArray;I)V', 'BB1', 'I2', '97', ['v3', 'v5'])
+info: ('Main', 'put(LMain$CharArray;I)V', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,1970528559)v5 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,1970528559)v7 = 0
+('LMain', 'put2(LMain$Node;LMain$CharArray;II)LMain$Node;', 'BB1', 'I2', '102', ['v2', 'v7'])
+('LMain', 'put2(LMain$Node;LMain$CharArray;II)LMain$Node;', 'BB6', 'I11', '103', ['v5', 'v12'])
+('LMain', 'put2(LMain$Node;LMain$CharArray;II)LMain$Node;', 'BB8', 'I15', '104', ['v25', 'v26'])
+info: ('Main', 'put2(LMain$Node;LMain$CharArray;II)LMain$Node;', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,337545117)v20 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,337545117)v5ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v26 -1 = 0
+info: ('Main', 'put2(LMain$Node;LMain$CharArray;II)LMain$Node;', 'BB6', 'I11')
+vcon: 	    -1FrameRegisterv(0,337545117)v26 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,337545117)v5ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v20 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,337545117)v12 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v12 +8 >= 0
+info: ('Main', 'put2(LMain$Node;LMain$CharArray;II)LMain$Node;', 'BB8', 'I15')
+vcon: 	    -1FrameRegisterv(0,337545117)v26 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,337545117)v5ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v20 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,337545117)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,337545117)v25 +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v25 >= 0
+info: ('Main', 'put2(LMain$Node;LMain$CharArray;II)LMain$Node;', 'BB6', 'I11')
+vcon: 	    -1FrameRegisterv(0,337545117)v26 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,337545117)v5ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v20 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,337545117)v12 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v12 +8 >= 0
+info: ('Main', 'put2(LMain$Node;LMain$CharArray;II)LMain$Node;', 'BB8', 'I15')
+vcon: 	    -1FrameRegisterv(0,337545117)v26 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,337545117)v5ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v20 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,337545117)v12 = 0
+vcon: 	 ∧  1FrameRegisterv(0,337545117)v25 +1 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,337545117)v25 >= 0
+('LMain', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB1', 'I2', '192', ['v2', 'v6'])
+('LMain', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB4', 'I8', '193', ['v4', 'v8'])
+('LMain', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB6', 'I12', '194', ['v21', 'v22'])
+('LMain', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB18', 'I45', '203', ['v28', 'v22'])
+('LMain', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB21', 'I52', '204', ['v35', 'v30'])
+('LMain', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB24', 'I58', '205', ['v33', 'v6'])
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB1', 'I2')
+vcon: 	    -1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB4', 'I8')
+vcon: 	    -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v8 +8 >= 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB6', 'I12')
+vcon: 	    -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v21 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB18', 'I45')
+vcon: 	    -1FrameRegisterv(0,708350323)v28 >= 0
+vcon: 	 ∧  8FrameHeapRegister(-1,-1)-1154036509 -1FrameRegisterv(0,708350323)v8 +8 >= 0
+vcon: 	 ∧  8FrameRegisterv(0,708350323)v28 -1FrameRegisterv(0,708350323)v8 +8 >= 0
+vcon: 	 ∧  8FrameHeapRegister(-1,-1)-1538563619 -1FrameRegisterv(0,708350323)v8 +8 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 >= 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v29 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB21', 'I52')
+vcon: 	    -1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v29 -1FrameRegisterv(0,708350323)v35 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v28 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB24', 'I58')
+vcon: 	    -1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v35 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v28 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB21', 'I52')
+vcon: 	    -1FrameRegisterv(0,708350323)v34 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v34 -1FrameRegisterv(0,708350323)v35 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v28 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB24', 'I58')
+vcon: 	    -1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v34 +1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v35 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v28 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB21', 'I52')
+vcon: 	    -1FrameRegisterv(0,708350323)v34 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v34 -1FrameRegisterv(0,708350323)v35 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v28 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB24', 'I58')
+vcon: 	    1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v34 -2 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v35 +2 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v28 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v16 +1 = 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB21', 'I52')
+vcon: 	    -1FrameRegisterv(0,708350323)v16 +1 = 0
+vcon: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v28 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v34 -1FrameRegisterv(0,708350323)v35 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v35 -1 >= 0
+info: ('Main', 'delete(LMain$Node;LMain$CharArray;I)LMain$Node;', 'BB24', 'I58')
+vcon: 	    -1FrameRegisterv(0,708350323)v16 +1 = 0
+vcThis branch is not considered for model counting! Fifty fifty selectivity!
+F20221227 14:23:56.412302 208719 SymbolTable.cpp:95] Check failed: it != variables_.end() Variable is not found: key.length
+*** Check failure stack trace: ***
+    @     0x7fa770131724  google::LogMessage::Fail()
+    @     0x7fa770131670  google::LogMessage::SendToLog()
+    @     0x7fa770130e9b  google::LogMessage::Flush()
+    @     0x7fa770134882  google::LogMessageFatal::~LogMessageFatal()
+    @     0x7fa76bb084a2  Vlab::Solver::SymbolTable::get_variable()
+    @     0x7fa76bb7c5cf  Vlab::Solver::DependencySlicer::visitQualIdentifier()
+    @     0x7fa76bbfdbee  Vlab::SMT::QualIdentifier::accept()
+    @     0x7fa76bafb2f3  Vlab::SMT::Visitor::visit()
+    @     0x7fa76bafa56a  Vlab::Solver::AstTraverser::visit()
+    @     0x7fa76baf8b13  Vlab::Solver::AstTraverser::visitGe()
+    @     0x7fa76bbf7346  Vlab::SMT::Ge::accept()
+    @     0x7fa76bafb2f3  Vlab::SMT::Visitor::visit()
+    @     0x7fa76bafa56a  Vlab::Solver::AstTraverser::visit()
+    @     0x7fa76bb7c343  Vlab::Solver::DependencySlicer::visitOr()
+    @     0x7fa76bbf554a  Vlab::SMT::Or::accept()
+    @     0x7fa76bafb2f3  Vlab::SMT::Visitor::visit()
+    @     0x7fa76bafa56a  Vlab::Solver::AstTraverser::visit()
+    @     0x7fa76bb7bdc3  Vlab::Solver::DependencySlicer::visitAnd()
+    @     0x7fa76bbf5202  Vlab::SMT::And::accept()
+    @     0x7fa76bafb2f3  Vlab::SMT::Visitor::visit()
+    @     0x7fa76bbf354d  Vlab::SMT::Assert::visit_children()
+    @     0x7fa76bafb326  Vlab::SMT::Visitor::visit_children_of()
+    @     0x7fa76bb7bcf9  Vlab::Solver::DependencySlicer::visitAssert()
+    @     0x7fa76bbf3498  Vlab::SMT::Assert::accept()
+    @     0x7fa76bafb2f3  Vlab::SMT::Visitor::visit()
+    @     0x7fa76bc017db  Vlab::SMT::Visitor::visit_list<>()
+    @     0x7fa76bbf283b  Vlab::SMT::Script::visit_children()
+    @     0x7fa76bafb326  Vlab::SMT::Visitor::visit_children_of()
+    @     0x7fa76baf7f83  Vlab::Solver::AstTraverser::visitScript()
+    @     0x7fa76bb7b451  Vlab::Solver::DependencySlicer::start()
+    @     0x7fa76bad4b44  Vlab::Driver::InitializeSolver()
+    @     0x7fa76bae5bc8  Java_vlab_cs_ucsb_edu_DriverProxy_isSatisfiable
+timeout: the monitored command dumped core
+Aborted
+on: 	 ∧  -1FrameParameterv(0,708350323)v4ⁱⁿ = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v22 -1 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v30 +256 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v28 +1 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v8 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v29 = 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v34 -1FrameRegisterv(0,708350323)v35 = 0
+vcon: 	 ∧  -1FrameRegisterv(0,708350323)v35 +255 >= 0
+vcon: 	 ∧  1FrameRegisterv(0,708350323)v35 -1 >= 0
+('LMain$CharArray', 'get(I)C', 'BB2', 'I3', '38', ['v2', 'v4'])
+info: ('Main$CharArray', 'get(I)C', 'BB2', 'I3')
+vcon: 	 ∧  1FrameAccessPath(0,1269339945)-244052958 < Application, LMain$CharArray, length, <Primordial,I> > -1FrameRegisterv(0,1269339945)v4 = 0
+vcon: 	 ∧  -1FrameParameterv(0,1269339945)v2ⁱⁿ = 0
+
+branch interval analysis done
+timeout 3m java -jar /PReach/BranchSelectivity/target/BranchSelectivity-1.0-SNAPSHOT-jar-with-dependencies.jar /PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/ yes
+info: 
+Main.java:230
+(= (+ (- var1)) 0),(= (+ (- var2)) 0),
+(= (+ (- var1)) 0)
+(= (+ (- var2)) 0)
+Main.java:230
+[(= (+ (- var1)) 0), (= (+ (- var2)) 0)]
+info: 
+Main$CharArray.java:33
+(= (+ (- var1)) 0),(= (+ 1FrameAccessPath453707749 < Application, LMain$CharArray, length, <Primordial,I> > (- var2)) 0),
+(= (+ (- var1)) 0)
+(= (+ 1FrameAccessPath453707749 < Application
+ LMain$CharArray
+ length
+ <Primordial
+I> > (- var2)) 0)
+Main$CharArray.java:33
+[(= (+ (- var1)) 0), (= (+ 1FrameAccessPath453707749 < Application,  LMain$CharArray,  length,  <Primordial, I> > (- var2)) 0)]
+info: 
+Main.java:97
+(or (= (+ (- var2) (- 1) ) 0) (= (+ (- var2) (- 1) ) 0) ),
+(or (= (+ (- var2) (- 1) ) 0) (= (+ (- var2) (- 1) ) 0) )
+Main.java:97
+[(or (= (+ (- var2) (- 1) ) 0) (= (+ (- var2) (- 1) ) 0) )]
+info: 
+Main.java:104
+(or (or (or (or (>= (+ var1 1 ) 0) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ),(or (or (= (+ (- var2) (- 1) ) 0) (= (+ (- var2) (- 1) ) 0) ) (= (+ (- var2) (- 1) ) 0) ),
+(or (or (or (or (>= (+ var1 1 ) 0) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) )
+(or (or (= (+ (- var2) (- 1) ) 0) (= (+ (- var2) (- 1) ) 0) ) (= (+ (- var2) (- 1) ) 0) )
+Main.java:104
+[(or (or (or (or (>= (+ var1 1 ) 0) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ), (or (or (= (+ (- var2) (- 1) ) 0) (= (+ (- var2) (- 1) ) 0) ) (= (+ (- var2) (- 1) ) 0) )]
+info: 
+Main.java:103
+(= (+ (- var1)) 0),(or (or (or (or (>= (+ var2) 0) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ),
+(= (+ (- var1)) 0)
+(or (or (or (or (>= (+ var2) 0) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) )
+Main.java:103
+[(= (+ (- var1)) 0), (or (or (or (or (>= (+ var2) 0) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) )]
+info: 
+Main.java:102
+info: 
+Main.java:192
+info: 
+Main.java:203
+(or (>= (+ (- var1)) 0) (>= (+ (- var1)) 0) ),(= (+ (- var2) (- 1) ) 0),
+(or (>= (+ (- var1)) 0) (>= (+ (- var1)) 0) )
+(= (+ (- var2) (- 1) ) 0)
+Main.java:203
+[(or (>= (+ (- var1)) 0) (>= (+ (- var1)) 0) ), (= (+ (- var2) (- 1) ) 0)]
+info: 
+Main.java:193
+(= (+ (- var1)) 0),(or (or (>= (+ var2) 0) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ),
+(= (+ (- var1)) 0)
+(or (or (>= (+ var2) 0) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) )
+Main.java:193
+[(= (+ (- var1)) 0), (or (or (>= (+ var2) 0) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) )]
+info: 
+Main.java:205
+info: 
+Main.java:194
+(= (+ (- var2) (- 1) ) 0),
+(= (+ (- var2) (- 1) ) 0)
+Main.java:194
+[(= (+ (- var2) (- 1) ) 0)]
+info: 
+Main.java:204
+(>= (+ var1 (- 1) ) 0),(= (+ (- var2) 256 ) 0),
+(>= (+ var1 (- 1) ) 0)
+(= (+ (- var2) 256 ) 0)
+Main.java:204
+[(>= (+ var1 (- 1) ) 0), (= (+ (- var2) 256 ) 0)]
+info: 
+Main$CharArray.java:38
+(= (+ (- var1)) 0),(= (+ (- FrameAccessPath-244052958) < Application, LMain$CharArray, length, <Primordial,I> > (- var2)) 0),
+(= (+ (- var1)) 0)
+(= (+ (- FrameAccessPath-244052958) < Application
+ LMain$CharArray
+ length
+ <Primordial
+I> > (- var2)) 0)
+Main$CharArray.java:38
+[(= (+ (- var1)) 0), (= (+ (- FrameAccessPath-244052958) < Application,  LMain$CharArray,  length,  <Primordial, I> > (- var2)) 0)]
+SourceLine = Main.java:192, Cons = null
+SourceLine = Main$CharArray.java:38, Cons = [(= (+ (- var1)) 0), (= (+ (- FrameAccessPath-244052958) < Application,  LMain$CharArray,  length,  <Primordial, I> > (- var2)) 0)]
+SourceLine = Main$CharArray.java:33, Cons = [(= (+ (- var1)) 0), (= (+ 1FrameAccessPath453707749 < Application,  LMain$CharArray,  length,  <Primordial, I> > (- var2)) 0)]
+SourceLine = Main.java:230, Cons = [(= (+ (- var1)) 0), (= (+ (- var2)) 0)]
+SourceLine = Main.java:194, Cons = [(= (+ (- var2) (- 1) ) 0)]
+SourceLine = Main.java:193, Cons = [(= (+ (- var1)) 0), (or (or (>= (+ var2) 0) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) )]
+SourceLine = Main.java:205, Cons = null
+SourceLine = Main.java:204, Cons = [(>= (+ var1 (- 1) ) 0), (= (+ (- var2) 256 ) 0)]
+SourceLine = Main.java:104, Cons = [(or (or (or (or (>= (+ var1 1 ) 0) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ) (>= (+ (- var1)) 0) ), (or (or (= (+ (- var2) (- 1) ) 0) (= (+ (- var2) (- 1) ) 0) ) (= (+ (- var2) (- 1) ) 0) )]
+SourceLine = Main.java:203, Cons = [(or (>= (+ (- var1)) 0) (>= (+ (- var1)) 0) ), (= (+ (- var2) (- 1) ) 0)]
+SourceLine = Main.java:103, Cons = [(= (+ (- var1)) 0), (or (or (or (or (>= (+ var2) 0) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) ) (>= (+ (- var2) 8 ) 0) )]
+SourceLine = Main.java:102, Cons = null
+SourceLine = Main.java:97, Cons = [(or (= (+ (- var2) (- 1) ) 0) (= (+ (- var2) (- 1) ) 0) )]
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/Main.java
+Class Name: Main
+x == null
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/Main.java:192)
+d == key.length()
+(/PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01/Main.java:193)
+(declare-fun keylength () Int)
+(declare-fun d () Int)
+(assert (= d keylength))
+(assert (= (+ (- d)) 0))
+(assert (or (or (>= (+ key.length) 0) (>= (+ (- key.length) 8 ) 0) ) (>= (+ (- key.length) 8 ) 0) ))
+(check-sat)
+
+
+('Analysis time without Interval analysis: ', 1.6826307773590088)
+('Analysis time: ', 4.952341794967651)
+SMDEBUG::collect-branch-probability.py::4.95665407181 seconds
+PReach Script Writing Starts...
+constructing CG
+Constructing call graph: 5s
+Constructing heap graph: 0s
+Call graph stats:
+  Nodes: 3337
+  Edges: 10731
+  Methods: 3306
+  Bytecode Bytes: 195398
+Root --> #Classes : 1  #Methods : 9
+#Classes : 1   #Methods : 9
+ABC library loaded properly
+LMain.delete(LMain$CharArray;)V
+LMain.<init>()V
+LMain.main([Ljava/lang/String;)V
+LMain.delete(LMain$Node;LMain$CharArray;I)LMain$Node;
+LMain.isEmpty()Z
+LMain.test(I)V
+LMain.size()I
+LMain.put2(LMain$Node;LMain$CharArray;II)LMain$Node;
+LMain.put(LMain$CharArray;I)V
+Number of Classes: 1
+Number of Methods: 9
+Dependency analysis started ...
+
+=============================
+
+invokevirtual < Application, LMain, put(LMain$CharArray;I)V > 3,5,1 @79 exception:32
+
+=============================
+
+Starting Markov Chain analysis ...
+/PReach/preach-benchmarks/sv-comp/algorithms-modified/Trie-FunSat01//branch_probability.txt
+LMain$CharArray.set(IC)V
+LMain$CharArray.set(IC)V
+LMain$CharArray.set(IC)V
+LMain$CharArray.set(IC)V
+LMain$CharArray.set(IC)V
+LMain$CharArray.set(IC)V
+LMain$CharArray.set(IC)V
+LMain$CharArray.set(IC)V
+LMain.put(LMain$CharArray;I)V
+LMain.delete(LMain$CharArray;)V
+LMain.delete(LMain$Node;LMain$CharArray;I)LMain$Node;
+LMain$CharArray.length()I
+LMain$Node.access$000(LMain$Node;)I
+LMain$Node.access$002(LMain$Node;I)I
+LMain$CharArray.get(I)C
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain.delete(LMain$Node;LMain$CharArray;I)LMain$Node;
+LMain$CharArray.length()I
+LMain$Node.access$000(LMain$Node;)I
+LMain$Node.access$002(LMain$Node;I)I
+LMain$CharArray.get(I)C
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain.delete(LMain$Node;LMain$CharArray;I)LMain$Node;
+LMain$Node.access$000(LMain$Node;)I
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain$Node.access$000(LMain$Node;)I
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain.put2(LMain$Node;LMain$CharArray;II)LMain$Node;
+LMain$CharArray.length()I
+LMain$Node.access$000(LMain$Node;)I
+LMain$Node.access$002(LMain$Node;I)I
+LMain$CharArray.get(I)C
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain.put2(LMain$Node;LMain$CharArray;II)LMain$Node;
+LMain$CharArray.length()I
+LMain$Node.access$000(LMain$Node;)I
+LMain$Node.access$002(LMain$Node;I)I
+LMain$CharArray.get(I)C
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain$Node.access$100(LMain$Node;)[LMain$Node;
+LMain.put2(LMain$Node;LMain$CharArray;II)LMain$Node;
+[ { "id" : "[ testLMPI#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1" : "Implicit" } },
+{ "id" : "[ testLMPI#1 ] New(LMain;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#2" : "Implicit" } },
+{ "id" : "[ testLMPI#2 ] Dup(1,0) Invoke(SPECIAL,LMain;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#3" : "Invoke" } },
+{ "id" : "[ testLMPI#3 ] LocalStore(Ljava/lang/Object;,1) New(LMain$CharArray;,0) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#4" : "Implicit" } },
+{ "id" : "[ testLMPI#4 ] Dup(1,0) Constant(I,8) Invoke(SPECIAL,LMain$CharArray;,<init>,(I)V) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#5" : "Invoke" } },
+{ "id" : "[ testLMPI#5 ] LocalStore(Ljava/lang/Object;,2) LocalLoad(Ljava/lang/Object;,2) Constant(I,0) Constant(I,83) Invoke(VIRTUAL,LMain$CharArray;,set,(IC)V) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#6" : "Invoke" } },
+{ "id" : "[ testLMPI#6 ] LocalLoad(Ljava/lang/Object;,2) Constant(I,1) Constant(I,86) Invoke(VIRTUAL,LMain$CharArray;,set,(IC)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#7" : "Invoke" } },
+{ "id" : "[ testLMPI#7 ] LocalLoad(Ljava/lang/Object;,2) Constant(I,2) Constant(I,67) Invoke(VIRTUAL,LMain$CharArray;,set,(IC)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#8" : "Invoke" } },
+{ "id" : "[ testLMPI#8 ] LocalLoad(Ljava/lang/Object;,2) Constant(I,3) Constant(I,79) Invoke(VIRTUAL,LMain$CharArray;,set,(IC)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#9" : "Invoke" } },
+{ "id" : "[ testLMPI#9 ] LocalLoad(Ljava/lang/Object;,2) Constant(I,4) Constant(I,77) Invoke(VIRTUAL,LMain$CharArray;,set,(IC)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#10" : "Invoke" } },
+{ "id" : "[ testLMPI#10 ] LocalLoad(Ljava/lang/Object;,2) Constant(I,5) Constant(I,80) Invoke(VIRTUAL,LMain$CharArray;,set,(IC)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#11" : "Invoke" } },
+{ "id" : "[ testLMPI#11 ] LocalLoad(Ljava/lang/Object;,2) Constant(I,6) Constant(I,50) Invoke(VIRTUAL,LMain$CharArray;,set,(IC)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#12" : "Invoke" } },
+{ "id" : "[ testLMPI#12 ] LocalLoad(Ljava/lang/Object;,2) Constant(I,7) Constant(I,48) Invoke(VIRTUAL,LMain$CharArray;,set,(IC)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#13" : "Invoke" } },
+{ "id" : "[ testLMPI#13 ] LocalLoad(Ljava/lang/Object;,1) LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,0) Invoke(VIRTUAL,LMain;,put,(LMain$CharArray;I)V) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#0" : "Invoke"} },
+{ "id" : "[ putLMALMALMCAPI#1#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#1" : "Implicit" } },
+{ "id" : "[ putLMALMALMCAPI#1#1 ] LocalLoad(I,2) Constant(I,-1) ConditionalBranch(I,ne,7) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v3 != v5", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#4" : "TRUE", "putLMALMALMCAPI#1#2" : "FALSE" }} },
+{ "id" : "[ putLMALMALMCAPI#1#2 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,1) Invoke(VIRTUAL,LMain;,delete,(LMain$CharArray;)V) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMCA#1#0" : "Invoke"} },
+{ "id" : "[ deleteLMALMALMCA#1#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMCA#1#1" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMCA#1#1 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,0) Get(LMain$Node;,NONSTATIC,LMain;,root) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMCA#1#2" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMCA#1#2 ] LocalLoad(Ljava/lang/Object;,1) Constant(I,0) Invoke(SPECIAL,LMain;,delete,(LMain$Node;LMain$CharArray;I)LMain$Node;) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#0" : "Invoke"} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#1" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#1 ] LocalLoad(Ljava/lang/Object;,1) Constant(L;,null) ConditionalBranch(Ljava/lang/Object;,ne,5) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v2 != v6", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#3" : "TRUE", "deleteLMALMALMNALMCAPI#1#2" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#2 ] Constant(L;,null) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#3 ] LocalLoad(I,3) LocalLoad(Ljava/lang/Object;,2) Invoke(VIRTUAL,LMain$CharArray;,length,()I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#4" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#4 ] ConditionalBranch(I,ne,24) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v4 != v8", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#11" : "TRUE", "deleteLMALMALMNALMCAPI#1#5" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#5 ] LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$000,(LMain$Node;)I) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#6" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#6 ] Constant(I,-1) ConditionalBranch(I,eq,19) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v21 == v22", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#9" : "TRUE", "deleteLMALMALMNALMCAPI#1#7" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#7 ] LocalLoad(Ljava/lang/Object;,0) Dup(1,0) Get(I,NONSTATIC,LMain;,N) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#8" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#8 ] Constant(I,1) BinaryOp(I,sub) Put(I,NONSTATIC,LMain;,N) ", "instruction_count" : "3", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#9" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#9 ] LocalLoad(Ljava/lang/Object;,1) Constant(I,-1) Invoke(STATIC,LMain$Node;,access$002,(LMain$Node;I)I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#10" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#10 ] Pop(1) Goto(42) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#17" : "Jump" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#11 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,3) Invoke(VIRTUAL,LMain$CharArray;,get,(I)C) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#12" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#12 ] LocalStore(I,4) LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#13" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#13 ] LocalLoad(I,4) LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#14" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#14 ] LocalLoad(I,4) ArrayLoad(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#15" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#15 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,3) Constant(I,1) BinaryOp(I,add) Invoke(SPECIAL,LMain;,delete,(LMain$Node;LMain$CharArray;I)LMain$Node;) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#0" : "Invoke"} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#1" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#1 ] LocalLoad(Ljava/lang/Object;,1) Constant(L;,null) ConditionalBranch(Ljava/lang/Object;,ne,5) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v2 != v6", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#3" : "TRUE", "deleteLMALMALMNALMCAPI#2#2" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#2 ] Constant(L;,null) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#3 ] LocalLoad(I,3) LocalLoad(Ljava/lang/Object;,2) Invoke(VIRTUAL,LMain$CharArray;,length,()I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#4" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#4 ] ConditionalBranch(I,ne,24) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v4 != v8", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#11" : "TRUE", "deleteLMALMALMNALMCAPI#2#5" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#5 ] LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$000,(LMain$Node;)I) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#6" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#6 ] Constant(I,-1) ConditionalBranch(I,eq,19) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v21 == v22", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#9" : "TRUE", "deleteLMALMALMNALMCAPI#2#7" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#7 ] LocalLoad(Ljava/lang/Object;,0) Dup(1,0) Get(I,NONSTATIC,LMain;,N) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#8" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#8 ] Constant(I,1) BinaryOp(I,sub) Put(I,NONSTATIC,LMain;,N) ", "instruction_count" : "3", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#9" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#9 ] LocalLoad(Ljava/lang/Object;,1) Constant(I,-1) Invoke(STATIC,LMain$Node;,access$002,(LMain$Node;I)I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#10" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#10 ] Pop(1) Goto(42) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#17" : "Jump" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#11 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,3) Invoke(VIRTUAL,LMain$CharArray;,get,(I)C) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#12" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#12 ] LocalStore(I,4) LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#13" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#13 ] LocalLoad(I,4) LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#14" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#14 ] LocalLoad(I,4) ArrayLoad(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#15" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#15 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,3) Constant(I,1) BinaryOp(I,add) Invoke(SPECIAL,LMain;,delete,(LMain$Node;LMain$CharArray;I)LMain$Node;) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#16" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#16 ] ArrayStore(Ljava/lang/Object;) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#17" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#17 ] LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$000,(LMain$Node;)I) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#18" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#18 ] Constant(I,-1) ConditionalBranch(I,eq,48) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v28 == v22", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#20" : "TRUE", "deleteLMALMALMNALMCAPI#2#19" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#19 ] LocalLoad(Ljava/lang/Object;,1) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#20 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#21" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#21 ] Constant(I,0) LocalStore(I,4) LocalLoad(I,4) Constant(I,256) ConditionalBranch(I,ge,66) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v35 >= v30", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#27" : "TRUE", "deleteLMALMALMNALMCAPI#2#22" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#22 ] LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#23" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#23 ] LocalLoad(I,4) ArrayLoad(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#24" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#24 ] Constant(L;,null) ConditionalBranch(Ljava/lang/Object;,eq,61) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v33 == v6", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#26" : "TRUE", "deleteLMALMALMNALMCAPI#2#25" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#25 ] LocalLoad(Ljava/lang/Object;,1) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#26 ] LocalLoad(I,4) Constant(I,1) BinaryOp(I,add) LocalStore(I,4) Goto(50) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#21" : "Jump" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#27 ] Constant(L;,null) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#2#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#2#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#16" : "Implicit" } } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#16 ] ArrayStore(Ljava/lang/Object;) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#17" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#17 ] LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$000,(LMain$Node;)I) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#18" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#18 ] Constant(I,-1) ConditionalBranch(I,eq,48) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v28 == v22", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#20" : "TRUE", "deleteLMALMALMNALMCAPI#1#19" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#19 ] LocalLoad(Ljava/lang/Object;,1) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#20 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#21" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#21 ] Constant(I,0) LocalStore(I,4) LocalLoad(I,4) Constant(I,256) ConditionalBranch(I,ge,66) ", "instruction_count" : "5", "cost" : "5", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v35 >= v30", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#27" : "TRUE", "deleteLMALMALMNALMCAPI#1#22" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#22 ] LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#23" : "Invoke" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#23 ] LocalLoad(I,4) ArrayLoad(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#24" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#24 ] Constant(L;,null) ConditionalBranch(Ljava/lang/Object;,eq,61) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v33 == v6", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#26" : "TRUE", "deleteLMALMALMNALMCAPI#1#25" : "FALSE" }} },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#25 ] LocalLoad(Ljava/lang/Object;,1) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#26 ] LocalLoad(I,4) Constant(I,1) BinaryOp(I,add) LocalStore(I,4) Goto(50) ", "instruction_count" : "5", "cost" : "6", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#21" : "Jump" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#27 ] Constant(L;,null) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMNALMCAPI#1#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMNALMCAPI#1#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMCA#1#3" : "Implicit" } } },
+{ "id" : "[ deleteLMALMALMCA#1#3 ] Put(LMain$Node;,NONSTATIC,LMain;,root) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMCA#1#4" : "Implicit" } },
+{ "id" : "[ deleteLMALMALMCA#1#4 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "deleteLMALMALMCA#1#1001001" : "Return" } },
+{ "id" : "[ deleteLMALMALMCA#1#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#3" : "Implicit" } } },
+{ "id" : "[ putLMALMALMCAPI#1#3 ] Goto(16) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#7" : "Jump" } },
+{ "id" : "[ putLMALMALMCAPI#1#4 ] LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,0) Get(LMain$Node;,NONSTATIC,LMain;,root) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#5" : "Implicit" } },
+{ "id" : "[ putLMALMALMCAPI#1#5 ] LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,2) Constant(I,0) Invoke(SPECIAL,LMain;,put2,(LMain$Node;LMain$CharArray;II)LMain$Node;) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#0" : "Invoke"} },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#1" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#1 ] LocalLoad(Ljava/lang/Object;,1) Constant(L;,null) ConditionalBranch(Ljava/lang/Object;,ne,8) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v2 != v7", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#5" : "TRUE", "put2LMALMALMNALMCAPIPI#1#2" : "FALSE" }} },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#2 ] New(LMain$Node;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#3" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#3 ] Dup(1,0) Constant(L;,null) Invoke(SPECIAL,LMain$Node;,<init>,(LMain$1;)V) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#4" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#4 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#5" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#5 ] LocalStore(Ljava/lang/Object;,1) LocalLoad(I,4) LocalLoad(Ljava/lang/Object;,2) Invoke(VIRTUAL,LMain$CharArray;,length,()I) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#6" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#6 ] ConditionalBranch(I,ne,28) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v5 != v12", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#13" : "TRUE", "put2LMALMALMNALMCAPIPI#1#7" : "FALSE" }} },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#7 ] LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$000,(LMain$Node;)I) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#8" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#8 ] Constant(I,-1) ConditionalBranch(I,ne,22) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v25 != v26", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#11" : "TRUE", "put2LMALMALMNALMCAPIPI#1#9" : "FALSE" }} },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#9 ] LocalLoad(Ljava/lang/Object;,0) Dup(1,0) Get(I,NONSTATIC,LMain;,N) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#10" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#10 ] Constant(I,1) BinaryOp(I,add) Put(I,NONSTATIC,LMain;,N) ", "instruction_count" : "3", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#11" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#11 ] LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,3) Invoke(STATIC,LMain$Node;,access$002,(LMain$Node;I)I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#12" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#12 ] Pop(1) LocalLoad(Ljava/lang/Object;,1) Return(Ljava/lang/Object;) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#1001001" : "Return" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#13 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,4) Invoke(VIRTUAL,LMain$CharArray;,get,(I)C) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#14" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#14 ] LocalStore(I,5) LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#15" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#15 ] LocalLoad(I,5) LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#16" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#16 ] LocalLoad(I,5) ArrayLoad(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#17" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#17 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,3) LocalLoad(I,4) Constant(I,1) BinaryOp(I,add) Invoke(SPECIAL,LMain;,put2,(LMain$Node;LMain$CharArray;II)LMain$Node;) ", "instruction_count" : "6", "cost" : "7", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#0" : "Invoke"} },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#0 ] start", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#1" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#1 ] LocalLoad(Ljava/lang/Object;,1) Constant(L;,null) ConditionalBranch(Ljava/lang/Object;,ne,8) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v2 != v7", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#5" : "TRUE", "put2LMALMALMNALMCAPIPI#2#2" : "FALSE" }} },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#2 ] New(LMain$Node;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#3" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#3 ] Dup(1,0) Constant(L;,null) Invoke(SPECIAL,LMain$Node;,<init>,(LMain$1;)V) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#4" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#4 ] null", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#5" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#5 ] LocalStore(Ljava/lang/Object;,1) LocalLoad(I,4) LocalLoad(Ljava/lang/Object;,2) Invoke(VIRTUAL,LMain$CharArray;,length,()I) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#6" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#6 ] ConditionalBranch(I,ne,28) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v5 != v12", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#13" : "TRUE", "put2LMALMALMNALMCAPIPI#2#7" : "FALSE" }} },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#7 ] LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$000,(LMain$Node;)I) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#8" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#8 ] Constant(I,-1) ConditionalBranch(I,ne,22) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v25 != v26", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#11" : "TRUE", "put2LMALMALMNALMCAPIPI#2#9" : "FALSE" }} },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#9 ] LocalLoad(Ljava/lang/Object;,0) Dup(1,0) Get(I,NONSTATIC,LMain;,N) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#10" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#10 ] Constant(I,1) BinaryOp(I,add) Put(I,NONSTATIC,LMain;,N) ", "instruction_count" : "3", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#11" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#11 ] LocalLoad(Ljava/lang/Object;,1) LocalLoad(I,3) Invoke(STATIC,LMain$Node;,access$002,(LMain$Node;I)I) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#12" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#12 ] Pop(1) LocalLoad(Ljava/lang/Object;,1) Return(Ljava/lang/Object;) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#1001001" : "Return" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#13 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,4) Invoke(VIRTUAL,LMain$CharArray;,get,(I)C) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#14" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#14 ] LocalStore(I,5) LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#15" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#15 ] LocalLoad(I,5) LocalLoad(Ljava/lang/Object;,0) LocalLoad(Ljava/lang/Object;,1) Invoke(STATIC,LMain$Node;,access$100,(LMain$Node;)[LMain$Node;) ", "instruction_count" : "4", "cost" : "4", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#16" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#16 ] LocalLoad(I,5) ArrayLoad(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#17" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#17 ] LocalLoad(Ljava/lang/Object;,2) LocalLoad(I,3) LocalLoad(I,4) Constant(I,1) BinaryOp(I,add) Invoke(SPECIAL,LMain;,put2,(LMain$Node;LMain$CharArray;II)LMain$Node;) ", "instruction_count" : "6", "cost" : "7", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#18" : "Invoke" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#18 ] ArrayStore(Ljava/lang/Object;) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#19" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#19 ] LocalLoad(Ljava/lang/Object;,1) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#2#1001001" : "Return" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#2#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#18" : "Implicit" } } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#18 ] ArrayStore(Ljava/lang/Object;) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#19" : "Implicit" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#19 ] LocalLoad(Ljava/lang/Object;,1) Return(Ljava/lang/Object;) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "put2LMALMALMNALMCAPIPI#1#1001001" : "Return" } },
+{ "id" : "[ put2LMALMALMNALMCAPIPI#1#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#6" : "Implicit" } } },
+{ "id" : "[ putLMALMALMCAPI#1#6 ] Put(LMain$Node;,NONSTATIC,LMain;,root) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#7" : "Implicit" } },
+{ "id" : "[ putLMALMALMCAPI#1#7 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "putLMALMALMCAPI#1#1001001" : "Return" } },
+{ "id" : "[ putLMALMALMCAPI#1#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#14" : "Implicit" } } },
+{ "id" : "[ testLMPI#14 ] Get(Z,STATIC,LMain;,$assertionsDisabled) Constant(I,0) ConditionalBranch(I,ne,52) ", "instruction_count" : "3", "cost" : "3", "secret_dependent_branch" : "branch", "ins_to_translate" : "if v33 != v8", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#18" : "TRUE", "testLMPI#15" : "FALSE" }} },
+{ "id" : "[ testLMPI#15 ] New(Ljava/lang/AssertionError;,0) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#16" : "Implicit" } },
+{ "id" : "[ testLMPI#16 ] Dup(1,0) Invoke(SPECIAL,Ljava/lang/AssertionError;,<init>,()V) ", "instruction_count" : "2", "cost" : "2", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#17" : "Invoke" } },
+{ "id" : "[ testLMPI#17 ] Throw() ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Implicit"} } },
+{ "id" : "[ testLMPI#18 ] Return(V) ", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : { "testLMPI#1001001" : "Return" } },
+{ "id" : "[ testLMPI#1001001 ] end", "instruction_count" : "1", "cost" : "1", "secret_dependent_branch" : "false", "exception" : "false", "incoming" : { }, "outgoing" : {} } } ]
+Constructing Markov chain...
+putLMALMALMCAPI#1#1
+ "putLMALMALMCAPI#1#2" : "FALSE"
+deleteLMALMALMNALMCAPI#1#1
+ "deleteLMALMALMNALMCAPI#1#2" : "FALSE"
+deleteLMALMALMNALMCAPI#1#4
+ "deleteLMALMALMNALMCAPI#1#5" : "FALSE"
+deleteLMALMALMNALMCAPI#1#6
+ "deleteLMALMALMNALMCAPI#1#7" : "FALSE"
+deleteLMALMALMNALMCAPI#2#1
+ "deleteLMALMALMNALMCAPI#2#2" : "FALSE"
+deleteLMALMALMNALMCAPI#2#4
+ "deleteLMALMALMNALMCAPI#2#5" : "FALSE"
+deleteLMALMALMNALMCAPI#2#6
+ "deleteLMALMALMNALMCAPI#2#7" : "FALSE"
+deleteLMALMALMNALMCAPI#2#18
+ "deleteLMALMALMNALMCAPI#2#19" : "FALSE"
+deleteLMALMALMNALMCAPI#2#21
+ "deleteLMALMALMNALMCAPI#2#22" : "FALSE"
+deleteLMALMALMNALMCAPI#2#24
+ "deleteLMALMALMNALMCAPI#2#25" : "FALSE"
+deleteLMALMALMNALMCAPI#1#18
+ "deleteLMALMALMNALMCAPI#1#19" : "FALSE"
+deleteLMALMALMNALMCAPI#1#21
+ "deleteLMALMALMNALMCAPI#1#22" : "FALSE"
+deleteLMALMALMNALMCAPI#1#24
+ "deleteLMALMALMNALMCAPI#1#25" : "FALSE"
+put2LMALMALMNALMCAPIPI#1#1
+ "put2LMALMALMNALMCAPIPI#1#2" : "FALSE"
+put2LMALMALMNALMCAPIPI#1#6
+ "put2LMALMALMNALMCAPIPI#1#7" : "FALSE"
+put2LMALMALMNALMCAPIPI#1#8
+ "put2LMALMALMNALMCAPIPI#1#9" : "FALSE"
+put2LMALMALMNALMCAPIPI#2#1
+ "put2LMALMALMNALMCAPIPI#2#2" : "FALSE"
+put2LMALMALMNALMCAPIPI#2#6
+ "put2LMALMALMNALMCAPIPI#2#7" : "FALSE"
+put2LMALMALMNALMCAPIPI#2#8
+ "put2LMALMALMNALMCAPIPI#2#9" : "FALSE"
+testLMPI#14
+ "testLMPI#15" : "FALSE"
+digraph {
+	0 -> 1[label= "1.0"];
+	1 -> 2[label= "1.0"];
+	2 -> 3[label= "1.0"];
+	3 -> 4[label= "1.0"];
+	4 -> 5[label= "1.0"];
+	5 -> 6[label= "1.0"];
+	6 -> 7[label= "1.0"];
+	7 -> 8[label= "1.0"];
+	8 -> 9[label= "1.0"];
+	9 -> 10[label= "1.0"];
+	10 -> 11[label= "1.0"];
+	11 -> 12[label= "1.0"];
+	12 -> 13[label= "1.0"];
+	13 -> 14[label= "1.0"];
+	14 -> 15[label= "1.0"];
+	15 -> 16[label= "1.0"];
+	15 -> 17[label= "1.0"];
+	17 -> 18[label= "1.0"];
+	18 -> 19[label= "1.0"];
+	19 -> 20[label= "1.0"];
+	20 -> 21[label= "1.0"];
+	21 -> 22[label= "1.0"];
+	22 -> 23[label= "1.0"];
+	22 -> 24[label= "1.0"];
+	24 -> 25[label= "1.0"];
+	23 -> 26[label= "1.0"];
+	26 -> 27[label= "1.0"];
+	26 -> 28[label= "1.0"];
+	28 -> 29[label= "1.0"];
+	29 -> 30[label= "1.0"];
+	29 -> 31[label= "1.0"];
+	31 -> 32[label= "1.0"];
+	32 -> 30[label= "1.0"];
+	30 -> 33[label= "1.0"];
+	33 -> 34[label= "1.0"];
+	27 -> 35[label= "1.0"];
+	35 -> 36[label= "1.0"];
+	36 -> 37[label= "1.0"];
+	37 -> 38[label= "1.0"];
+	38 -> 39[label= "1.0"];
+	39 -> 40[label= "1.0"];
+	40 -> 41[label= "1.0"];
+	40 -> 42[label= "1.0"];
+	42 -> 43[label= "1.0"];
+	41 -> 44[label= "1.0"];
+	44 -> 45[label= "1.0"];
+	44 -> 46[label= "1.0"];
+	46 -> 47[label= "1.0"];
+	47 -> 48[label= "1.0"];
+	47 -> 49[label= "1.0"];
+	49 -> 50[label= "1.0"];
+	50 -> 48[label= "1.0"];
+	48 -> 51[label= "1.0"];
+	51 -> 52[label= "1.0"];
+	45 -> 53[label= "1.0"];
+	53 -> 54[label= "1.0"];
+	54 -> 55[label= "1.0"];
+	55 -> 56[label= "1.0"];
+	56 -> 57[label= "1.0"];
+	57 -> 52[label= "1.0"];
+	52 -> 58[label= "1.0"];
+	58 -> 59[label= "1.0"];
+	58 -> 60[label= "1.0"];
+	60 -> 43[label= "1.0"];
+	59 -> 61[label= "1.0"];
+	61 -> 62[label= "1.0"];
+	61 -> 63[label= "1.0"];
+	63 -> 64[label= "1.0"];
+	64 -> 65[label= "1.0"];
+	65 -> 66[label= "1.0"];
+	65 -> 67[label= "1.0"];
+	67 -> 43[label= "1.0"];
+	66 -> 61[label= "1.0"];
+	62 -> 43[label= "1.0"];
+	43 -> 68[label= "1.0"];
+	68 -> 34[label= "1.0"];
+	34 -> 69[label= "1.0"];
+	69 -> 70[label= "1.0"];
+	69 -> 71[label= "1.0"];
+	71 -> 25[label= "1.0"];
+	70 -> 72[label= "1.0"];
+	72 -> 73[label= "1.0"];
+	72 -> 74[label= "1.0"];
+	74 -> 75[label= "1.0"];
+	75 -> 76[label= "1.0"];
+	76 -> 77[label= "1.0"];
+	76 -> 78[label= "1.0"];
+	78 -> 25[label= "1.0"];
+	77 -> 72[label= "1.0"];
+	73 -> 25[label= "1.0"];
+	25 -> 79[label= "1.0"];
+	79 -> 80[label= "1.0"];
+	80 -> 81[label= "1.0"];
+	81 -> 82[label= "1.0"];
+	82 -> 83[label= "1.0"];
+	16 -> 84[label= "1.0"];
+	84 -> 85[label= "1.0"];
+	85 -> 86[label= "1.0"];
+	86 -> 87[label= "1.0"];
+	86 -> 88[label= "1.0"];
+	88 -> 89[label= "1.0"];
+	89 -> 90[label= "1.0"];
+	90 -> 87[label= "1.0"];
+	87 -> 91[label= "1.0"];
+	91 -> 92[label= "1.0"];
+	91 -> 93[label= "1.0"];
+	93 -> 94[label= "1.0"];
+	94 -> 95[label= "1.0"];
+	94 -> 96[label= "1.0"];
+	96 -> 97[label= "1.0"];
+	97 -> 95[label= "1.0"];
+	95 -> 98[label= "1.0"];
+	98 -> 99[label= "1.0"];
+	92 -> 100[label= "1.0"];
+	100 -> 101[label= "1.0"];
+	101 -> 102[label= "1.0"];
+	102 -> 103[label= "1.0"];
+	103 -> 104[label= "1.0"];
+	104 -> 105[label= "1.0"];
+	105 -> 106[label= "1.0"];
+	105 -> 107[label= "1.0"];
+	107 -> 108[label= "1.0"];
+	108 -> 109[label= "1.0"];
+	109 -> 106[label= "1.0"];
+	106 -> 110[label= "1.0"];
+	110 -> 111[label= "1.0"];
+	110 -> 112[label= "1.0"];
+	112 -> 113[label= "1.0"];
+	113 -> 114[label= "1.0"];
+	113 -> 115[label= "1.0"];
+	115 -> 116[label= "1.0"];
+	116 -> 114[label= "1.0"];
+	114 -> 117[label= "1.0"];
+	117 -> 118[label= "1.0"];
+	111 -> 119[label= "1.0"];
+	119 -> 120[label= "1.0"];
+	120 -> 121[label= "1.0"];
+	121 -> 122[label= "1.0"];
+	122 -> 123[label= "1.0"];
+	123 -> 124[label= "1.0"];
+	124 -> 118[label= "1.0"];
+	118 -> 125[label= "1.0"];
+	125 -> 126[label= "1.0"];
+	126 -> 99[label= "1.0"];
+	99 -> 127[label= "1.0"];
+	127 -> 83[label= "1.0"];
+	83 -> 128[label= "1.0"];
+	128 -> 129[label= "1.0"];
+	129 -> 130[label= "0.0"];
+	129 -> 131[label= "1.0"];
+	131 -> 132[label= "1.0"];
+	132 -> 133[label= "1.0"];
+	133 -> 134[label= "1.0"];
+	130 -> 134[label= "1.0"];
+}
+dtmc
+
+module LMain_test
+
+	s : [0..135] init 0;
+
+	[] s = 0 -> 1.0 : (s' = 1);
+	[] s = 1 -> 1.0 : (s' = 2);
+	[] s = 2 -> 1.0 : (s' = 3);
+	[] s = 3 -> 1.0 : (s' = 4);
+	[] s = 4 -> 1.0 : (s' = 5);
+	[] s = 5 -> 1.0 : (s' = 6);
+	[] s = 6 -> 1.0 : (s' = 7);
+	[] s = 7 -> 1.0 : (s' = 8);
+	[] s = 8 -> 1.0 : (s' = 9);
+	[] s = 9 -> 1.0 : (s' = 10);
+	[] s = 10 -> 1.0 : (s' = 11);
+	[] s = 11 -> 1.0 : (s' = 12);
+	[] s = 12 -> 1.0 : (s' = 13);
+	[] s = 13 -> 1.0 : (s' = 14);
+	[] s = 14 -> 1.0 : (s' = 15);
+	[] s = 15 -> 1.0 : (s' = 16);
+	[] s = 15 -> 1.0 : (s' = 17);
+	[] s = 17 -> 1.0 : (s' = 18);
+	[] s = 18 -> 1.0 : (s' = 19);
+	[] s = 19 -> 1.0 : (s' = 20);
+	[] s = 20 -> 1.0 : (s' = 21);
+	[] s = 21 -> 1.0 : (s' = 22);
+	[] s = 22 -> 1.0 : (s' = 23);
+	[] s = 22 -> 1.0 : (s' = 24);
+	[] s = 24 -> 1.0 : (s' = 25);
+	[] s = 23 -> 1.0 : (s' = 26);
+	[] s = 26 -> 1.0 : (s' = 27);
+	[] s = 26 -> 1.0 : (s' = 28);
+	[] s = 28 -> 1.0 : (s' = 29);
+	[] s = 29 -> 1.0 : (s' = 30);
+	[] s = 29 -> 1.0 : (s' = 31);
+	[] s = 31 -> 1.0 : (s' = 32);
+	[] s = 32 -> 1.0 : (s' = 30);
+	[] s = 30 -> 1.0 : (s' = 33);
+	[] s = 33 -> 1.0 : (s' = 34);
+	[] s = 27 -> 1.0 : (s' = 35);
+	[] s = 35 -> 1.0 : (s' = 36);
+	[] s = 36 -> 1.0 : (s' = 37);
+	[] s = 37 -> 1.0 : (s' = 38);
+	[] s = 38 -> 1.0 : (s' = 39);
+	[] s = 39 -> 1.0 : (s' = 40);
+	[] s = 40 -> 1.0 : (s' = 41);
+	[] s = 40 -> 1.0 : (s' = 42);
+	[] s = 42 -> 1.0 : (s' = 43);
+	[] s = 41 -> 1.0 : (s' = 44);
+	[] s = 44 -> 1.0 : (s' = 45);
+	[] s = 44 -> 1.0 : (s' = 46);
+	[] s = 46 -> 1.0 : (s' = 47);
+	[] s = 47 -> 1.0 : (s' = 48);
+	[] s = 47 -> 1.0 : (s' = 49);
+	[] s = 49 -> 1.0 : (s' = 50);
+	[] s = 50 -> 1.0 : (s' = 48);
+	[] s = 48 -> 1.0 : (s' = 51);
+	[] s = 51 -> 1.0 : (s' = 52);
+	[] s = 45 -> 1.0 : (s' = 53);
+	[] s = 53 -> 1.0 : (s' = 54);
+	[] s = 54 -> 1.0 : (s' = 55);
+	[] s = 55 -> 1.0 : (s' = 56);
+	[] s = 56 -> 1.0 : (s' = 57);
+	[] s = 57 -> 1.0 : (s' = 52);
+	[] s = 52 -> 1.0 : (s' = 58);
+	[] s = 58 -> 1.0 : (s' = 59);
+	[] s = 58 -> 1.0 : (s' = 60);
+	[] s = 60 -> 1.0 : (s' = 43);
+	[] s = 59 -> 1.0 : (s' = 61);
+	[] s = 61 -> 1.0 : (s' = 62);
+	[] s = 61 -> 1.0 : (s' = 63);
+	[] s = 63 -> 1.0 : (s' = 64);
+	[] s = 64 -> 1.0 : (s' = 65);
+	[] s = 65 -> 1.0 : (s' = 66);
+	[] s = 65 -> 1.0 : (s' = 67);
+	[] s = 67 -> 1.0 : (s' = 43);
+	[] s = 66 -> 1.0 : (s' = 61);
+	[] s = 62 -> 1.0 : (s' = 43);
+	[] s = 43 -> 1.0 : (s' = 68);
+	[] s = 68 -> 1.0 : (s' = 34);
+	[] s = 34 -> 1.0 : (s' = 69);
+	[] s = 69 -> 1.0 : (s' = 70);
+	[] s = 69 -> 1.0 : (s' = 71);
+	[] s = 71 -> 1.0 : (s' = 25);
+	[] s = 70 -> 1.0 : (s' = 72);
+	[] s = 72 -> 1.0 : (s' = 73);
+	[] s = 72 -> 1.0 : (s' = 74);
+	[] s = 74 -> 1.0 : (s' = 75);
+	[] s = 75 -> 1.0 : (s' = 76);
+	[] s = 76 -> 1.0 : (s' = 77);
+	[] s = 76 -> 1.0 : (s' = 78);
+	[] s = 78 -> 1.0 : (s' = 25);
+	[] s = 77 -> 1.0 : (s' = 72);
+	[] s = 73 -> 1.0 : (s' = 25);
+	[] s = 25 -> 1.0 : (s' = 79);
+	[] s = 79 -> 1.0 : (s' = 80);
+	[] s = 80 -> 1.0 : (s' = 81);
+	[] s = 81 -> 1.0 : (s' = 82);
+	[] s = 82 -> 1.0 : (s' = 83);
+	[] s = 16 -> 1.0 : (s' = 84);
+	[] s = 84 -> 1.0 : (s' = 85);
+	[] s = 85 -> 1.0 : (s' = 86);
+	[] s = 86 -> 1.0 : (s' = 87);
+	[] s = 86 -> 1.0 : (s' = 88);
+	[] s = 88 -> 1.0 : (s' = 89);
+	[] s = 89 -> 1.0 : (s' = 90);
+	[] s = 90 -> 1.0 : (s' = 87);
+	[] s = 87 -> 1.0 : (s' = 91);
+	[] s = 91 -> 1.0 : (s' = 92);
+	[] s = 91 -> 1.0 : (s' = 93);
+	[] s = 93 -> 1.0 : (s' = 94);
+	[] s = 94 -> 1.0 : (s' = 95);
+	[] s = 94 -> 1.0 : (s' = 96);
+	[] s = 96 -> 1.0 : (s' = 97);
+	[] s = 97 -> 1.0 : (s' = 95);
+	[] s = 95 -> 1.0 : (s' = 98);
+	[] s = 98 -> 1.0 : (s' = 99);
+	[] s = 92 -> 1.0 : (s' = 100);
+	[] s = 100 -> 1.0 : (s' = 101);
+	[] s = 101 -> 1.0 : (s' = 102);
+	[] s = 102 -> 1.0 : (s' = 103);
+	[] s = 103 -> 1.0 : (s' = 104);
+	[] s = 104 -> 1.0 : (s' = 105);
+	[] s = 105 -> 1.0 : (s' = 106);
+	[] s = 105 -> 1.0 : (s' = 107);
+	[] s = 107 -> 1.0 : (s' = 108);
+	[] s = 108 -> 1.0 : (s' = 109);
+	[] s = 109 -> 1.0 : (s' = 106);
+	[] s = 106 -> 1.0 : (s' = 110);
+	[] s = 110 -> 1.0 : (s' = 111);
+	[] s = 110 -> 1.0 : (s' = 112);
+	[] s = 112 -> 1.0 : (s' = 113);
+	[] s = 113 -> 1.0 : (s' = 114);
+	[] s = 113 -> 1.0 : (s' = 115);
+	[] s = 115 -> 1.0 : (s' = 116);
+	[] s = 116 -> 1.0 : (s' = 114);
+	[] s = 114 -> 1.0 : (s' = 117);
+	[] s = 117 -> 1.0 : (s' = 118);
+	[] s = 111 -> 1.0 : (s' = 119);
+	[] s = 119 -> 1.0 : (s' = 120);
+	[] s = 120 -> 1.0 : (s' = 121);
+	[] s = 121 -> 1.0 : (s' = 122);
+	[] s = 122 -> 1.0 : (s' = 123);
+	[] s = 123 -> 1.0 : (s' = 124);
+	[] s = 124 -> 1.0 : (s' = 118);
+	[] s = 118 -> 1.0 : (s' = 125);
+	[] s = 125 -> 1.0 : (s' = 126);
+	[] s = 126 -> 1.0 : (s' = 99);
+	[] s = 99 -> 1.0 : (s' = 127);
+	[] s = 127 -> 1.0 : (s' = 83);
+	[] s = 83 -> 1.0 : (s' = 128);
+	[] s = 128 -> 1.0 : (s' = 129);
+	[] s = 129 -> 0.0 : (s' = 130) + 1.0 : (s' = 131);
+	[] s = 131 -> 1.0 : (s' = 132);
+	[] s = 132 -> 1.0 : (s' = 133);
+	[] s = 133 -> 1.0 : (s' = 134);
+	[] s = 130 -> 1.0 : (s' = 134);
+
+endmodule
+assertionReachabilitySpec: P=? [F s = 131]
+PRISM
+=====
+
+Version: 4.5
+Date: Tue Dec 27 14:24:05 GMT 2022
+Hostname: 53294439ac79
+Memory limits: cudd=1g, java(heap)=981.5m
+Command line: prism LMain_test.sm LMain_test.csl
+
+Parsing model file "LMain_test.sm"...
+
+Parsing properties file "LMain_test.csl"...
+
+1 property:
+(1) P=? [ F s=131 ]
+
+Type:        DTMC
+Modules:     LMain_test 
+Variables:   s 
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ F s=131 ]
+
+Building model...
+
+Warning: Update 1 of command 149 of module "LMain_test" doesn't do anything ("(s'=130)", line 155, column 29)
+
+Warning: Guard for command 17 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 24 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 28 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 31 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 43 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 47 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 50 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 63 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 67 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 71 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 79 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 83 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 87 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 100 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 106 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 109 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 121 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 127 of module "LMain_test" overlaps with previous commands.
+
+Warning: Guard for command 130 of module "LMain_test" overlaps with previous commands.
+
+Computing reachable states...
+
+Reachability (BFS): 45 iterations in 0.00 seconds (average 0.000044, setup 0.00)
+
+Time for model construction: 0.054 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        DTMC
+States:      134 (1 initial)
+Transitions: 153
+
+Transition matrix: 292 nodes (3 terminal), 153 minterms, vars: 8r/8c
+
+Prob0: 32 iterations in 0.00 seconds (average 0.000063, setup 0.00)
+
+Prob1: 1 iterations in 0.00 seconds (average 0.001000, setup 0.00)
+
+yes = 131, no = 3, maybe = 0
+
+Value in the initial state: 1.0
+
+Time for model checking: 0.004 seconds.
+
+Result: 1.0 (value in the initial state)
+Probability for assertion reachability: 1.0
+Dependency analysis time: 1ms
+Execution time for probabilistic analysis: 367ms
+Total Execution time: 368ms
+
+real	0m15.406s
+user	0m51.572s
+sys	0m4.043s

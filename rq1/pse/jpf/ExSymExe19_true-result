@@ -1,0 +1,210 @@
+=========================== code ==============================
+package sampling.svcomp.jpf;
+
+    import gov.nasa.jpf.symbc.Debug;
+
+    public class ExSymExe19_true {
+
+  public static void main(String[] args) {
+    test();
+  }
+  /* we want to let the user specify that this method should be symbolic */
+
+  /*
+   * test IF_ICMPLE, IADD, INEG & IMUL  bytecodes
+   */
+  public static void test() {
+        int x = Debug.makeSymbolicInteger("x");
+        int z = Debug.makeSymbolicInteger("z");
+        int r = Debug.makeSymbolicInteger("r");
+    if (z < 0)
+      return;
+    System.out.println("Testing ExSymExe19");
+    int y = 3;
+    x = z + r;
+    z = y * x;
+    r = -z;
+    if (x > 99) { 
+      System.out.println("branch FOO1");
+      // assert false;
+    } else
+      System.out.println("branch FOO2");
+    if (r > z)
+      System.out.println("branch BOO1");
+    else
+      System.out.println("branch BOO2");
+
+    
+  }
+}
+
+------------------------------------------------------------------
+
+Jan 12, 2023 12:36:30 PM edu.cmu.sv.isstac.canopy.SamplingAnalysis$Builder build
+INFO: Using state caching implemented by class: edu.cmu.sv.isstac.canopy.exploration.cache.TrieCache
+Jan 12, 2023 12:36:30 PM edu.cmu.sv.isstac.canopy.SamplingAnalysis$Builder build
+INFO: State cache does not support CG optimization. Disabling CG optimization
+Jan 12, 2023 12:36:30 PM edu.cmu.sv.isstac.canopy.quantification.ModelCounterFactory getInstance
+INFO: Using lazy model counter that creates uniform UP from variables of PC at model count invocation. This may not be what you want!
+symbolic.min_int=-2147483648
+symbolic.min_long=-9223372036854775808
+symbolic.min_short=-32768
+symbolic.min_byte=-128
+symbolic.min_char=0
+symbolic.max_int=2147483647
+symbolic.max_long=9223372036854775807
+symbolic.max_short=32767
+symbolic.max_byte=127
+symbolic.max_char=65535
+symbolic.min_double=4.9E-324
+symbolic.max_double=1.7976931348623157E308
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch <init>
+INFO: *NOT* using incremental solving
+JavaPathfinder core system v8.0 (rev 45a4450cd0bd1193df5419f7c9d9b89807d00db6) - (C) 2005-2014 United States Government. All rights reserved.
+
+
+====================================================== system under test
+sampling.svcomp.jpf.ExSymExe19_true.main()
+
+====================================================== search started: 1/12/23 12:36 PM
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: null
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: null
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: z<0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator getModelCounterInstance
+INFO: Creating model counter for symbolic vars: z
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator createUniformProblemSetting
+WARNING: Defaulting to lower bound for *ALL* integers in model counter: -1073741824
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator createUniformProblemSetting
+WARNING: Defaulting to upper bound for *ALL* integers in model counter: 1073741823
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:z<0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 1, termType:SUCCESS, path volume: 1073741824
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Testing ExSymExe19
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+branch FOO1
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: (r+z)>99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: TRUE
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:true, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+branch BOO2
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: (0-((r+z)*3))<=((r+z)*3)&&(r+z)>99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator getModelCounterInstance
+INFO: Creating model counter for symbolic vars: r,z
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator createUniformProblemSetting
+WARNING: Defaulting to lower bound for *ALL* integers in model counter: -1073741824
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.quantification.UniformUPModelCounterDecorator createUniformProblemSetting
+WARNING: Defaulting to upper bound for *ALL* integers in model counter: 1073741823
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:(0-((r+z)*3))<=((r+z)*3)&&(r+z)>99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 2, termType:SUCCESS, path volume: 1729382148999217152
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: (0-((r+z)*3))<=((r+z)*3)&&(r+z)>99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+branch FOO2
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: (r+z)<=99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+branch BOO1
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: (0-((r+z)*3))>((r+z)*3)&&(r+z)<=99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:(0-((r+z)*3))>((r+z)*3)&&(r+z)<=99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 3, termType:SUCCESS, path volume: 576460752840294400
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+branch BOO2
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: (0-((r+z)*3))<=((r+z)*3)&&(r+z)<=99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:true, isEndState:true, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: SMDEBUG::pc:(0-((r+z)*3))<=((r+z)*3)&&(r+z)<=99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.SamplingAnalysisListener pathTerminated
+INFO: Sample #: 4, termType:SUCCESS, path volume: 107374182400
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: (0-((r+z)*3))<=((r+z)*3)&&(r+z)<=99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: (r+z)<=99&&z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: z>=0
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::hadBacktrackingRequest:false, isNewState:false, isEndState:false, isIgnoredState:false, depthLimitReached:false
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::Check here!
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.search.DepthSyncedDFSearch search
+INFO: SMDEBUG::pc: null
+SampleStatisticsOutputter{min. reward=2.0, max. reward=4, max. reward sample #=2, max. reward time=0, # same max. rewards=3, total samples=4, total unique samples=4, total analysis time=0, avg. throughput=9.237875288683602, reward mean=3.5, reward variance=0.9999999999999999, reward stddev=0.9999999999999999, final result=SamplingResult{Max succ state=ResultContainer{reward=4, samplesNumber=2, path=[0,1,0,1], pc=constraint # = 3
+(CONST_0 - ((r + z) * CONST_3)) <= ((r + z) * CONST_3) &&
+(r + z) > CONST_99 &&
+z >= CONST_0}, Max fail state=, Max grey state=}}
+
+====================================================== results
+no errors detected
+
+====================================================== statistics
+elapsed time:       00:00:00
+states:             new=9,visited=0,backtracked=9,end=4
+search:             maxDepth=4,constraints=0
+choice generators:  thread=1 (signal=0,lock=1,sharedRef=0,threadApi=0,reschedule=0), data=4
+heap:               new=471,released=40,maxLive=459,gcCycles=8
+instructions:       6400
+max memory:         981MB
+loaded code:        classes=82,methods=1665
+
+====================================================== search finished: 1/12/23 12:36 PM
+Jan 12, 2023 12:36:31 PM edu.cmu.sv.isstac.canopy.quantification.ModelCounterFactory cleanUpTempFiles
+INFO: Removing model counter tmp dir: /tmp/modelcounter
+
+real	0m0.911s
+user	0m2.077s
+sys	0m0.221s
