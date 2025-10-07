@@ -342,6 +342,9 @@ def parse_dotfiles(
                     modified_block.split("\n")[1:]
                 )
             
+            # remove old debugger calls like call void @llvm.dbg.declare
+            modified_block = re.sub(r".*call\s+void\s+@llvm\.dbg\..*\n?", "", modified_block)
+            
             # remove lines with debugger msg like #dbg_
             modified_block = re.sub(r".*#dbg_.*\n?", "", modified_block)
 
