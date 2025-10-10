@@ -1,0 +1,30 @@
+{
+    "git.ignoreLimitWarning": true,
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/*.pyc": true,
+        "**/__pycache__": true,
+        "**/.git": true,
+        "**/.DS_Store": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/rq2/fuzz-data/**": true,
+        "**/rq2/fuzz-result/**": true,
+        "**/rq2/esti-result/**": true,
+        "**/*.pyc": true,
+        "**/__pycache__": true,
+        "**/coverage/**": true,
+        "**/.pytest_cache": true
+    },
+    "files.watcherExclude": {
+        "**/rq2/fuzz-data/**": true,
+        "**/rq2/fuzz-result/**": true,
+        "**/rq2/esti-result/**": true,
+        "**/__pycache__/**": true,
+        "**/node_modules/**": true
+    },
+    "python.analysis.extraPaths": [
+        "./rq2"
+    ],
+}
