@@ -88,12 +88,12 @@
       "problemMatcher": []
     },
     {
-      "label": "sense:sample-ll",
+      "label": "sense:sample",
       "type": "shell",
       "command": "bash",
       "args": [
         "-lc",
-        "conda run -n play3.10 opt-20 -load-pass-plugin=./SampleArgsPass.so -passes=\"function(sample-args)\" -sample-only-fns=f -S demo.ll -o demo.sample.ll"
+        "SAMPLE_ONLY_FNS=f conda run -n play3.10 clang-20 -O0 -Xclang -disable-O0-optnone -fpass-plugin=./SampleArgsPass.so ../demo/demo.c -L. -lsample_runtime -o demo"
       ],
       "options": {
         "cwd": "${workspaceFolder}/sense/build"

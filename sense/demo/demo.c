@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "mut_runtime.h"  // so we can seed/budget from user code if we want
+#include <stdio.h> // so we can seed/budget from user code if we want
 
 // target function
 double f(int a, double x) {

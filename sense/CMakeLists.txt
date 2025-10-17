@@ -33,6 +33,10 @@ add_llvm_pass_plugin(MutArgsPass
 add_llvm_pass_plugin(SampleArgsPass
   passes/SampleArgsPass.cpp
 )
+
+add_llvm_pass_plugin(DummyIOPass
+  passes/DummyIOPass.cpp
+)
 # Link to nothing extra; pass plugins link LLVM bits implicitly via the macro.
 # We expose symbols that will be referenced from the runtime libraries at link time of the final program.
 

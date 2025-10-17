@@ -13,28 +13,23 @@
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/raw_ostream.h"
+#include <cstdlib>
+#include <cstring>
 
 using namespace llvm;
 
-// ---------- CLI knobs ----------
-static cl::opt<unsigned long long> SeedOpt(
-    "sample-seed", cl::init(0x1234567890ABCDEFull),
-    cl::desc("Seed for sampling runtime (default 0x1234567890ABCDEF)"));
-
-static cl::opt<int> BudgetOpt(
-    "sample-budget", cl::init(-1),
-    cl::desc("Max number of samples per process (-1 = unlimited)"));
-
-// Only sample these function names if non-empty (comma-separated)
-static cl::opt<std::string> OnlyFnsOpt(
-    "sample-only-fns", cl::init(""),
-    cl::desc("Comma-separated list of function names to sample (default: all)"));
-
 static bool nameAllowed(StringRef N) {
-  if (OnlyFnsOpt.empty()) return true;
+  // Check environment variable SAMPLE_ONLY_FNS for comma-separated function names
+  const char* envVar = std::getenv("SAMPLE_ONLY_FNS");
+  if (!envVar || strlen(envVar) == 0) {
+    return true; // If env var not set or empty, instrument all functions
+  }
+  
   SmallVector<StringRef, 8> Names;
-  StringRef(OnlyFnsOpt).split(Names, ',');
-  for (auto S : Names) if (S == N) return true;
+  StringRef(envVar).split(Names, ',');
+  for (auto S : Names) {
+    if (S.trim() == N) return true; // trim whitespace around function names
+  }
   return false;
 }
 
@@ -42,21 +37,14 @@ namespace {
 
 struct SampleArgsFunctionPass : public PassInfoMixin<SampleArgsFunctionPass> {
 
-  // Insert runtime decls (sample_seed, sample_set_budget, sample_int, sample_double, printf)
-  static void ensureRuntimeDecls(Module &M, Function *&SampleSeed,
-                                 Function *&SampleBudget, Function *&SampleInt,
+  // Insert runtime decls (sample_int, sample_double, printf)
+  static void ensureRuntimeDecls(Module &M, Function *&SampleInt,
                                  Function *&SampleDouble, Function *&Printf) {
     LLVMContext &Ctx = M.getContext();
-    auto *VoidTy = Type::getVoidTy(Ctx);
     auto *I32Ty  = Type::getInt32Ty(Ctx);
-    auto *I64Ty  = Type::getInt64Ty(Ctx);
     auto *F64Ty  = Type::getDoubleTy(Ctx);
     auto *CharPtrTy = PointerType::getUnqual(Type::getInt8Ty(Ctx));
 
-    SampleSeed = cast<Function>(M.getOrInsertFunction(
-        "sample_seed", FunctionType::get(VoidTy, {I64Ty}, false)).getCallee());
-    SampleBudget = cast<Function>(M.getOrInsertFunction(
-        "sample_set_budget", FunctionType::get(VoidTy, {I32Ty}, false)).getCallee());
     SampleInt = cast<Function>(M.getOrInsertFunction(
         "sample_int", FunctionType::get(I32Ty, {I32Ty}, false)).getCallee());
     SampleDouble = cast<Function>(M.getOrInsertFunction(
@@ -66,12 +54,16 @@ struct SampleArgsFunctionPass : public PassInfoMixin<SampleArgsFunctionPass> {
   }
 
   PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
+    errs() << "=== SampleArgsFunctionPass::run called on function: " << F.getName() << " ===\n";
+    
     if (F.isDeclaration() || !nameAllowed(F.getName()))
       return PreservedAnalyses::all();
 
+    errs() << "    Instrumenting function: " << F.getName() << "\n";
+
     Module &M = *F.getParent();
-    Function *SampleSeed = nullptr, *SampleBudget = nullptr, *SampleInt = nullptr, *SampleDouble = nullptr, *Printf = nullptr;
-    ensureRuntimeDecls(M, SampleSeed, SampleBudget, SampleInt, SampleDouble, Printf);
+    Function *SampleInt = nullptr, *SampleDouble = nullptr, *Printf = nullptr;
+    ensureRuntimeDecls(M, SampleInt, SampleDouble, Printf);
 
     // Insert at function entry
     BasicBlock &Entry = F.getEntryBlock();
@@ -147,6 +139,9 @@ extern "C" LLVM_ATTRIBUTE_WEAK ::llvm::PassPluginLibraryInfo llvmGetPassPluginIn
   return {
     LLVM_PLUGIN_API_VERSION, "SampleArgsPass", "0.1",
     [](PassBuilder &PB) {
+      // Print when the plugin is loaded
+      errs() << "=== SampleArgsPass PASS PLUGIN LOADED ===\n";
+
       // opt -passes="function(sample-args)"
       PB.registerPipelineParsingCallback(
           [](StringRef Name, FunctionPassManager &FPM,
@@ -157,6 +152,15 @@ extern "C" LLVM_ATTRIBUTE_WEAK ::llvm::PassPluginLibraryInfo llvmGetPassPluginIn
             }
             return false;
           });
+      
+      // Register to run automatically in optimization pipelines
+      // This is triggered when clang/afl-cc -fpass-plugin=$WORK/utils/SampleArgsPass.so
+      // uses any optimization flag or not at all.
+      PB.registerPipelineStartEPCallback(
+        [](ModulePassManager &MPM, OptimizationLevel Level) {
+          errs() << "=== Pipeline start callback - adding SampleArgsFunctionPass ===\n";
+          MPM.addPass(createModuleToFunctionPassAdaptor(SampleArgsFunctionPass{}));
+        });
     }
   };
 }
