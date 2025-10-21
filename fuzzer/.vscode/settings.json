@@ -1,0 +1,25 @@
+{
+  // ---- Use clangd for all language features
+  "clangd.arguments": [
+    "--compile-commands-dir=/workspaces/fuzzer",
+    "--background-index",
+    "--all-scopes-completion",
+    "--header-insertion=never"
+  ],
+  // ---- Disable cpptools IntelliSense (keep its debugger)
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.errorSquiggles": "disabled",
+  "C_Cpp.default.compilerPath": "/usr/bin/clang++",
+  "C_Cpp.default.cppStandard": "c++17",
+  "C_Cpp.default.cStandard": "c11",
+  "C_Cpp.default.intelliSenseMode": "linux-clang-x64",
+  "C_Cpp.default.compileCommands": "/workspaces/fuzzer/compile_commands.json",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/build/**": true,
+    "**/out/**": true
+  },
+  "editor.formatOnSave": true,
+  "C_Cpp.clang_format_style": "{ BasedOnStyle: LLVM, IndentWidth: 2, ColumnLimit: 100 }"
+}

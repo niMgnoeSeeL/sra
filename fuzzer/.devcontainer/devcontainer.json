@@ -1,0 +1,47 @@
+{
+  "name": "AFL++ Extension Dev (LLVM 20)",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+        "LLVM_VERSION": "20",
+        "GCC_VERSION": "11"
+    }
+  },
+  // Make the container’s working folder ONLY /workspaces/fuzzer
+  "workspaceFolder": "/workspaces/fuzzer",
+
+  // Bind-mount ONLY the opened folder (sra/fuzzer) to /workspaces/fuzzer
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/fuzzer,type=bind,consistency=cached",
+
+  // 🚫 Disable the automatic extra mount of the Git root (your /mnt/ssd3/ericzhou/sra)
+  "mountWorkspaceGitRoot": "never",
+  "remoteUser": "vscode",
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined"
+  ],
+  "containerEnv": {
+    "AFL_SKIP_CPUFREQ": "1",
+    "AFL_TRY_AFFINITY": "1",
+    "AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES": "1",
+    "LLVM_VERSION": "20",
+    "GCC_VERSION": "11",
+    "CC": "clang",
+    "CXX": "clang++"
+  },
+  "postCreateCommand": "echo 'Dev container ready'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "ms-azuretools.vscode-docker",
+        "foxundermoon.shell-format"
+      ]
+    }
+  }
+}

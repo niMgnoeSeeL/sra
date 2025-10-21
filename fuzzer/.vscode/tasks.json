@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schema.store/schemas/json/tasks.json",
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}"
+  },
+  "tasks": [
+    {
+      "label": "AFL: build",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "make -C AFLplusplus -j$(nproc)"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "AFL: clean",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "make -C AFLplusplus clean"
+      ]
+    },
+    {
+      "label": "Generate compile_commands.json (AFL++)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "rm -f compile_commands.json && bear --output compile_commands.json -- make -j$(nproc) -C AFLplusplus"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate compile_commands.json (FT)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "rm -f compile_commands.json && bear --output compile_commands.json -- make -j$(nproc) -C AFLplusplus"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
