@@ -28,6 +28,96 @@
                     "ignoreFailures": true
                 }
             ]
-        }
+        },
+        {
+            "name": "Debug pass via opt-20 (mut-args)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/MutArgsPass.so",
+                "-passes=function(mut-args)",
+                "-S",
+                "${workspaceFolder}/sense/build/demo.ll",
+                "-o",
+                "${workspaceFolder}/sense/build/demo.mut.ll",
+                // "-mut-seed=42", # USE env var MUT_SEED
+                // "-mut-budget=1", # USE env var MUT_BUDGET
+                "-mut-only-fns=f"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "externalConsole": false,
+            "preLaunchTask": "sense:emit-ll"
+        },
+        {
+            "name": "Debug pass via opt-20 (sample-args)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleArgsPass.so",
+                "-passes=function(sample-args)",
+                "-S",
+                "${workspaceFolder}/sense/build/demo.ll",
+                "-o",
+                "${workspaceFolder}/sense/build/demo.sample.ll",
+                // "-sample-seed=42", # USE env var SAMPLE_SEED
+                // "-sample-budget=1", # USE env var SAMPLE_BUDGET
+                // "-sample-only-fns=f"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "externalConsole": false,
+            "preLaunchTask": "sense:emit-ll"
+        },
+        {
+            "name": "Debug mutated demo",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/build/demo_mut",
+            "args": [],
+            "cwd": "${workspaceFolder}/sense/build",
+            "environment": [
+                {
+                    "name": "MUT_SEED",
+                    "value": "12345"
+                },
+                {
+                    "name": "MUT_BUDGET",
+                    "value": "-1"
+                }
+            ],
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "externalConsole": false,
+            "preLaunchTask": "build-mut-demo"
+        },
+        {
+            "name": "Debug sampled demo",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/build/demo_sample",
+            "args": [],
+            "cwd": "${workspaceFolder}/sense/build",
+            "environment": [
+                {
+                    "name": "SAMPLE_SEED",
+                    "value": "54321"
+                },
+                {
+                    "name": "SAMPLE_BUDGET",
+                    "value": "-1"
+                }
+            ],
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "externalConsole": false,
+            "preLaunchTask": "build-sample-demo"
+        },
     ]
 }

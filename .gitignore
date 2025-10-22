@@ -14,3 +14,19 @@ rq2/esti-result/**
 
 # taint analysis projects
 taint-subjects/**
+sra/taint-subjects/**
+
+formatter/build/**
+formatter/test_projects/**
+
+# Our Fuzzer
+fuzzer/.cache/**
+fuzzer/AFLplusplus/**
+fuzzer/build/**
+fuzzer/exercises/**
+fuzzer/fuzztastic/**
+fuzzer/utils/**
+fuzzer/subjects/**
+fuzzer/compile_commands.json
+
+fuzzer/sense/build/**

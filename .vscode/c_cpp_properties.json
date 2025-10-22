@@ -12,7 +12,6 @@
             "intelliSenseMode": "linux-gcc-x64",
             "compilerPath": "/usr/bin/c++",
             "compileCommands": [
-                "${workspaceFolder}/sense/build/compile_commands.json",
                 "${workspaceFolder}/formatter/build/compile_commands.json"
             ]
         }

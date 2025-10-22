@@ -49,6 +49,101 @@
         "rm -f compile_commands.json && bear --output compile_commands.json -- make -j$(nproc) -C AFLplusplus"
       ],
       "problemMatcher": []
+    },
+    {
+      "label": "sense:cmake-config-debug",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "/usr/bin/cmake -S .. -B . -DLLVM_DIR=\"$(llvm-config-20 --cmakedir)\" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/build"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "sense:build-all",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "/usr/bin/cmake --build . -j"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/build"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "sense:emit-ll",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "clang-20 -O0 -S -emit-llvm -Xclang -disable-O0-optnone ../demo/demo.c -I ../runtime -o demo.ll"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/build"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "sense:mutate-ll",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "opt-20 -load-pass-plugin=./MutArgsPass.so -passes=\"function(mut-args)\" -mut-only-fns=f -S demo.ll -o demo.mut.ll"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/build"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "sense:sample",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "SAMPLE_ONLY_FNS=f clang-20 -O0 -Xclang -disable-O0-optnone -fpass-plugin=./SampleArgsPass.so ../demo/demo.c -L. -lsample_runtime -o demo"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/build"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "sense:build-mut-demo",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "clang-20 demo.mut.ll libmut_runtime.a -o demo_mut"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/build"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "sense:build-sample-demo",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "clang-20 demo.sample.ll libsample_runtime.a -o demo_sample"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/build"
+      },
+      "problemMatcher": []
     }
   ]
 }
