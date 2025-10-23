@@ -34,6 +34,10 @@ add_llvm_pass_plugin(SampleArgsPass
   passes/SampleArgsPass.cpp
 )
 
+add_llvm_pass_plugin(SampleFlowSrcPass
+  passes/SampleFlowSrcPass.cpp
+)
+
 add_llvm_pass_plugin(DummyIOPass
   passes/DummyIOPass.cpp
 )

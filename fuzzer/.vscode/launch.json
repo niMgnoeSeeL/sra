@@ -119,5 +119,28 @@
             "externalConsole": false,
             "preLaunchTask": "build-sample-demo"
         },
+        {
+            "name": "Debug pass via opt-20 (sample-flow-src)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=function(sample-flow-src)",
+                "-sample-line=7",
+                "-sample-var-name=buf",
+                // "-sample-col-start=9",
+                // "-sample-col-end=12",
+                "-S",
+                "${workspaceFolder}/sense/demo/flow_simple.ll",
+                "-o",
+                "${workspaceFolder}/sense/build/flow_simple_sampled.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "externalConsole": false
+        },
     ]
 }
