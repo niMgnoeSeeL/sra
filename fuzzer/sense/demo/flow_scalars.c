@@ -15,10 +15,5 @@ int main() {
   log(y);
   printf("double: %.2f\n", y * 2.0);
 
-  // Test case 3: char array taint source - fgets
-  char buf[16];
-  fgets(buf, sizeof(buf), stdin); // buf is tainted (line 20)
-  printf("string: %s", buf);
-
   return 0;
 }

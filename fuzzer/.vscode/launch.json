@@ -120,7 +120,7 @@
             "preLaunchTask": "build-sample-demo"
         },
         {
-            "name": "Debug pass via opt-20 (sample-flow-src)",
+            "name": "Debug SampleFlowSrcPass (var name mode)",
             "type": "cppdbg",
             "request": "launch",
             "program": "/usr/bin/opt-20",
@@ -142,5 +142,73 @@
             "miDebuggerPath": "/usr/bin/gdb",
             "externalConsole": false
         },
+        {
+            "name": "Debug SampleFlowSrcPass (lineno colno mode)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=function(sample-flow-src)",
+                "-sample-line=7",
+                // "-sample-var-name=buf",
+                "-sample-col-start=9",
+                "-sample-col-end=12",
+                "-S",
+                "${workspaceFolder}/sense/demo/flow_simple.ll",
+                "-o",
+                "${workspaceFolder}/sense/build/flow_simple_sampled.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "externalConsole": false
+        },
+        {
+            "name": "Debug SampleFlowSrcPass (var name mode) 2",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=function(sample-flow-src)",
+                "-sample-line=8",
+                "-sample-var-name=x",
+                // "-sample-col-start=9",
+                // "-sample-col-end=12",
+                "-S",
+                "${workspaceFolder}/sense/demo/flow_scalars.ll",
+                "-o",
+                "${workspaceFolder}/sense/build/flow_scalars_x.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "externalConsole": false
+        },
+        {
+            "name": "Debug SampleFlowSrcPass (struct field mode)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=function(sample-flow-src)",
+                "-sample-line=14",
+                "-sample-col-start=22",
+                "-sample-col-end=28",
+                "-S",
+                "${workspaceFolder}/sense/demo/flow_struct.ll",
+                "-o",
+                "${workspaceFolder}/sense/build/flow_struct_sampled.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "externalConsole": false
+        }
     ]
 }
