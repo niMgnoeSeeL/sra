@@ -209,6 +209,35 @@
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
             "externalConsole": false
-        }
+        },
+        {
+            "name": "Debug SampleFlowSrcPass (orchestrator command - SRC_ID=1)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=sample-flow-src",
+                "-sample-line=8",
+                "-sample-col-start=22",
+                "-sample-col-end=24",
+                "-sample-src-id=1",
+                "-sample-var-name=x",
+                "${workspaceFolder}/sense/demo/flow_scalars.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/flow_scalars.instrumented.ll.src1.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all",
+        },
     ]
 }

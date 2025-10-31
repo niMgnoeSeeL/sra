@@ -114,6 +114,9 @@ static cl::opt<std::string>
     VarNameOpt("sample-var-name",
                cl::desc("Target variable name (e.g., 'x' from '&x')"),
                cl::init(""));
+static cl::opt<int> SrcIDOpt("sample-src-id",
+                             cl::desc("Source ID for flow tracking"),
+                             cl::init(-1));
 namespace {
 
 struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
@@ -350,7 +353,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
   static void declareSamplingFunctions(Module &M, Function *&SampleInt,
                                        Function *&SampleDouble,
-                                       Function *&SampleBytes) {
+                                       Function *&SampleBytes,
+                                       Function *&SampleReportSource) {
     LLVMContext &Ctx = M.getContext();
 
     // sample_int: i32 sample_int(i32)
@@ -375,6 +379,16 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
                           {PointerType::getUnqual(Ctx), Type::getInt32Ty(Ctx)},
                           false));
     SampleBytes = cast<Function>(SampleBytesFn.getCallee());
+
+    // sample_report_source: void sample_report_source(ptr, i32, i32)
+    // params: (data_ptr, size, src_id)
+    FunctionCallee SampleReportSourceFn = M.getOrInsertFunction(
+        "sample_report_source",
+        FunctionType::get(Type::getVoidTy(Ctx),
+                          {PointerType::getUnqual(Ctx), Type::getInt32Ty(Ctx),
+                           Type::getInt32Ty(Ctx)},
+                          false));
+    SampleReportSource = cast<Function>(SampleReportSourceFn.getCallee());
   }
 
   static SmallVector<Instruction *, 8> buildStmtSlice(Instruction *Anchor) {
@@ -438,11 +452,15 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
   static void insertSampleCalls(const DataLayout &DL, LLVMContext &Ctx,
                                 Function *&SampleInt, Function *&SampleDouble,
-                                Function *&SampleBytes, Value *&Base,
+                                Function *&SampleBytes,
+                                Function *&SampleReportSource, Value *&Base,
                                 Instruction *&LastWriter, AllocaInst *&AI,
-                                Value *&Ptr, Type *&PointedToType) {
+                                Value *&Ptr, Type *&PointedToType, int srcID) {
     // Initialize the sample call instruction pointer
     CallInst *SampleCall = nullptr;
+    Value *ReportPtr = nullptr;  // Pointer to report to sample_report_source
+    Value *ReportSize = nullptr; // Size to report to sample_report_source
+
     // Case 1: Scalar integer (i32)
     if (PointedToType && PointedToType->isIntegerTy(32)) {
       errs() << "[sample-flow-src] Detected i32 scalar - using sample_int\n";
@@ -459,6 +477,10 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
       SampleCall = SampledValue;
 
+      // Set up for report call
+      ReportPtr = Ptr ? Ptr : Base;
+      ReportSize = ConstantInt::get(Type::getInt32Ty(Ctx), 4); // sizeof(i32)
+
       // Case 2: Scalar double
     } else if (PointedToType && PointedToType->isDoubleTy()) {
       errs()
@@ -472,6 +494,10 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
       B.CreateStore(SampledValue, Ptr ? Ptr : Base);
 
       SampleCall = SampledValue;
+
+      // Set up for report call
+      ReportPtr = Ptr ? Ptr : Base;
+      ReportSize = ConstantInt::get(Type::getInt32Ty(Ctx), 8); // sizeof(double)
 
       // Case 3: Array or buffer - use sample_bytes
     } else {
@@ -511,13 +537,30 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
         errs() << "[sample-flow-src] Using default size: 16 bytes\n";
       }
 
-      // Create and insert the sample_bytes call
+      // Insert sample_bytes call (does the actual sampling/mutation)
       SampleCall = CallInst::Create(SampleBytes, {Ptr, Len});
       SampleCall->insertAfter(LastWriter);
+
+      // Set up for report call
+      ReportPtr = Ptr;
+      ReportSize = Len;
     } // end case 3
 
     errs() << "[sample-flow-src] Inserted sample call: " << *SampleCall << "\n";
     errs() << "[sample-flow-src]   immediately after: " << *LastWriter << "\n";
+
+    // Add sample_report_source call if srcID is provided
+    if (srcID >= 0 && SampleReportSource && ReportPtr && ReportSize) {
+      Value *SrcIDVal = ConstantInt::get(Type::getInt32Ty(Ctx), srcID);
+      CallInst *ReportCall = CallInst::Create(
+          SampleReportSource, {ReportPtr, ReportSize, SrcIDVal});
+      ReportCall->insertAfter(SampleCall);
+
+      errs()
+          << "[sample-flow-src] Inserted sample_report_source call with SRC_ID="
+          << srcID << "\n";
+      errs() << "[sample-flow-src]   " << *ReportCall << "\n";
+    }
   }
 
   // Given a base address (allocation, for example), a function call, find the
@@ -636,19 +679,50 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
     // Declare all possible sampling functions
     Function *SampleInt = nullptr, *SampleDouble = nullptr,
-             *SampleBytes = nullptr;
+             *SampleBytes = nullptr, *SampleReportSource = nullptr;
 
-    declareSamplingFunctions(M, SampleInt, SampleDouble, SampleBytes);
+    declareSamplingFunctions(M, SampleInt, SampleDouble, SampleBytes,
+                             SampleReportSource);
 
     Instruction *Anchor = nullptr;
     Value *Base = nullptr;
 
-    // === Step 1: Find base variable using DILocalVariable (if var name
-    // provided) ===
-    if (!VarNameOpt.empty()) {
-      errs()
-          << "[sample-flow-src] Using DILocalVariable approach with var name: "
-          << VarNameOpt << "\n";
+    // === Step 1 (recommended): find anchor instruction matching span ===
+    errs() << "[sample-flow-src] Try using line:col matching approach\n";
+
+    // Find the LAST instruction matching the line:col, because complex
+    // expressions like matrix[1][0] may generate multiple instructions
+    // with the same debug location, and we want the final one closest
+    // to the actual use.
+    for (Instruction &I : instructions(F)) {
+      if (DebugLoc DL = I.getDebugLoc()) {
+        if (DL.getLine() == LineOpt && DL.getCol() >= ColStartOpt &&
+            DL.getCol() <= ColEndOpt) {
+          Anchor = &I;
+          // Don't break - keep looking for later instructions
+        }
+      }
+    }
+
+    if (!Anchor)
+      goto fallback;
+
+    errs() << "[sample-flow-src] Found anchor: " << *Anchor << "\n";
+
+    // === Step 1b: identify base object (alloca/global) ===
+    if (auto *GEP = dyn_cast<GetElementPtrInst>(Anchor))
+      Base = getBaseObject(GEP, DL);
+    else if (auto *Call = dyn_cast<CallBase>(Anchor))
+      Base = getBaseObject(Call->getArgOperand(0), DL);
+    // if (!Base)
+    //   return PreservedAnalyses::all();
+
+    // fallback
+  fallback:
+    if (!Anchor || !Base) {
+      errs() << "[sample-flow-src] Fallback to using DILocalVariable approach "
+                "with var name: "
+             << VarNameOpt << "\n";
 
       // Find the variable directly using debug info
       Base = findVariableByName(F, VarNameOpt, LineOpt);
@@ -685,36 +759,6 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
                << LineOpt << "\n";
         return PreservedAnalyses::all();
       }
-
-    } else {
-      // === Step 1 (recommended): find anchor instruction matching span ===
-      errs() << "[sample-flow-src] Using line:col matching approach\n";
-
-      // Find the LAST instruction matching the line:col, because complex
-      // expressions like matrix[1][0] may generate multiple instructions
-      // with the same debug location, and we want the final one closest
-      // to the actual use.
-      for (Instruction &I : instructions(F)) {
-        if (DebugLoc DL = I.getDebugLoc()) {
-          if (DL.getLine() == LineOpt && DL.getCol() >= ColStartOpt &&
-              DL.getCol() <= ColEndOpt) {
-            Anchor = &I;
-            // Don't break - keep looking for later instructions
-          }
-        }
-      }
-
-      assert(Anchor && "[sample-flow-src] ERROR: Anchor instruction not found");
-
-      errs() << "[sample-flow-src] Found anchor: " << *Anchor << "\n";
-
-      // === Step 1b: identify base object (alloca/global) ===
-      if (auto *GEP = dyn_cast<GetElementPtrInst>(Anchor))
-        Base = getBaseObject(GEP, DL);
-      else if (auto *Call = dyn_cast<CallBase>(Anchor))
-        Base = getBaseObject(Call->getArgOperand(0), DL);
-      if (!Base)
-        return PreservedAnalyses::all();
     }
 
     errs() << "[sample-flow-src] Base object: " << *Base << "\n";
@@ -743,8 +787,9 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     findPointedToType(DL, Anchor, Base, AllocatedType, Ptr, PointedToType);
 
     // Finally, dispatch based on the pointed-to type
-    insertSampleCalls(DL, Ctx, SampleInt, SampleDouble, SampleBytes, Base,
-                      LastWriter, AI, Ptr, PointedToType);
+    insertSampleCalls(DL, Ctx, SampleInt, SampleDouble, SampleBytes,
+                      SampleReportSource, Base, LastWriter, AI, Ptr,
+                      PointedToType, SrcIDOpt);
 
     return PreservedAnalyses::none();
   }
