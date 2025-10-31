@@ -27,6 +27,10 @@ fuzzer/exercises/**
 fuzzer/fuzztastic/**
 fuzzer/utils/**
 fuzzer/subjects/**
-fuzzer/compile_commands.json
+fuzzer/compile_commands*.json
 
 fuzzer/sense/build/**
+fuzzer/sense/demo/**
+!fuzzer/sense/demo/*.c
+!fuzzer/sense/demo/*.ll
+!fuzzer/sense/demo/*.sarif

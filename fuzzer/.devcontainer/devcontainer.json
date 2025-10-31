@@ -4,16 +4,14 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-        "LLVM_VERSION": "20",
-        "GCC_VERSION": "11"
+      "LLVM_VERSION": "20",
+      "GCC_VERSION": "11"
     }
   },
   // Make the container’s working folder ONLY /workspaces/fuzzer
   "workspaceFolder": "/workspaces/fuzzer",
-
   // Bind-mount ONLY the opened folder (sra/fuzzer) to /workspaces/fuzzer
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/fuzzer,type=bind,consistency=cached",
-
   // 🚫 Disable the automatic extra mount of the Git root (your /mnt/ssd3/ericzhou/sra)
   "mountWorkspaceGitRoot": "never",
   "remoteUser": "vscode",
@@ -40,7 +38,8 @@
         "ms-vscode.cmake-tools",
         "twxs.cmake",
         "ms-azuretools.vscode-docker",
-        "foxundermoon.shell-format"
+        "foxundermoon.shell-format",
+        "vadimcn.vscode-lldb"
       ]
     }
   }
