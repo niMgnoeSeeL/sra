@@ -5,6 +5,11 @@ project(mutargs LANGUAGES C CXX)
 find_package(LLVM 20.1...<21 REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION} at ${LLVM_DIR}")
 
+# Add this flag -fstandalone-debug to Fix a lldb bug
+# so that we can use lldb to pretty-print libstdc++ types
+# See https://github.com/vadimcn/codelldb/issues/415
+add_compile_options(-fstandalone-debug)
+
 # LLVM CMake helpers and definitions
 list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
 include(AddLLVM)
@@ -48,6 +53,55 @@ add_llvm_pass_plugin(DummyIOPass
 )
 # Link to nothing extra; pass plugins link LLVM bits implicitly via the macro.
 # We expose symbols that will be referenced from the runtime libraries at link time of the final program.
+
+# ---- orchestrator executable ----
+# Find Clang for AST analysis
+find_package(Clang REQUIRED CONFIG)
+
+# Find or fetch nlohmann/json for SARIF parsing
+find_package(nlohmann_json 3.2.0 QUIET)
+if(NOT nlohmann_json_FOUND)
+  message(STATUS "nlohmann/json not found, using FetchContent")
+  include(FetchContent)
+  FetchContent_Declare(
+    json
+    URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+  )
+  FetchContent_MakeAvailable(json)
+endif()
+
+add_executable(taint-orchestrator
+  orchestrator/main.cpp
+  orchestrator/FlowManager.cpp
+  orchestrator/SARIFParser.cpp
+  orchestrator/ASTAnalyzer.cpp
+  orchestrator/InstrumentationStrategy.cpp
+  orchestrator/ServiceComm.cpp
+)
+
+target_include_directories(taint-orchestrator PRIVATE
+  ${LLVM_INCLUDE_DIRS}
+  ${CLANG_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_SOURCE_DIR}/orchestrator
+)
+
+target_link_libraries(taint-orchestrator PRIVATE
+  # LLVM libraries
+  LLVM
+  # Clang libraries for AST analysis
+  clangAST
+  clangBasic
+  clangFrontend
+  clangSerialization
+  clangTooling
+  # JSON library
+  nlohmann_json::nlohmann_json
+)
+
+target_compile_definitions(taint-orchestrator PRIVATE
+  ${LLVM_DEFINITIONS}
+)
 
 # ---- tiny demos (optional) ----
 add_executable(demo demo/demo.c)

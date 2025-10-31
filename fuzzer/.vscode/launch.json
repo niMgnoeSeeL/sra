@@ -239,5 +239,31 @@
             ],
             "preLaunchTask": "sense:build-all",
         },
+        {
+            "name": "Debug taint-orchestrator (flow_scalars)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/build/taint-orchestrator",
+            "args": [
+                "--sarif",
+                "${workspaceFolder}/sense/demo/flow_scalars.sarif",
+                "--input",
+                "${workspaceFolder}/sense/demo/flow_scalars.ll",
+                "--output",
+                "${workspaceFolder}/sense/build/flow_scalars.instrumented.ll",
+                "--pass-dir",
+                "${workspaceFolder}/sense/build",
+                "--verbose"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all"
+        },
     ]
 }
