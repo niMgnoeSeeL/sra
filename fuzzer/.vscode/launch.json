@@ -240,6 +240,35 @@
             "preLaunchTask": "sense:build-all",
         },
         {
+            "name": "Debug SampleFlowSinkPass (orchestrator command - SINK_ID=1)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSinkPass.so",
+                "-passes=sample-flow-sink",
+                "-sample-line=16",
+                "-sample-col-start=31",
+                "-sample-col-end=40",
+                "-sample-sink-id=1",
+                "-sample-var-name=s",
+                "${workspaceFolder}/sense/demo/flow_struct.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/flow_struct.instrumented.ll.sink.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all",
+        },
+        {
             "name": "Debug taint-orchestrator (flow_scalars)",
             "type": "lldb",
             "request": "launch",
