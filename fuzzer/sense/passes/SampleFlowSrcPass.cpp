@@ -712,8 +712,13 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     // === Step 1b: identify base object (alloca/global) ===
     if (auto *GEP = dyn_cast<GetElementPtrInst>(Anchor))
       Base = getBaseObject(GEP, DL);
-    else if (auto *Call = dyn_cast<CallBase>(Anchor))
-      Base = getBaseObject(Call->getArgOperand(0), DL);
+    else if (auto *Call = dyn_cast<CallBase>(Anchor)) {
+      // Note: For now, for calls, we don't know which argument the line:col
+      // spans. Always fallback to varname mode for correct identification.
+      Base = nullptr;
+      errs() << "[sample-flow-src] CallBase anchor - forcing varname "
+                "fallback\n";
+    }
     // if (!Base)
     //   return PreservedAnalyses::all();
 
