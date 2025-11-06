@@ -35,6 +35,11 @@ add_library(flow_runtime STATIC
 )
 target_include_directories(flow_runtime PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/runtime)
 
+add_library(df_coverage_runtime STATIC
+  runtime/df_coverage_runtime.c
+)
+target_include_directories(df_coverage_runtime PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/runtime)
+
 # ---- pass plugins (new PM) ----
 add_llvm_pass_plugin(MutArgsPass
   passes/MutArgsPass.cpp
@@ -50,6 +55,10 @@ add_llvm_pass_plugin(SampleFlowSrcPass
 
 add_llvm_pass_plugin(SampleFlowSinkPass
   passes/SampleFlowSinkPass.cpp
+)
+
+add_llvm_pass_plugin(DataFlowCoveragePass
+  passes/DataFlowCoveragePass.cpp
 )
 
 add_llvm_pass_plugin(DummyIOPass

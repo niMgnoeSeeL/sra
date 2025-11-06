@@ -51,12 +51,12 @@ struct SourceLocation {
 
 // Represents a complete taint flow from source to sink
 struct Flow {
-  int flowID;           // Unique flow identifier (sequential)
+  int flowID;            // Unique flow identifier (sequential)
   SourceLocation source; // Where the taint originates
   SourceLocation sink;   // Where the taint leaks
-  int srcID;            // Assigned source ID (shared across flows)
-  int sinkID;           // Assigned sink ID (shared across flows)
-  
+  int srcID;             // Assigned source ID (shared across flows)
+  int sinkID;            // Assigned sink ID (shared across flows)
+
   // Optional: dataflow path (ignored for now, can be extended)
   std::vector<SourceLocation> path;
 
@@ -65,7 +65,8 @@ struct Flow {
 
 class FlowManager {
 public:
-  FlowManager() : nextFlowID(1), nextSrcID(1), nextSinkID(1) {}
+  FlowManager()
+      : nextFlowID(1), nextSrcID(1), nextSinkID(1), nextIntermediateID(1) {}
 
   // Add a flow and assign IDs
   void addFlow(const Flow &F);
@@ -83,6 +84,14 @@ public:
     return sinkLocationToID;
   }
 
+  // Get unique intermediate locations with their assigned IDs
+  const std::map<SourceLocation, int> &getIntermediateLocations() const {
+    return intermediateLocationToID;
+  }
+
+  // Add an intermediate location and assign ID (for dataflow coverage)
+  int addIntermediateLocation(const SourceLocation &Loc);
+
   // Query: get all flows that use a specific source ID
   std::vector<const Flow *> getFlowsWithSrcID(int srcID) const;
 
@@ -96,14 +105,24 @@ public:
   size_t getNumFlows() const { return flows.size(); }
   size_t getNumUniqueSources() const { return srcLocationToID.size(); }
   size_t getNumUniqueSinks() const { return sinkLocationToID.size(); }
+  size_t getNumUniqueIntermediates() const {
+    return intermediateLocationToID.size();
+  }
 
   void printSummary() const;
+
+  // Serialization: save flow database to file for pass/fuzzer consumption
+  bool serializeToFile(const std::string &FilePath) const;
+
+  // Deserialization: load flow database from file (for fuzzer service)
+  bool deserializeFromFile(const std::string &FilePath);
 
 private:
   std::vector<Flow> flows;
   std::map<SourceLocation, int> srcLocationToID;
   std::map<SourceLocation, int> sinkLocationToID;
-  
+  std::map<SourceLocation, int> intermediateLocationToID;
+
   // Reverse mappings for queries
   std::map<int, std::vector<const Flow *>> srcIDToFlows;
   std::map<int, std::vector<const Flow *>> sinkIDToFlows;
@@ -112,6 +131,7 @@ private:
   int nextFlowID;
   int nextSrcID;
   int nextSinkID;
+  int nextIntermediateID;
 };
 
 } // namespace taint

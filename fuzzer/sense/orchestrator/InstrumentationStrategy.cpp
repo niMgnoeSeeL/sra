@@ -48,6 +48,34 @@ OptCommand InstrumentationStrategy::generateSinkCommand(
   return cmd;
 }
 
+OptCommand
+InstrumentationStrategy::generateCoverageCommand(const std::string &flowDbPath,
+                                                 const std::string &inputLL,
+                                                 const std::string &outputLL) {
+  OptCommand cmd;
+  cmd.inputFile = inputLL;
+  cmd.outputFile = outputLL;
+  cmd.id = -1;          // No specific ID for coverage pass
+  cmd.isSource = false; // Not a source or sink
+
+  // Build opt command for DataFlowCoveragePass
+  std::ostringstream oss;
+
+  fs::path passPlugin = fs::path(passPluginDir) / "DataFlowCoveragePass.so";
+
+  oss << optPath << " -load-pass-plugin=" << passPlugin
+      << " -passes=df-coverage"
+      << " -df-flow-db=" << flowDbPath << " " << inputLL << " -S -o "
+      << outputLL;
+
+  cmd.command = oss.str();
+
+  std::cout << "[InstrumentationStrategy] Generated coverage command:\n  ";
+  std::cout << cmd.command << "\n";
+
+  return cmd;
+}
+
 bool InstrumentationStrategy::executeCommand(const OptCommand &cmd,
                                              std::string &errorOutput) {
   std::cout << "[InstrumentationStrategy] Executing: " << cmd.command << "\n";
@@ -55,12 +83,23 @@ bool InstrumentationStrategy::executeCommand(const OptCommand &cmd,
   bool success = runShellCommand(cmd.command, errorOutput);
 
   if (success) {
-    std::cout << "[InstrumentationStrategy] Successfully instrumented "
-              << (cmd.isSource ? "source" : "sink") << " at "
-              << cmd.location.toString() << "\n";
+    if (cmd.id >= 0) {
+      // Source or sink instrumentation
+      std::cout << "[InstrumentationStrategy] Successfully instrumented "
+                << (cmd.isSource ? "source" : "sink") << " at "
+                << cmd.location.toString() << "\n";
+    } else {
+      // Coverage or other instrumentation
+      std::cout << "[InstrumentationStrategy] Successfully completed "
+                   "instrumentation\n";
+    }
   } else {
-    std::cerr << "[InstrumentationStrategy] ERROR: Instrumentation failed at "
-              << cmd.location.toString() << "\n";
+    if (cmd.id >= 0) {
+      std::cerr << "[InstrumentationStrategy] ERROR: Instrumentation failed at "
+                << cmd.location.toString() << "\n";
+    } else {
+      std::cerr << "[InstrumentationStrategy] ERROR: Instrumentation failed\n";
+    }
     std::cerr << "  Command: " << cmd.command << "\n";
     std::cerr << "  Error output: " << errorOutput << "\n";
   }

@@ -44,12 +44,12 @@
 namespace taint {
 
 struct OptCommand {
-  std::string command;        // Full opt command line
-  std::string inputFile;      // Input LLVM IR file
-  std::string outputFile;     // Output LLVM IR file
-  int id;                     // SRC_ID or SINK_ID
-  bool isSource;              // true = source, false = sink
-  SourceLocation location;    // Location being instrumented
+  std::string command;     // Full opt command line
+  std::string inputFile;   // Input LLVM IR file
+  std::string outputFile;  // Output LLVM IR file
+  int id;                  // SRC_ID or SINK_ID
+  bool isSource;           // true = source, false = sink
+  SourceLocation location; // Location being instrumented
 };
 
 class InstrumentationStrategy {
@@ -69,6 +69,11 @@ public:
                                  const InstrumentationInfo &info,
                                  const std::string &inputLL,
                                  const std::string &outputLL);
+
+  // Generate dataflow coverage instrumentation command
+  OptCommand generateCoverageCommand(const std::string &flowDbPath,
+                                     const std::string &inputLL,
+                                     const std::string &outputLL);
 
   // Execute an opt command
   bool executeCommand(const OptCommand &cmd, std::string &errorOutput);

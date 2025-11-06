@@ -150,7 +150,14 @@ int main(int argc, char **argv) {
   for (const auto &flow : parser.getFlows()) {
     flowMgr.addFlow(flow);
   }
+
   flowMgr.printSummary();
+
+  // Serialize flow database for pass/fuzzer consumption
+  std::string flowDbPath = config.outputLL + ".flowdb";
+  if (!flowMgr.serializeToFile(flowDbPath)) {
+    std::cerr << "WARNING: Failed to serialize flow database\n";
+  }
 
   // Step 3: Analyze source code with AST to extract variable names
   std::cout << "\n[Step 3] Analyzing source code with Clang AST\n";
@@ -162,6 +169,9 @@ int main(int argc, char **argv) {
     sourceFiles.insert(loc.filePath);
   }
   for (const auto &[loc, _] : flowMgr.getSinkLocations()) {
+    sourceFiles.insert(loc.filePath);
+  }
+  for (const auto &[loc, _] : flowMgr.getIntermediateLocations()) {
     sourceFiles.insert(loc.filePath);
   }
 
@@ -181,7 +191,7 @@ int main(int argc, char **argv) {
 
   std::vector<taint::OptCommand> commands;
 
-  // Generate source instrumentation commands (deduplicated)
+  // Generate source instrumentation commands
   for (const auto &[loc, srcID] : flowMgr.getSourceLocations()) {
     // AST must be loaded for this file
     assert(astLoadStatus[loc.filePath] &&
@@ -206,21 +216,40 @@ int main(int argc, char **argv) {
     commands.push_back(cmd);
   }
 
-  // Generate sink instrumentation commands (deduplicated)
-  // TODO: implement sink instrumentation and uncomment this
-  // for (const auto &[loc, sinkID] : flowMgr.getSinkLocations()) {
-  //   taint::InstrumentationInfo info;
-  //   info.mode = taint::InstrumentationMode::LineCol;
-  //   info.isValid = true;
+  // Generate sink instrumentation commands
+  for (const auto &[loc, sinkID] : flowMgr.getSinkLocations()) {
+    // AST must be loaded for this file
+    assert(astLoadStatus[loc.filePath] &&
+           "AST analysis failed - cannot generate instrumentation commands");
 
-  //   std::string input = commands.empty() ? config.inputLL
-  //                                         : commands.back().outputFile;
-  //   std::string output = config.outputLL + ".sink" + std::to_string(sinkID) +
-  //   ".ll";
+    taint::InstrumentationInfo info = astAnalyzer.analyzeLocation(loc);
 
-  //   auto cmd = strategy.generateSinkCommand(loc, sinkID, info, input,
-  //   output); commands.push_back(cmd);
-  // }
+    if (!info.isValid) {
+      std::cerr << "WARNING: Location analysis failed for " << loc.toString()
+                << ": " << info.errorMessage << "\n";
+      continue;
+    }
+
+    // For pipelined instrumentation, each command reads from previous output
+    std::string input =
+        commands.empty() ? config.inputLL : commands.back().outputFile;
+    std::string output =
+        config.outputLL + ".sink" + std::to_string(sinkID) + ".ll";
+
+    auto cmd = strategy.generateSinkCommand(loc, sinkID, info, input, output);
+    commands.push_back(cmd);
+  }
+
+  // Generate dataflow coverage instrumentation command (if there are
+  // intermediate locations)
+  if (flowMgr.getNumUniqueIntermediates() > 0) {
+    std::string input =
+        commands.empty() ? config.inputLL : commands.back().outputFile;
+    std::string output = config.outputLL + ".dfcov.ll";
+
+    auto cmd = strategy.generateCoverageCommand(flowDbPath, input, output);
+    commands.push_back(cmd);
+  }
 
   // Step 5: Execute instrumentation pipeline
   std::cout << "\n[Step 5] Executing instrumentation pipeline ("
@@ -258,11 +287,17 @@ int main(int argc, char **argv) {
   std::cout << "Sources instrumented: " << flowMgr.getNumUniqueSources()
             << "\n";
   std::cout << "Sinks instrumented: " << flowMgr.getNumUniqueSinks() << "\n";
+  std::cout << "Intermediate locations: " << flowMgr.getNumUniqueIntermediates()
+            << "\n";
+  std::cout << "Flow database: " << flowDbPath << "\n";
   std::cout << "Output: " << config.outputLL << "\n";
   std::cout << "\nNext steps:\n";
-  std::cout << "  1. Link with runtime library (libsample_runtime.a)\n";
+  std::cout << "  1. Link with runtime libraries:\n";
+  std::cout << "     - libsample_runtime.a (sampling)\n";
+  std::cout << "     - libflow_runtime.a (source/sink tracking)\n";
+  std::cout << "     - libdf_coverage_runtime.a (dataflow coverage)\n";
   std::cout << "  2. Compile instrumented IR: clang " << config.outputLL
-            << " -o program\n";
+            << " <runtimes> -o program\n";
   std::cout << "  3. Run and monitor taint flow events\n";
 
   return 0;
