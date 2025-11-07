@@ -77,15 +77,25 @@ struct IntermediateLocation {
   unsigned colEnd;
 };
 
-// Parse the FlowManager database and extract intermediate locations
-std::vector<IntermediateLocation>
+// Represents a flow with its intermediate path
+struct FlowInfo {
+  uint32_t flowID;
+  uint32_t srcID;
+  uint32_t sinkID;
+  std::vector<uint32_t> intermediateIDs;
+  std::string description;
+};
+
+// Parse the FlowManager database and extract intermediate locations + flows
+std::pair<std::vector<IntermediateLocation>, std::vector<FlowInfo>>
 parseFlowDatabase(const std::string &FilePath) {
   std::vector<IntermediateLocation> Locations;
+  std::vector<FlowInfo> Flows;
 
   std::ifstream File(FilePath);
   if (!File.is_open()) {
     errs() << "[df-coverage] ERROR: Could not open file: " << FilePath << "\n";
-    return Locations;
+    return {Locations, Flows};
   }
 
   std::string Line;
@@ -97,38 +107,77 @@ parseFlowDatabase(const std::string &FilePath) {
     std::string Type;
     std::getline(ISS, Type, ',');
 
-    // Only parse INTERMEDIATE entries
-    if (Type != "INTERMEDIATE")
-      continue;
+    // Parse INTERMEDIATE entries
+    if (Type == "INTERMEDIATE") {
+      // Parse: INTERMEDIATE,ID,file,line,colStart,colEnd
+      std::string IDStr, FilePath, LineStr, ColStartStr, ColEndStr;
 
-    // Parse: INTERMEDIATE,ID,file,line,colStart,colEnd
-    std::string IDStr, FilePath, LineStr, ColStartStr, ColEndStr;
+      if (!std::getline(ISS, IDStr, ',') || !std::getline(ISS, FilePath, ',') ||
+          !std::getline(ISS, LineStr, ',') ||
+          !std::getline(ISS, ColStartStr, ',') ||
+          !std::getline(ISS, ColEndStr, ',')) {
+        errs() << "[df-coverage] WARNING: Malformed INTERMEDIATE line: " << Line
+               << "\n";
+        continue;
+      }
 
-    if (!std::getline(ISS, IDStr, ',') || !std::getline(ISS, FilePath, ',') ||
-        !std::getline(ISS, LineStr, ',') ||
-        !std::getline(ISS, ColStartStr, ',') ||
-        !std::getline(ISS, ColEndStr, ',')) {
-      errs() << "[df-coverage] WARNING: Malformed INTERMEDIATE line: " << Line
-             << "\n";
-      continue;
+      IntermediateLocation Loc;
+      Loc.id = std::stoul(IDStr);
+      Loc.filePath = FilePath;
+      Loc.line = std::stoul(LineStr);
+      Loc.colStart = std::stoul(ColStartStr);
+      Loc.colEnd = std::stoul(ColEndStr);
+
+      Locations.push_back(Loc);
     }
+    // Parse FLOW entries to get intermediate IDs per flow
+    else if (Type == "FLOW") {
+      // Parse: FLOW,flowID,srcID,sinkID,intermediate_ids=[...],description
+      std::string FlowIDStr, SrcIDStr, SinkIDStr, IntermediateIDsStr,
+          Description;
 
-    IntermediateLocation Loc;
-    Loc.id = std::stoul(IDStr);
-    Loc.filePath = FilePath;
-    Loc.line = std::stoul(LineStr);
-    Loc.colStart = std::stoul(ColStartStr);
-    Loc.colEnd = std::stoul(ColEndStr);
+      if (!std::getline(ISS, FlowIDStr, ',') ||
+          !std::getline(ISS, SrcIDStr, ',') ||
+          !std::getline(ISS, SinkIDStr, ',') ||
+          !std::getline(ISS, IntermediateIDsStr, ',')) {
+        errs() << "[df-coverage] WARNING: Malformed FLOW line: " << Line
+               << "\n";
+        continue;
+      }
 
-    Locations.push_back(Loc);
+      std::getline(ISS, Description); // Rest of line
+
+      FlowInfo Flow;
+      Flow.flowID = std::stoul(FlowIDStr);
+      Flow.srcID = std::stoul(SrcIDStr);
+      Flow.sinkID = std::stoul(SinkIDStr);
+      Flow.description = Description;
+
+      // Parse intermediate IDs from [1,2,3] format
+      if (IntermediateIDsStr.size() >= 2 && IntermediateIDsStr.front() == '[' &&
+          IntermediateIDsStr.back() == ']') {
+        std::string IDsStr =
+            IntermediateIDsStr.substr(1, IntermediateIDsStr.size() - 2);
+        if (!IDsStr.empty()) {
+          std::istringstream IDsStream(IDsStr);
+          std::string IDStr;
+          while (std::getline(IDsStream, IDStr, ',')) {
+            Flow.intermediateIDs.push_back(std::stoul(IDStr));
+          }
+        }
+      }
+
+      Flows.push_back(Flow);
+    }
   }
 
   File.close();
 
   errs() << "[df-coverage] Loaded " << Locations.size()
-         << " intermediate locations from " << FilePath << "\n";
+         << " intermediate locations and " << Flows.size() << " flows from "
+         << FilePath << "\n";
 
-  return Locations;
+  return {Locations, Flows};
 }
 
 // Check if debug location matches the target location
@@ -169,9 +218,8 @@ struct DataFlowCoveragePass : public PassInfoMixin<DataFlowCoveragePass> {
       return PreservedAnalyses::all();
     }
 
-    // Parse intermediate locations from FlowManager database
-    std::vector<IntermediateLocation> Locations =
-        parseFlowDatabase(FlowDbFileOpt);
+    // Parse intermediate locations and flows from FlowManager database
+    auto [Locations, Flows] = parseFlowDatabase(FlowDbFileOpt);
 
     if (Locations.empty()) {
       errs() << "[df-coverage] No intermediate locations to instrument.\n";

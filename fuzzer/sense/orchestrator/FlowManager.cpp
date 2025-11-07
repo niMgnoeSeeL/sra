@@ -151,9 +151,10 @@ bool FlowManager::serializeToFile(const std::string &FilePath) const {
   }
 
   // Write header with version and counts
-  File << "# FlowManager Serialized Database v1.0\n";
-  File << "# Format: TYPE,ID,file,line,colStart,colEnd[,flowID,srcID,sinkID,"
-          "description]\n";
+  File << "# FlowManager Serialized Database v1.1\n";
+  File << "# Format: SOURCE/SINK/INTERMEDIATE,ID,file,line,colStart,colEnd\n";
+  File << "#         "
+          "FLOW,flowID,srcID,sinkID,intermediate_ids=[...],description\n";
   File << "METADATA,flows=" << getNumFlows()
        << ",sources=" << getNumUniqueSources()
        << ",sinks=" << getNumUniqueSinks()
@@ -177,14 +178,27 @@ bool FlowManager::serializeToFile(const std::string &FilePath) const {
          << "," << loc.colStart << "," << loc.colEnd << "\n";
   }
 
-  // Write flow mappings
+  // Write flow mappings with intermediate IDs
   for (const auto &flow : flows) {
+    // Build intermediate IDs list
+    std::string intermediateIDs = "[";
+    for (size_t i = 0; i < flow.path.size(); i++) {
+      const auto &pathLoc = flow.path[i];
+      auto it = intermediateLocationToID.find(pathLoc);
+      if (it != intermediateLocationToID.end()) {
+        if (i > 0)
+          intermediateIDs += ",";
+        intermediateIDs += std::to_string(it->second);
+      }
+    }
+    intermediateIDs += "]";
+
     // Escape description (replace commas with semicolons)
     std::string escapedDesc = flow.description;
     std::replace(escapedDesc.begin(), escapedDesc.end(), ',', ';');
 
     File << "FLOW," << flow.flowID << "," << flow.srcID << "," << flow.sinkID
-         << "," << escapedDesc << "\n";
+         << "," << intermediateIDs << "," << escapedDesc << "\n";
   }
 
   File.close();
@@ -266,12 +280,14 @@ bool FlowManager::deserializeFromFile(const std::string &FilePath) {
           nextIntermediateID = id + 1;
       }
     } else if (type == "FLOW") {
-      // Parse: FLOW,flowID,srcID,sinkID,description
-      std::string flowIDStr, srcIDStr, sinkIDStr, description;
+      // Parse: FLOW,flowID,srcID,sinkID,intermediate_ids=[...],description
+      std::string flowIDStr, srcIDStr, sinkIDStr, intermediateIDsStr,
+          description;
 
       if (!std::getline(iss, flowIDStr, ',') ||
           !std::getline(iss, srcIDStr, ',') ||
-          !std::getline(iss, sinkIDStr, ',')) {
+          !std::getline(iss, sinkIDStr, ',') ||
+          !std::getline(iss, intermediateIDsStr, ',')) {
         std::cerr << "[FlowManager] WARNING: Malformed flow line " << lineNum
                   << ": " << line << "\n";
         continue;
@@ -285,6 +301,27 @@ bool FlowManager::deserializeFromFile(const std::string &FilePath) {
       flow.srcID = std::stoi(srcIDStr);
       flow.sinkID = std::stoi(sinkIDStr);
       flow.description = description;
+
+      // Parse intermediate IDs from [1,2,3] format
+      if (intermediateIDsStr.size() >= 2 && intermediateIDsStr.front() == '[' &&
+          intermediateIDsStr.back() == ']') {
+        std::string idsStr =
+            intermediateIDsStr.substr(1, intermediateIDsStr.size() - 2);
+        if (!idsStr.empty()) {
+          std::istringstream idsStream(idsStr);
+          std::string idStr;
+          while (std::getline(idsStream, idStr, ',')) {
+            int intermediateID = std::stoi(idStr);
+            // Find the location corresponding to this ID
+            for (const auto &[loc, id] : intermediateLocationToID) {
+              if (id == intermediateID) {
+                flow.path.push_back(loc);
+                break;
+              }
+            }
+          }
+        }
+      }
 
       // Find source and sink locations by ID
       for (const auto &[loc, id] : srcLocationToID) {
