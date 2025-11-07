@@ -1,0 +1,70 @@
+# Default configuration for the Flow Monitor Service
+# This service monitors fuzzing executions for dataflow coverage and taint flow completion
+
+# Shared Memory Configuration
+shared_memory:
+  # Directory where shared memory files are located
+  shm_dir: "/dev/shm"
+  
+  # Prefix patterns for shared memory regions to monitor
+  flow_events_prefix: "flow_events_"
+  coverage_prefix: "df_coverage_"
+  
+  # Polling interval in seconds (how often to check for new executions)
+  poll_interval: 0.1  # 100ms
+
+# Flow Database Configuration
+flow_database:
+  # Path to the .flowdb file with flow definitions
+  # Can be absolute or relative to working directory
+  database_path: null  # Must be provided via CLI or set here
+
+# Output Configuration
+output:
+  # Output format: "jsonl" (JSON Lines) or "json" (pretty-printed JSON array)
+  format: "jsonl"
+  
+  # Output destination: file path or "-" for stdout
+  destination: "-"  # stdout by default
+  
+  # Buffer writes to improve performance
+  buffered: true
+  
+  # Flush after each execution (slower but safer)
+  flush_each: false
+
+# Processing Configuration
+processing:
+  # Maximum number of executions to process before exiting
+  # Set to 0 or null for unlimited
+  max_executions: null
+
+# Logging Configuration
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: "INFO"
+  
+  # Log format
+  format: "[%(asctime)s] %(levelname)s: %(message)s"
+  
+  # Log destination: file path or null for stderr
+  destination: null  # stderr by default
+
+# Statistics Configuration
+statistics:
+  # Print statistics interval (seconds), 0 to disable periodic printing
+  print_interval: 10
+  
+  # Print final summary on exit
+  print_summary: true
+
+# Cleanup Configuration
+cleanup:
+  # Automatically cleanup processed shared memory regions
+  auto_cleanup: true
+  
+  # Cleanup stale regions on startup
+  cleanup_on_startup: true
+  
+  # Cleanup all regions on exit
+  cleanup_on_exit: false  # Keep regions for debugging by default

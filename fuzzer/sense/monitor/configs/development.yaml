@@ -1,0 +1,27 @@
+# Development configuration - verbose logging and debugging features enabled
+
+# Inherit from default
+_base: "default.yaml"
+
+# Override shared memory polling
+shared_memory:
+  poll_interval: 0.05  # 50ms - faster polling for development
+
+# Override output for debugging
+output:
+  format: "json"  # Pretty-printed for readability
+  flush_each: true  # Flush after each execution
+
+# Override logging for development
+logging:
+  level: "DEBUG"
+
+# Override statistics for more frequent updates
+statistics:
+  print_interval: 5  # Print stats every 5 seconds
+
+# Override cleanup to preserve data
+cleanup:
+  auto_cleanup: true  # always auto cleanup, otherwise monitor will detect processed executions
+  cleanup_on_startup: false
+  cleanup_on_exit: false

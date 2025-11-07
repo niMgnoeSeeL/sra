@@ -1,0 +1,31 @@
+# Production fuzzing configuration - optimized for performance and reliability
+
+# Inherit from default
+_base: "default.yaml"
+
+# Override shared memory for production
+shared_memory:
+  poll_interval: 0.1  # 100ms
+
+# Override output for production
+output:
+  format: "jsonl"  # Compact JSONL format
+  destination: "/tmp/flow_monitor.jsonl"  # Log to file
+  buffered: true
+  flush_each: false  # Batch writes for performance
+
+# Override logging for production
+logging:
+  level: "WARNING"  # Only warnings and errors
+  destination: "/tmp/flow_monitor.log"
+
+# Override statistics
+statistics:
+  print_interval: 60  # Print stats every minute
+  print_summary: true
+
+# Override cleanup for production
+cleanup:
+  auto_cleanup: true  # Clean up processed regions
+  cleanup_on_startup: true  # Clean stale regions on start
+  cleanup_on_exit: true  # Clean everything on exit

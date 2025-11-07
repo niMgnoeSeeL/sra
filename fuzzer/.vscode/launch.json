@@ -345,5 +345,28 @@
             ],
             "preLaunchTask": "sense:build-all"
         },
+        {
+            "name": "Debug Flow Monitor (Python)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/monitor/flow_monitor.py",
+            "args": [
+                "--flowdb",
+                "${workspaceFolder}/sense/build/flow_simple.instrumented.ll.flowdb",
+                "--config",
+                "${workspaceFolder}/sense/monitor/configs/development.yaml",
+                "--output",
+                "/tmp/flow_monitor_test.jsonl",
+                "--log-level",
+                "INFO",
+                "--cleanup-on-exit"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/sense/monitor",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/sense/monitor"
+            }
+        },
     ]
 }
