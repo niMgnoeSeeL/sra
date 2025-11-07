@@ -3,15 +3,22 @@
 //===----------------------------------------------------------------------===//
 
 #include "df_coverage_runtime.h"
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/mman.h>
+#include <unistd.h>
 
-// Global coverage map (allocated at runtime)
+// Global coverage map (allocated in shared memory)
 uint8_t *__df_coverage_map = NULL;
-uint32_t __df_coverage_map_size = 0;
+uint32_t __df_coverage_map_size __attribute__((weak)) = 0;
 
-// Initialize coverage map
+// Shared memory state
+static int g_shm_fd = -1;
+static char g_shm_name[256];
+
+// Initialize coverage map in shared memory
 void df_coverage_init(void) {
   if (__df_coverage_map) {
     return; // Already initialized
@@ -23,15 +30,41 @@ void df_coverage_init(void) {
     __df_coverage_map_size = 1024;
   }
 
-  __df_coverage_map =
-      (uint8_t *)calloc(__df_coverage_map_size, sizeof(uint8_t));
-  if (!__df_coverage_map) {
-    fprintf(stderr, "[df-coverage] ERROR: Failed to allocate coverage map\n");
+  // Create shared memory region: /df_coverage_<pid>
+  snprintf(g_shm_name, sizeof(g_shm_name), "/df_coverage_%d", getpid());
+
+  g_shm_fd = shm_open(g_shm_name, O_CREAT | O_RDWR, 0600);
+  if (g_shm_fd < 0) {
+    perror("[df-coverage] ERROR: shm_open failed");
     exit(1);
   }
 
-  fprintf(stderr, "[df-coverage] Initialized coverage map with %u locations\n",
-          __df_coverage_map_size);
+  // Resize shared memory
+  if (ftruncate(g_shm_fd, __df_coverage_map_size) < 0) {
+    perror("[df-coverage] ERROR: ftruncate failed");
+    close(g_shm_fd);
+    shm_unlink(g_shm_name);
+    exit(1);
+  }
+
+  // Map shared memory
+  __df_coverage_map =
+      (uint8_t *)mmap(NULL, __df_coverage_map_size, PROT_READ | PROT_WRITE,
+                      MAP_SHARED, g_shm_fd, 0);
+  if (__df_coverage_map == MAP_FAILED) {
+    perror("[df-coverage] ERROR: mmap failed");
+    close(g_shm_fd);
+    shm_unlink(g_shm_name);
+    exit(1);
+  }
+
+  // Zero the map
+  memset(__df_coverage_map, 0, __df_coverage_map_size);
+
+  fprintf(stderr,
+          "[df-coverage] Initialized coverage map with %u locations in shared "
+          "memory %s\n",
+          __df_coverage_map_size, g_shm_name);
 }
 
 // Record that a location was hit
@@ -112,9 +145,18 @@ void df_coverage_reset(void) {
 */
 
 __attribute__((destructor)) static void df_coverage_exit_handler(void) {
-  if (__df_coverage_map) {
-    // df_coverage_print_summary();
-    free(__df_coverage_map);
+  if (__df_coverage_map && __df_coverage_map != MAP_FAILED) {
+    // Unmap shared memory
+    munmap(__df_coverage_map, __df_coverage_map_size);
     __df_coverage_map = NULL;
   }
+
+  if (g_shm_fd >= 0) {
+    close(g_shm_fd);
+    g_shm_fd = -1;
+  }
+
+  // Note: We do NOT unlink the shared memory here!
+  // The monitor service needs to read it after the process exits.
+  // The monitor will unlink it after processing.
 }

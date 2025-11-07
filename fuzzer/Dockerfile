@@ -22,16 +22,16 @@ ENV NO_CORESIGHT=1 \
 # --- Core system setup ---
 RUN apt-get update && apt-get full-upgrade -y && \
     apt-get install -y --no-install-recommends \
-        ca-certificates apt-transport-https gnupg wget curl xz-utils bzip2 \
-        software-properties-common && \
+    ca-certificates apt-transport-https gnupg wget curl xz-utils bzip2 xxd \
+    software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
 # --- Add apt.llvm.org repo (LLVM 20 for Noble) ---
 RUN mkdir -p /etc/apt/keyrings && \
     wget -qO /etc/apt/keyrings/llvm-snapshot.gpg.key https://apt.llvm.org/llvm-snapshot.gpg.key && \
     echo "deb [signed-by=/etc/apt/keyrings/llvm-snapshot.gpg.key] \
-      http://apt.llvm.org/noble/ llvm-toolchain-noble-${LLVM_VERSION} main" \
-      > /etc/apt/sources.list.d/llvm.list
+    http://apt.llvm.org/noble/ llvm-toolchain-noble-${LLVM_VERSION} main" \
+    > /etc/apt/sources.list.d/llvm.list
 
 # --- Install dependencies (LLVM 20 toolchain + utilities; NO libc++) ---
 # --- Install Fuzztastic dependencies ---
@@ -47,10 +47,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libclang1-${LLVM_VERSION} libclang-${LLVM_VERSION}-dev \
     libclang-cpp${LLVM_VERSION} libclang-cpp${LLVM_VERSION}-dev \
     libomp-${LLVM_VERSION}-dev libomp5-${LLVM_VERSION} \
-    golang-go libffi-dev libssl-dev pkg-config rapidjson-dev unzip wget \
+    golang-go libffi-dev libssl-dev pkg-config rapidjson-dev unzip libxxhash-dev \
     $([ "$(dpkg --print-architecture)" = "amd64" ] && echo gcc-${GCC_VERSION}-multilib gcc-multilib) \
     $([ "$(dpkg --print-architecture)" = "arm64" ] && echo libcapstone-dev) && \
-  rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 # --- Compiler alternatives ---
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VERSION} 0 && \
@@ -99,7 +99,7 @@ ARG USER_UID=1001
 ARG USER_GID=${USER_UID}
 RUN if ! getent group ${USER_GID} >/dev/null; then groupadd --gid ${USER_GID} ${USERNAME}; fi && \
     if ! id -u ${USERNAME} >/dev/null 2>&1; then \
-        useradd -s /bin/bash --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME}; \
+    useradd -s /bin/bash --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME}; \
     fi && \
     apt-get update && apt-get install -y sudo && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-${USERNAME} && \

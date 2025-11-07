@@ -34,6 +34,7 @@ add_library(flow_runtime STATIC
   runtime/flow_runtime.c
 )
 target_include_directories(flow_runtime PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/runtime)
+target_link_libraries(flow_runtime PRIVATE xxhash)
 
 add_library(df_coverage_runtime STATIC
   runtime/df_coverage_runtime.c
