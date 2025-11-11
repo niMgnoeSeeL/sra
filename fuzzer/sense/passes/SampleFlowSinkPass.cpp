@@ -643,12 +643,35 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
                 "fallback\n";
     } else if (auto *Load = dyn_cast<LoadInst>(Anchor)) {
       Base = getBaseObject(Load->getPointerOperand(), DL);
+    } else {
+      // Generic case: anchor is a computed value in a register
+      // Examples: arithmetic (fmul, fsub), casts, phi nodes, etc.
+
+      // Check if the instruction produces a value
+      if (Anchor->getType()->isVoidTy()) {
+        errs() << "[sample-flow-sink] ERROR: Anchor is void instruction: "
+               << *Anchor << "\n";
+        goto fallback;
+      }
+
+      // Strategy: Allocate temporary stack space and store the value there
+      errs() << "[sample-flow-sink] Anchor is computed value - creating "
+             << "temporary stack location\n";
+
+      // Create alloca at function entry for the temporary
+      IRBuilder<> AllocaBuilder(&F.getEntryBlock(), F.getEntryBlock().begin());
+      std::string sink_temp_name = "sink_temp" + std::to_string(SinkIDOpt);
+      AllocaInst *TempAlloca = AllocaBuilder.CreateAlloca(
+          Anchor->getType(), nullptr, sink_temp_name);
+
+      // Store the computed value to temp location (right after the anchor)
+      IRBuilder<> StoreBuilder(Anchor->getNextNode());
+      StoreBuilder.CreateStore(Anchor, TempAlloca);
+
+      // Use the temp alloca as our BASE
+      Base = TempAlloca;
+      errs() << "[sample-flow-sink] Created temporary: " << *TempAlloca << "\n";
     }
-    // TODO:
-    // else if {
-    //   // If the anchor is an Instruction with a return value, then mark its
-    //   return value as the tainted var
-    // }
 
   fallback:
     LoadInst *LoadFromBase =
