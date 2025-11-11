@@ -36,16 +36,15 @@
 #include "FlowManager.h"
 #include "InstrumentationStrategy.h"
 #include "SARIFParser.h"
-#include "ServiceComm.h"
 #include <cassert>
+#include <clang/Tooling/CompilationDatabase.h>
+#include <clang/Tooling/JSONCompilationDatabase.h>
 #include <cstring>
 #include <filesystem>
 #include <iostream>
 #include <map>
 #include <set>
 #include <vector>
-#include <clang/Tooling/CompilationDatabase.h>
-#include <clang/Tooling/JSONCompilationDatabase.h>
 
 namespace fs = std::filesystem;
 

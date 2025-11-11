@@ -14,34 +14,63 @@ namespace taint {
 // Helper visitor to find AST node at specific location
 class LocationFinder : public clang::RecursiveASTVisitor<LocationFinder> {
 public:
-  LocationFinder(clang::ASTContext &Ctx, unsigned Line, unsigned Col)
-      : Context(Ctx), TargetLine(Line), TargetCol(Col), FoundNode(nullptr) {}
+  LocationFinder(clang::ASTContext &Ctx, unsigned Line, unsigned ColStart,
+                 unsigned ColEnd)
+      : Context(Ctx), TargetLine(Line), TargetColStart(ColStart),
+        TargetColEnd(ColEnd), FoundNode(nullptr) {}
 
-  bool VisitStmt(clang::Stmt *S) {
-    clang::SourceLocation Loc = S->getBeginLoc();
-    if (Loc.isInvalid())
+  bool VisitExpr(clang::Expr *E) {
+    clang::SourceLocation BeginLoc = E->getBeginLoc();
+    clang::SourceLocation EndLoc = E->getEndLoc();
+
+    if (BeginLoc.isInvalid() || EndLoc.isInvalid())
       return true;
 
     clang::SourceManager &SM = Context.getSourceManager();
-    unsigned Line = SM.getSpellingLineNumber(Loc);
-    unsigned Col = SM.getSpellingColumnNumber(Loc);
+    unsigned BeginLine = SM.getSpellingLineNumber(BeginLoc);
+    unsigned BeginCol = SM.getSpellingColumnNumber(BeginLoc);
+    unsigned EndLine = SM.getSpellingLineNumber(EndLoc);
+    unsigned EndCol = SM.getSpellingColumnNumber(EndLoc);
 
-    // Check if this statement matches our target location
-    if (Line == TargetLine && Col >= TargetCol - 2 && Col <= TargetCol + 2) {
-      // Found a candidate (allow ±2 column tolerance for different compilers)
-      FoundNode = S;
+    // Check if this expression's span is contained within the target range
+    // The node must:
+    // 1. Be on the target line (for now, single-line only)
+    // 2. Start at or after TargetColStart
+    // 3. End at or before TargetColEnd
+    if (BeginLine == TargetLine && EndLine == TargetLine) {
+      // Check if the entire node span is within [TargetColStart, TargetColEnd]
+      if (BeginCol >= TargetColStart && EndCol <= TargetColEnd) {
+        // This node is fully contained - prefer larger spans
+        if (!FoundNode) {
+          FoundNode = E;
+        } else {
+          // Compare with existing candidate - prefer the one with larger span
+          clang::SourceLocation PrevBegin = FoundNode->getBeginLoc();
+          clang::SourceLocation PrevEnd = FoundNode->getEndLoc();
+          unsigned PrevBeginCol = SM.getSpellingColumnNumber(PrevBegin);
+          unsigned PrevEndCol = SM.getSpellingColumnNumber(PrevEnd);
+          unsigned PrevSpan = PrevEndCol - PrevBeginCol;
+          unsigned CurrentSpan = EndCol - BeginCol;
+
+          // Prefer the strictly larger span (the outermost expr within bounds)
+          if (CurrentSpan > PrevSpan) {
+            FoundNode = E;
+          }
+        }
+      }
     }
 
     return true;
   }
 
-  clang::Stmt *getFoundNode() const { return FoundNode; }
+  clang::Expr *getFoundNode() const { return FoundNode; }
 
 private:
   clang::ASTContext &Context;
   unsigned TargetLine;
-  unsigned TargetCol;
-  clang::Stmt *FoundNode;
+  unsigned TargetColStart;
+  unsigned TargetColEnd;
+  clang::Expr *FoundNode;
 };
 
 bool ASTAnalyzer::loadSourceFile(const std::string &filePath,
@@ -104,7 +133,7 @@ InstrumentationInfo ASTAnalyzer::analyzeLocation(const SourceLocation &loc) {
   }
 
   // Find AST node at this location
-  clang::Stmt *node = findNodeAtLocation(loc);
+  clang::Expr *node = findNodeAtLocation(loc);
 
   if (!node) {
     // Could not find exact node - still try to extract variable name
@@ -126,6 +155,9 @@ InstrumentationInfo ASTAnalyzer::analyzeLocation(const SourceLocation &loc) {
     info.typeName = inferLLVMType(ASE->getType());
   } else if (auto *ME = llvm::dyn_cast<clang::MemberExpr>(node)) {
     info.typeName = inferLLVMType(ME->getType());
+  } else if (auto *BO = llvm::dyn_cast<clang::BinaryOperator>(node)) {
+    // For binary operators, try to extract type from the operation result
+    info.typeName = inferLLVMType(BO->getType());
   }
 
   std::cout << "[ASTAnalyzer] Analyzed location " << loc.toString() << ": "
@@ -134,44 +166,135 @@ InstrumentationInfo ASTAnalyzer::analyzeLocation(const SourceLocation &loc) {
   return info;
 }
 
-clang::Stmt *ASTAnalyzer::findNodeAtLocation(const SourceLocation &loc) {
+clang::Expr *ASTAnalyzer::findNodeAtLocation(const SourceLocation &loc) {
   if (!astUnit)
     return nullptr;
 
-  LocationFinder finder(astUnit->getASTContext(), loc.line, loc.colStart);
+  LocationFinder finder(astUnit->getASTContext(), loc.line, loc.colStart,
+                        loc.colEnd);
   finder.TraverseDecl(astUnit->getASTContext().getTranslationUnitDecl());
 
   return finder.getFoundNode();
 }
 
-std::string ASTAnalyzer::extractVarName(clang::Stmt *node) {
+std::string ASTAnalyzer::extractVarName(clang::Expr *node) {
   if (!node)
     return "";
 
-  // DeclRefExpr: direct variable reference (e.g., "x")
+  // Strip implicit casts to get to the real expression
+  node = node->IgnoreImpCasts();
+
+  // DeclRefExpr: direct variable reference (e.g., "x", "buf")
   if (auto *DRE = llvm::dyn_cast<clang::DeclRefExpr>(node)) {
     return DRE->getNameInfo().getAsString();
   }
 
-  // ArraySubscriptExpr: array access (e.g., "buf[5]")
+  // ArraySubscriptExpr: array access (e.g., "buf[5]", "arr[i]")
   if (auto *ASE = llvm::dyn_cast<clang::ArraySubscriptExpr>(node)) {
-    // Get the base array name
-    if (auto *Base = llvm::dyn_cast<clang::DeclRefExpr>(
-            ASE->getBase()->IgnoreImpCasts())) {
-      return Base->getNameInfo().getAsString();
-    }
+    // Recursively extract from base
+    std::string BaseName = extractVarName(ASE->getBase());
+    if (!BaseName.empty())
+      return BaseName;
   }
 
-  // MemberExpr: struct field access (e.g., "s.age")
+  // MemberExpr: struct/class field access (e.g., "s.age", "p->field")
   if (auto *ME = llvm::dyn_cast<clang::MemberExpr>(node)) {
-    // Get the base struct name
-    if (auto *Base = llvm::dyn_cast<clang::DeclRefExpr>(
-            ME->getBase()->IgnoreImpCasts())) {
-      return Base->getNameInfo().getAsString();
+    // Recursively extract from base
+    std::string BaseName = extractVarName(ME->getBase());
+    if (!BaseName.empty())
+      return BaseName;
+  }
+
+  // UnaryOperator: unary operations (e.g., "-x", "*p", "&x", "++i")
+  if (auto *UO = llvm::dyn_cast<clang::UnaryOperator>(node)) {
+    std::string SubName = extractVarName(UO->getSubExpr());
+    if (!SubName.empty())
+      return SubName;
+  }
+
+  // BinaryOperator: binary operations (e.g., "a + b", "x * y")
+  if (auto *BO = llvm::dyn_cast<clang::BinaryOperator>(node)) {
+    // Try left side first
+    std::string LeftVar = extractVarName(BO->getLHS());
+    if (!LeftVar.empty())
+      return LeftVar;
+    // Then right side
+    std::string RightVar = extractVarName(BO->getRHS());
+    if (!RightVar.empty())
+      return RightVar;
+  }
+
+  // ConditionalOperator: ternary operator (e.g., "cond ? a : b")
+  if (auto *CO = llvm::dyn_cast<clang::ConditionalOperator>(node)) {
+    // Try condition first
+    std::string CondVar = extractVarName(CO->getCond());
+    if (!CondVar.empty())
+      return CondVar;
+    // Then true branch
+    std::string TrueVar = extractVarName(CO->getTrueExpr());
+    if (!TrueVar.empty())
+      return TrueVar;
+    // Finally false branch
+    std::string FalseVar = extractVarName(CO->getFalseExpr());
+    if (!FalseVar.empty())
+      return FalseVar;
+  }
+
+  // CallExpr: function calls (e.g., "foo(x)", "log(y)")
+  if (auto *CE = llvm::dyn_cast<clang::CallExpr>(node)) {
+    // Try to extract from arguments
+    for (unsigned i = 0; i < CE->getNumArgs(); ++i) {
+      std::string ArgVar = extractVarName(CE->getArg(i));
+      if (!ArgVar.empty())
+        return ArgVar;
     }
   }
 
-  return "";
+  // ParenExpr: parenthesized expressions (e.g., "(x)")
+  if (auto *PE = llvm::dyn_cast<clang::ParenExpr>(node)) {
+    return extractVarName(PE->getSubExpr());
+  }
+
+  // CompoundAssignOperator: compound assignments (e.g., "x += 5")
+  if (auto *CAO = llvm::dyn_cast<clang::CompoundAssignOperator>(node)) {
+    // Extract from LHS (the variable being modified)
+    std::string LHS = extractVarName(CAO->getLHS());
+    if (!LHS.empty())
+      return LHS;
+    // Fallback to RHS
+    std::string RHS = extractVarName(CAO->getRHS());
+    if (!RHS.empty())
+      return RHS;
+  }
+
+  // CStyleCastExpr: C-style casts (e.g., "(int)x")
+  if (auto *CSCE = llvm::dyn_cast<clang::CStyleCastExpr>(node)) {
+    return extractVarName(CSCE->getSubExpr());
+  }
+
+  // CXXStaticCastExpr, CXXReinterpretCastExpr, etc.: C++ casts
+  if (auto *CCE = llvm::dyn_cast<clang::CXXNamedCastExpr>(node)) {
+    return extractVarName(CCE->getSubExpr());
+  }
+
+  // StmtExpr: GNU statement expressions (e.g., "({int x = 5; x;})")
+  if (auto *SE = llvm::dyn_cast<clang::StmtExpr>(node)) {
+    // This is rare, just try to find any DeclRefExpr inside
+    // For now, return empty
+    return "";
+  }
+
+  // Literals have no variable names - return empty
+  if (llvm::isa<clang::IntegerLiteral>(node) ||
+      llvm::isa<clang::FloatingLiteral>(node) ||
+      llvm::isa<clang::StringLiteral>(node) ||
+      llvm::isa<clang::CharacterLiteral>(node)) {
+    // matched expression is literal with no var name
+    return "";
+  }
+
+  // If we get here, we have an unhandled expression type
+  assert(false && "[ASTAnalyzer] Unhandled expression type in extractVarName");
 }
 
 std::string ASTAnalyzer::inferLLVMType(clang::QualType type) {

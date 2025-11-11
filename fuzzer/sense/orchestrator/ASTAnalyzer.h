@@ -69,11 +69,11 @@ private:
   std::unique_ptr<clang::ASTUnit> astUnit;
   std::string currentFilePath;
 
-  // Helper: Find AST node at specific line:col
-  clang::Stmt *findNodeAtLocation(const SourceLocation &loc);
+  // Helper: Find AST expression at specific line:col
+  clang::Expr *findNodeAtLocation(const SourceLocation &loc);
 
-  // Helper: Extract variable name from AST node
-  std::string extractVarName(clang::Stmt *node);
+  // Helper: Extract variable name from AST expression
+  std::string extractVarName(clang::Expr *node);
 
   // Helper: Infer LLVM type from Clang type
   std::string inferLLVMType(clang::QualType type);
