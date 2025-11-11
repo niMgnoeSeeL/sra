@@ -226,18 +226,25 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
   // === Helper: find variable by name using debug info ===
   static Value *findVariableByName(Function &F, StringRef VarName,
                                    unsigned TaintLine) {
-    // In LLVM 20+, debug info can be in debug records (#dbg_declare) or
-    // intrinsics. We need to find the variable that:
+    // Variables can be either:
+    // 1. Local variables (DILocalVariable) attached to allocas
+    // 2. Global variables (DIGlobalVariableExpression) in the module
+    //
+    // We need to find the variable that:
     // 1. Has the matching name
-    // 2. Is in scope at TaintLine (check DILocalVariable line range)
+    // 2. Is in scope at TaintLine (for locals) or is accessible (for globals)
     // 3. Is actually used/defined on TaintLine
 
+    Module &M = *F.getParent();
     errs() << "[sample-flow-src] Searching for declaration of variable '"
            << VarName << "' used on line " << TaintLine << "\n";
 
-    SmallVector<std::pair<Value *, DILocalVariable *>, 4> Candidates;
+    SmallVector<std::pair<Value *, DILocalVariable *>, 4> LocalCandidates;
+    SmallVector<std::pair<GlobalVariable *, DIGlobalVariable *>, 4>
+        GlobalCandidates;
 
-    // Collect all variables with matching name
+    // === Part 1: Search for LOCAL variables ===
+    // Collect all local variables with matching name
     for (Instruction &I : instructions(F)) {
       // Method 1: Check new-style debug records (#dbg_declare)
       for (DbgRecord &DR : I.getDbgRecordRange()) {
@@ -246,9 +253,10 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
             if (auto *DIVar = DVR->getVariable()) {
               if (DIVar->getName() == VarName) {
                 Value *Address = DVR->getVariableLocationOp(0);
-                Candidates.push_back({Address, DIVar});
-                errs() << "[sample-flow-src]   Found candidate: " << *Address
-                       << " declared at line " << DIVar->getLine() << "\n";
+                LocalCandidates.push_back({Address, DIVar});
+                errs() << "[sample-flow-src]   Found local candidate: "
+                       << *Address << " declared at line " << DIVar->getLine()
+                       << "\n";
               }
             }
           }
@@ -263,27 +271,38 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
         for (auto *DDI : Declares) {
           if (auto *DIVar = DDI->getVariable()) {
             if (DIVar->getName() == VarName) {
-              Candidates.push_back({AI, DIVar});
-              errs() << "[sample-flow-src]   Found candidate (intrinsic): "
-                     << *AI << " declared at line " << DIVar->getLine() << "\n";
+              LocalCandidates.push_back({AI, DIVar});
+              errs()
+                  << "[sample-flow-src]   Found local candidate (intrinsic): "
+                  << *AI << " declared at line " << DIVar->getLine() << "\n";
             }
           }
         }
       }
     }
 
-    if (Candidates.empty()) {
-      errs() << "[sample-flow-src] No variables named '" << VarName
-             << "' found\n";
-      return nullptr;
+    // === Part 2: Search for GLOBAL variables ===
+    for (auto &GV : M.globals()) {
+      SmallVector<DIGlobalVariableExpression *, 1> GVEs;
+      GV.getDebugInfo(GVEs);
+
+      for (auto *GVE : GVEs) {
+        if (auto *DIGV = GVE->getVariable()) {
+          if (DIGV->getName() == VarName) {
+            GlobalCandidates.push_back({&GV, DIGV});
+            errs() << "[sample-flow-src]   Found global candidate: "
+                   << GV.getName() << " declared at line " << DIGV->getLine()
+                   << "\n";
+          }
+        }
+      }
     }
 
-    // Filter candidates: keep only those that are in scope at TaintLine
-    // and are actually used on TaintLine
-    Value *BestMatch = nullptr;
-    DILocalVariable *BestDIVar = nullptr;
+    // === Part 3: Filter LOCAL candidates ===
+    Value *BestLocalMatch = nullptr;
+    DILocalVariable *BestLocalDIVar = nullptr;
 
-    for (auto [Address, DIVar] : Candidates) {
+    for (auto [Address, DIVar] : LocalCandidates) {
       // Check 1: Variable must be declared before or at TaintLine
       if (DIVar->getLine() > TaintLine) {
         errs() << "[sample-flow-src]   Rejecting " << *Address
@@ -327,11 +346,11 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
       if (UsedOnTaintLine) {
         // Prefer the candidate with declaration closest to TaintLine
         // (handles shadowing - innermost scope wins)
-        if (!BestMatch || DIVar->getLine() > BestDIVar->getLine()) {
-          BestMatch = Address;
-          BestDIVar = DIVar;
-          errs() << "[sample-flow-src]   Accepted as best match: " << *Address
-                 << "\n";
+        if (!BestLocalMatch || DIVar->getLine() > BestLocalDIVar->getLine()) {
+          BestLocalMatch = Address;
+          BestLocalDIVar = DIVar;
+          errs() << "[sample-flow-src]   Accepted as best local match: "
+                 << *Address << "\n";
         }
       } else {
         errs() << "[sample-flow-src]   Rejecting " << *Address
@@ -339,16 +358,75 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
       }
     }
 
-    if (BestMatch) {
-      errs() << "[sample-flow-src] Selected variable '" << VarName
-             << "' declared at line " << BestDIVar->getLine()
-             << ", address: " << *BestMatch << "\n";
-    } else {
-      errs() << "[sample-flow-src] No variable '" << VarName
-             << "' is used on line " << TaintLine << "\n";
+    // === Part 4: Filter GLOBAL candidates ===
+    GlobalVariable *BestGlobalMatch = nullptr;
+    DIGlobalVariable *BestGlobalDIVar = nullptr;
+
+    for (auto [GV, DIGV] : GlobalCandidates) {
+      // Check: Verify the global (or its alias) is used on TaintLine
+      bool UsedOnTaintLine = false;
+      for (Instruction &I : instructions(F)) {
+        if (DebugLoc DL = I.getDebugLoc()) {
+          if (DL.getLine() == TaintLine) {
+            // Check if this instruction uses the global or an alias
+            for (Use &U : I.operands()) {
+              Value *Op = U.get();
+
+              // Direct use
+              if (Op == GV) {
+                UsedOnTaintLine = true;
+                break;
+              }
+
+              // Use through GEP or other pointer operations
+              SmallVector<const Value *, 4> Objects;
+              getUnderlyingObjects(Op, Objects);
+              for (auto *Obj : Objects) {
+                if (Obj == GV) {
+                  UsedOnTaintLine = true;
+                  break;
+                }
+              }
+              if (UsedOnTaintLine)
+                break;
+            }
+            if (UsedOnTaintLine)
+              break;
+          }
+        }
+      }
+
+      if (UsedOnTaintLine) {
+        BestGlobalMatch = GV;
+        BestGlobalDIVar = DIGV;
+        errs() << "[sample-flow-src]   Accepted as best global match: "
+               << GV->getName() << "\n";
+        break; // Only one global with this name should exist
+      } else {
+        errs() << "[sample-flow-src]   Rejecting global " << GV->getName()
+               << " - not used on line " << TaintLine << "\n";
+      }
     }
 
-    return BestMatch;
+    // === Part 5: Return best match (prefer local over global for shadowing)
+    // ===
+    if (BestLocalMatch) {
+      errs() << "[sample-flow-src] Selected LOCAL variable '" << VarName
+             << "' declared at line " << BestLocalDIVar->getLine()
+             << ", address: " << *BestLocalMatch << "\n";
+      return BestLocalMatch;
+    }
+
+    if (BestGlobalMatch) {
+      errs() << "[sample-flow-src] Selected GLOBAL variable '" << VarName
+             << "' (" << BestGlobalMatch->getName() << ") declared at line "
+             << BestGlobalDIVar->getLine() << "\n";
+      return BestGlobalMatch;
+    }
+
+    errs() << "[sample-flow-src] No variable '" << VarName
+           << "' is used on line " << TaintLine << "\n";
+    return nullptr;
   }
 
   static void declareSamplingFunctions(Module &M, Function *&SampleInt,
@@ -455,7 +533,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
                                 Function *&SampleBytes,
                                 Function *&SampleReportSource, Value *&Base,
                                 Instruction *&LastWriter, AllocaInst *&AI,
-                                Value *&Ptr, Type *&PointedToType, int srcID) {
+                                GlobalVariable *&GV, Value *&Ptr,
+                                Type *&PointedToType, int srcID) {
     // Initialize the sample call instruction pointer
     CallInst *SampleCall = nullptr;
     Value *ReportPtr = nullptr;  // Pointer to report to sample_report_source
@@ -506,14 +585,21 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
       // Ensure we have a pointer
       if (!Ptr) {
-        // Fallback: create GEP from base
+        // Fallback: create GEP from base (works for both allocas and globals)
         IRBuilder<> B(LastWriter->getParent());
         if (AI) {
           Ptr = B.CreateConstInBoundsGEP2_64(AI->getAllocatedType(), AI, 0, 0);
+          errs() << "[sample-flow-src] Ptr from alloca fallback: " << *Ptr
+                 << "\n";
+        } else if (GV) {
+          Ptr = B.CreateConstInBoundsGEP2_64(GV->getValueType(), GV, 0, 0);
+          errs() << "[sample-flow-src] Ptr from global fallback: " << *Ptr
+                 << "\n";
         } else {
           Ptr = Base;
+          errs() << "[sample-flow-src] Ptr from base fallback: " << *Ptr
+                 << "\n";
         }
-        errs() << "[sample-flow-src] Ptr from fallback: " << *Ptr << "\n";
       }
 
       // Calculate size based on the pointed-to type (already inferred above)
@@ -725,7 +811,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     // fallback
   fallback:
     if (!Anchor || !Base) {
-      errs() << "[sample-flow-src] Fallback to using DILocalVariable approach "
+      errs() << "[sample-flow-src] Fallback to using "
+                "DILocalVariable/DIGlobalVariable approach "
                 "with var name: "
              << VarNameOpt << "\n";
 
@@ -775,12 +862,19 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     Instruction *LastWriter = findLastWriterInSlice(Slice, Base, AA);
 
     // === Step 4: insert sample call based on type ===
-    // Strategy: Check if Base is an alloca and what type it allocates
+    // Strategy: Check if Base is an alloca or global and what type it has
     AllocaInst *AI = dyn_cast<AllocaInst>(Base);
-    Type *AllocatedType = AI ? AI->getAllocatedType() : nullptr;
+    GlobalVariable *GV = dyn_cast<GlobalVariable>(Base);
+    Type *AllocatedType = nullptr;
 
-    if (AllocatedType) {
-      errs() << "[sample-flow-src] Allocated type: " << *AllocatedType << "\n";
+    if (AI) {
+      AllocatedType = AI->getAllocatedType();
+      errs() << "[sample-flow-src] Base is alloca, allocated type: "
+             << *AllocatedType << "\n";
+    } else if (GV) {
+      AllocatedType = GV->getValueType();
+      errs() << "[sample-flow-src] Base is global, value type: "
+             << *AllocatedType << "\n";
     }
 
     // Try to infer the pointed-to type from the pointer used in the
@@ -793,7 +887,7 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
     // Finally, dispatch based on the pointed-to type
     insertSampleCalls(DL, Ctx, SampleInt, SampleDouble, SampleBytes,
-                      SampleReportSource, Base, LastWriter, AI, Ptr,
+                      SampleReportSource, Base, LastWriter, AI, GV, Ptr,
                       PointedToType, SrcIDOpt);
 
     return PreservedAnalyses::none();
