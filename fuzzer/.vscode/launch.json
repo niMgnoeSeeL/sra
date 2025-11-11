@@ -321,6 +321,34 @@
             "preLaunchTask": "sense:build-all"
         },
         {
+            "name": "Debug taint-orchestrator (totinfo_nl)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/build/taint-orchestrator",
+            "args": [
+                "--sarif",
+                "${workspaceFolder}/subjects/totinfo/totinfo_nl_iruntrusted.sarif",
+                "--input",
+                "${workspaceFolder}/subjects/totinfo/totinfo.ll",
+                "--output",
+                "${workspaceFolder}/sense/build/totinfo_nl_iruntrusted.instrumented.ll",
+                "--compile-db",
+                "${workspaceFolder}/subjects/totinfo/compile_commands.json",
+                "--pass-dir",
+                "${workspaceFolder}/sense/build",
+                "--verbose"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all"
+        },
+        {
             "name": "Debug DataFlowCoveragePass (flow_simple)",
             "type": "lldb",
             "request": "launch",
@@ -334,6 +362,35 @@
                 "-S",
                 "-o",
                 "${workspaceFolder}/sense/build/flow_simple.instrumented.ll.dfcov.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all"
+        },
+        {
+            "name": "Debug SampleFlowSrcPass (totinfo_nl SRC_ID=1)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=sample-flow-src",
+                "-sample-line=53",
+                "-sample-col-start=16",
+                "-sample-col-end=20",
+                "-sample-var-name=line",
+                "-sample-src-id=1",
+                "${workspaceFolder}/subjects/totinfo/totinfo.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/totinfo_nl_iruntrusted.instrumented.ll.src1.ll"
             ],
             "cwd": "${workspaceFolder}/sense/build",
             "env": {

@@ -44,6 +44,8 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <clang/Tooling/CompilationDatabase.h>
+#include <clang/Tooling/JSONCompilationDatabase.h>
 
 namespace fs = std::filesystem;
 
@@ -53,6 +55,7 @@ struct Config {
   std::string outputLL;
   std::string passDir;
   std::string optPath = "opt";
+  std::string compileDbPath; // Optional: path to compile_commands.json
   std::vector<std::string> compileArgs;
   bool verbose = false;
 };
@@ -69,8 +72,12 @@ void printUsage(const char *progName) {
                "files\n\n";
   std::cout << "Optional options:\n";
   std::cout << "  --opt-path <path>    Path to opt binary (default: opt)\n";
+  std::cout << "  --compile-db <path>  Path to compile_commands.json for "
+               "proper AST parsing\n";
   std::cout
       << "  --compile-args <...> Compilation arguments for AST analysis\n";
+  std::cout << "                       (comma-separated, used if --compile-db "
+               "not provided)\n";
   std::cout << "  --verbose            Enable verbose output\n";
   std::cout << "  --help               Show this help message\n\n";
   std::cout << "Example:\n";
@@ -78,7 +85,8 @@ void printUsage(const char *progName) {
   std::cout << "    --sarif flows.sarif \\\n";
   std::cout << "    --input program.ll \\\n";
   std::cout << "    --output program.instrumented.ll \\\n";
-  std::cout << "    --pass-dir ./build\n";
+  std::cout << "    --pass-dir ./build \\\n";
+  std::cout << "    --compile-db ./compile_commands.json\n";
 }
 
 bool parseArgs(int argc, char **argv, Config &config) {
@@ -98,6 +106,8 @@ bool parseArgs(int argc, char **argv, Config &config) {
       config.passDir = argv[++i];
     } else if (arg == "--opt-path" && i + 1 < argc) {
       config.optPath = argv[++i];
+    } else if (arg == "--compile-db" && i + 1 < argc) {
+      config.compileDbPath = argv[++i];
     } else if (arg == "--compile-args" && i + 1 < argc) {
       // Parse comma-separated compile args
       std::string argsStr = argv[++i];
@@ -163,6 +173,26 @@ int main(int argc, char **argv) {
   std::cout << "\n[Step 3] Analyzing source code with Clang AST\n";
   taint::ASTAnalyzer astAnalyzer;
 
+  // Load compilation database if provided
+  std::unique_ptr<clang::tooling::CompilationDatabase> compileDb;
+  if (!config.compileDbPath.empty()) {
+    std::cout << "[Step 3] Loading compilation database: "
+              << config.compileDbPath << "\n";
+
+    std::string errorMsg;
+    compileDb = clang::tooling::JSONCompilationDatabase::loadFromFile(
+        config.compileDbPath, errorMsg,
+        clang::tooling::JSONCommandLineSyntax::AutoDetect);
+
+    if (!compileDb) {
+      std::cerr << "WARNING: Failed to load compilation database: " << errorMsg
+                << "\n";
+      std::cerr << "         Will use --compile-args if provided\n";
+    } else {
+      std::cout << "[Step 3] Successfully loaded compilation database\n";
+    }
+  }
+
   // Load source files for AST analysis
   std::set<std::string> sourceFiles;
   for (const auto &[loc, _] : flowMgr.getSourceLocations()) {
@@ -177,7 +207,51 @@ int main(int argc, char **argv) {
 
   std::map<std::string, bool> astLoadStatus;
   for (const auto &file : sourceFiles) {
-    bool loaded = astAnalyzer.loadSourceFile(file, config.compileArgs);
+    // Get compile commands for this file
+    std::vector<std::string> fileCompileArgs;
+
+    if (compileDb) {
+      // Look up compile commands from compilation database
+      auto commands = compileDb->getCompileCommands(file);
+
+      if (!commands.empty()) {
+        // Use the first command (there should only be one per file)
+        const auto &cmd = commands[0];
+
+        std::cout << "[AST] Using compile command from database for: " << file
+                  << "\n";
+
+        // Extract arguments (skip the compiler name and source file)
+        for (const auto &arg : cmd.CommandLine) {
+          // Skip compiler executable and the source file itself
+          if (arg == cmd.Filename || arg.find("clang") != std::string::npos ||
+              arg.find("gcc") != std::string::npos ||
+              arg.find("g++") != std::string::npos ||
+              arg.find("c++") != std::string::npos) {
+            continue;
+          }
+          fileCompileArgs.push_back(arg);
+        }
+
+        if (config.verbose) {
+          std::cout << "[AST] Compile args (" << fileCompileArgs.size()
+                    << "): ";
+          for (const auto &arg : fileCompileArgs) {
+            std::cout << arg << " ";
+          }
+          std::cout << "\n";
+        }
+      } else {
+        std::cout << "[AST] No compile command found in database for: " << file
+                  << ", using fallback\n";
+        fileCompileArgs = config.compileArgs;
+      }
+    } else {
+      // No compilation database - use --compile-args if provided
+      fileCompileArgs = config.compileArgs;
+    }
+
+    bool loaded = astAnalyzer.loadSourceFile(file, fileCompileArgs);
     astLoadStatus[file] = loaded;
     if (!loaded) {
       std::cerr << "WARNING: Could not load AST for " << file

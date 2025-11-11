@@ -48,19 +48,7 @@ bool ASTAnalyzer::loadSourceFile(const std::string &filePath,
                                  const std::vector<std::string> &compileArgs) {
   currentFilePath = filePath;
 
-  // Build compiler arguments for parsing
-  // We need to create a minimal compilation database entry
-  std::vector<std::string> args = {"clang"};
-
-  // Add user-provided compile args
-  args.insert(args.end(), compileArgs.begin(), compileArgs.end());
-
-  // Add the source file
-  args.push_back(filePath);
-
-  // Use runToolOnCodeWithArgs which handles file reading properly
-  // Note: We need to read the file content ourselves for
-  // buildASTFromCodeWithArgs
+  // Read source file content
   std::ifstream file(filePath);
   if (!file.is_open()) {
     std::cerr << "[ASTAnalyzer] Failed to open source file: " << filePath
@@ -72,12 +60,22 @@ bool ASTAnalyzer::loadSourceFile(const std::string &filePath,
                          std::istreambuf_iterator<char>());
   file.close();
 
-  // Build AST from the source code
-  // Use only the file name for the virtual file system
+  // Extract just the filename for the virtual file system
   std::string fileName = filePath.substr(filePath.find_last_of("/\\") + 1);
 
-  // TODO: use clang::tooling::buildASTFromCodeWithArgs to pass compileArgs
-  astUnit = clang::tooling::buildASTFromCode(sourceCode, fileName);
+  // Build AST with proper compilation arguments
+  if (compileArgs.empty()) {
+    // No compile args provided - use simple parsing
+    std::cout << "[ASTAnalyzer] Building AST without compile arguments for: "
+              << fileName << "\n";
+    astUnit = clang::tooling::buildASTFromCode(sourceCode, fileName);
+  } else {
+    // Use provided compile arguments for proper parsing
+    std::cout << "[ASTAnalyzer] Building AST with " << compileArgs.size()
+              << " compile arguments for: " << fileName << "\n";
+    astUnit = clang::tooling::buildASTFromCodeWithArgs(sourceCode, compileArgs,
+                                                       fileName);
+  }
 
   if (!astUnit) {
     std::cerr << "[ASTAnalyzer] Failed to parse source file: " << filePath
