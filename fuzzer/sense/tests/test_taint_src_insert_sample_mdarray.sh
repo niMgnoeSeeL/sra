@@ -24,7 +24,8 @@ MATRIX_COL_END=31
 
 opt-20 -load-pass-plugin=./SampleFlowSrcPass.so \
   -passes='function(sample-flow-src)' \
-  -sample-line=8 -sample-col-start=$MATRIX_COL_START -sample-col-end=$MATRIX_COL_END \
+  --src-line=8 --src-col-start=$MATRIX_COL_START --src-col-end=$MATRIX_COL_END \
+  --src-file="$DEMO_DIR/flow_mdarray.c" \
   -S ../demo/flow_mdarray.ll -o flow_mdarray_sampled.ll
 echo "✓ Generated flow_mdarray_sampled.ll"
 echo

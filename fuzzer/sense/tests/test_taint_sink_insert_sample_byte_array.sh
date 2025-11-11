@@ -19,8 +19,9 @@ echo ""
 echo "2. Running SampleFlowSinkPass for buf in printf (line 10, col 17-20)..."
 opt-20 -load-pass-plugin="$PASS_SO" \
   -passes='function(sample-flow-sink)' \
-  -sample-line=10 -sample-col-start=16 -sample-col-end=19 \
-  -sample-var-name=buf -sample-sink-id=1 \
+  --sink-line=10 --sink-col-start=16 --sink-col-end=19 \
+  --sink-var-name=buf --sink-id=2 \
+  --sink-file="$SOURCE_FILE" \
   -S "$BUILD_DIR/flow_simple.ll" -o "$BUILD_DIR/flow_simple_buf_sink.ll"
 
 # Verify sink tracking

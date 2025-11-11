@@ -18,8 +18,9 @@ echo ""
 echo "2. Running SampleFlowSinkPass for int variable 'x' (line 9, col 7-8)..."
 opt-20 -load-pass-plugin="$PASS_SO" \
   -passes='function(sample-flow-sink)' \
-  -sample-line=9 -sample-col-start=7 -sample-col-end=8 \
-  -sample-var-name=x -sample-sink-id=1 \
+  --sink-line=9 --sink-col-start=7 --sink-col-end=8 \
+  --sink-var-name=x --sink-id=1 \
+  --sink-file="$SOURCE_FILE" \
   -S "$BUILD_DIR/flow_scalars.ll" -o "$BUILD_DIR/flow_scalars_x_sink.ll"
 
 # Test case 2: double variable sink (line 15, log(y))
@@ -27,8 +28,9 @@ echo ""
 echo "3. Running SampleFlowSinkPass for double variable 'y' (line 15, col 7-8)..."
 opt-20 -load-pass-plugin="$PASS_SO" \
   -passes='function(sample-flow-sink)' \
-  -sample-line=15 -sample-col-start=7 -sample-col-end=8 \
-  -sample-var-name=y -sample-sink-id=2 \
+  --sink-line=15 --sink-col-start=7 --sink-col-end=8 \
+  --sink-var-name=y --sink-id=2 \
+  --sink-file="$SOURCE_FILE" \
   -S "$BUILD_DIR/flow_scalars.ll" -o "$BUILD_DIR/flow_scalars_y_sink.ll"
 
 # Verify int sink tracking

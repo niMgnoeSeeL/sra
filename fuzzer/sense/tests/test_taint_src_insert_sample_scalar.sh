@@ -18,7 +18,8 @@ echo ""
 echo "2. Running SampleFlowSrcPass for int variable 'x' (line 8)..."
 opt-20 -load-pass-plugin="$PASS_SO" \
   -passes='function(sample-flow-src)' \
-  -sample-var-name=x -sample-line=8 \
+  --src-var-name=x --src-line=8 \
+  --src-file="$SOURCE_FILE" \
   -S "$BUILD_DIR/flow_scalars.ll" -o "$BUILD_DIR/flow_scalars_x.ll"
 
 # Test case 2: double variable (line 14)
@@ -26,7 +27,8 @@ echo ""
 echo "3. Running SampleFlowSrcPass for double variable 'y' (line 14)..."
 opt-20 -load-pass-plugin="$PASS_SO" \
   -passes='function(sample-flow-src)' \
-  -sample-var-name=y -sample-line=14 \
+  --src-var-name=y --src-line=14 \
+  --src-file="$SOURCE_FILE" \
   -S "$BUILD_DIR/flow_scalars.ll" -o "$BUILD_DIR/flow_scalars_y.ll"
 
 # Verify int sampling

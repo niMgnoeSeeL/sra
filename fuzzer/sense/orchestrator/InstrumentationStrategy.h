@@ -94,7 +94,7 @@ private:
                               const SourceLocation &loc,
                               const InstrumentationInfo &info, int id,
                               const std::string &inputLL,
-                              const std::string &outputLL);
+                              const std::string &outputLL, bool isSource);
 
   // Helper: Execute shell command
   bool runShellCommand(const std::string &cmd, std::string &output);

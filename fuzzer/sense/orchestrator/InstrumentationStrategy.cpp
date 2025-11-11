@@ -18,8 +18,8 @@ OptCommand InstrumentationStrategy::generateSourceCommand(
     const SourceLocation &loc, int srcID, const InstrumentationInfo &info,
     const std::string &inputLL, const std::string &outputLL) {
   OptCommand cmd;
-  cmd.command =
-      buildOptCommand("sample-flow-src", loc, info, srcID, inputLL, outputLL);
+  cmd.command = buildOptCommand("sample-flow-src-module", loc, info, srcID,
+                                inputLL, outputLL, true);
   cmd.inputFile = inputLL;
   cmd.outputFile = outputLL;
   cmd.id = srcID;
@@ -35,8 +35,8 @@ OptCommand InstrumentationStrategy::generateSinkCommand(
     const SourceLocation &loc, int sinkID, const InstrumentationInfo &info,
     const std::string &inputLL, const std::string &outputLL) {
   OptCommand cmd;
-  cmd.command =
-      buildOptCommand("sample-flow-sink", loc, info, sinkID, inputLL, outputLL);
+  cmd.command = buildOptCommand("sample-flow-sink-module", loc, info, sinkID,
+                                inputLL, outputLL, false);
   cmd.inputFile = inputLL;
   cmd.outputFile = outputLL;
   cmd.id = sinkID;
@@ -131,40 +131,52 @@ bool InstrumentationStrategy::executeAll(
 std::string InstrumentationStrategy::buildOptCommand(
     const std::string &passName, const SourceLocation &loc,
     const InstrumentationInfo &info, int id, const std::string &inputLL,
-    const std::string &outputLL) {
+    const std::string &outputLL, bool isSource) {
   std::ostringstream oss;
 
   // Build pass plugin path
   std::string passPlugin;
-  if (passName == "sample-flow-src") {
+  if (passName == "sample-flow-src-module" || passName == "sample-flow-src") {
     passPlugin = fs::path(passPluginDir) / "SampleFlowSrcPass.so";
-  } else if (passName == "sample-flow-sink") {
+  } else if (passName == "sample-flow-sink-module" ||
+             passName == "sample-flow-sink") {
     passPlugin = fs::path(passPluginDir) / "SampleFlowSinkPass.so";
   } else {
     passPlugin = fs::path(passPluginDir) / (passName + ".so");
   }
+
+  // Determine option prefix based on pass type
+  std::string optPrefix = isSource ? "src-" : "sink-";
+
+  // Use the full file path for disambiguation
+  // This allows us to distinguish between files with the same name
+  // in different directories (e.g., src/main.c vs test/main.c)
+  std::string filePath = loc.filePath;
 
   // Base opt command
   oss << optPath << " -load-pass-plugin=" << passPlugin
       << " -passes=" << passName;
 
   // Always add line parameter
-  oss << " -sample-line=" << loc.line;
+  oss << " --" << optPrefix << "line=" << loc.line;
 
   // Add column parameters for line:col mode
-  oss << " -sample-col-start=" << loc.colStart
-      << " -sample-col-end=" << loc.colEnd;
+  oss << " --" << optPrefix << "col-start=" << loc.colStart << " --"
+      << optPrefix << "col-end=" << loc.colEnd;
+
+  // Add file path parameter for disambiguation
+  oss << " --" << optPrefix << "file=" << filePath;
 
   // Add variable name if available (fallback mode)
   if (!info.varName.empty()) {
-    oss << " -sample-var-name=" << info.varName;
+    oss << " --" << optPrefix << "var-name=" << info.varName;
   }
 
   // Add ID parameter
-  if (passName == "sample-flow-src") {
-    oss << " -sample-src-id=" << id;
-  } else if (passName == "sample-flow-sink") {
-    oss << " -sample-sink-id=" << id;
+  if (isSource) {
+    oss << " --src-id=" << id;
+  } else {
+    oss << " --sink-id=" << id;
   }
 
   // Input/output files

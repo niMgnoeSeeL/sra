@@ -19,9 +19,10 @@ echo "[2] Running SampleFlowSrcPass..."
 cd "$BUILD_DIR"
 opt-20 -load-pass-plugin=./SampleFlowSrcPass.so \
     -passes='function(sample-flow-src)' \
-    -sample-line=7 \
-    -sample-col-start=9 \
-    -sample-col-end=12 \
+    --src-line=7 \
+    --src-col-start=9 \
+    --src-col-end=12 \
+    --src-file="$DEMO_DIR/flow_simple.c" \
     "$DEMO_DIR/flow_simple.ll" \
     -S -o flow_simple_sampled.ll
 echo "✓ Generated flow_simple_sampled.ll"

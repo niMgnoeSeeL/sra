@@ -18,8 +18,9 @@ echo ""
 echo "2. Running SampleFlowSinkPass for matrix[1] in printf (line 10, col 23-32)..."
 opt-20 -load-pass-plugin="$PASS_SO" \
   -passes='function(sample-flow-sink)' \
-  -sample-line=10 -sample-col-start=23 -sample-col-end=32 \
-  -sample-var-name=matrix -sample-sink-id=1 \
+  --sink-line=10 --sink-col-start=23 --sink-col-end=32 \
+  --sink-var-name=matrix --sink-id=1 \
+  --sink-file="$SOURCE_FILE" \
   -S "$BUILD_DIR/flow_mdarray.ll" -o "$BUILD_DIR/flow_mdarray_sink.ll"
 
 # Verify sink tracking

@@ -94,6 +94,8 @@
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Support/CommandLine.h"
+#include "llvm/Support/FileSystem.h"
+#include "llvm/Support/Path.h"
 
 using namespace llvm;
 
@@ -103,19 +105,22 @@ constexpr unsigned TargetLine = 7;
 constexpr unsigned ColStart = 9;
 constexpr unsigned ColEnd = 12;
 
-static cl::opt<unsigned> LineOpt("sample-line", cl::desc("Target line"),
+static cl::opt<unsigned> LineOpt("src-line", cl::desc("Target line"),
                                  cl::init(TargetLine));
-static cl::opt<unsigned> ColStartOpt("sample-col-start",
-                                     cl::desc("Column start"),
+static cl::opt<unsigned> ColStartOpt("src-col-start", cl::desc("Column start"),
                                      cl::init(ColStart));
-static cl::opt<unsigned> ColEndOpt("sample-col-end", cl::desc("Column end"),
+static cl::opt<unsigned> ColEndOpt("src-col-end", cl::desc("Column end"),
                                    cl::init(ColEnd));
 static cl::opt<std::string>
-    VarNameOpt("sample-var-name",
+    FileNameOpt("src-file",
+                cl::desc("Target file path for disambiguation (e.g., "
+                         "'src/main.c' or '/path/to/file.c')"),
+                cl::init(""));
+static cl::opt<std::string>
+    VarNameOpt("src-var-name",
                cl::desc("Target variable name (e.g., 'x' from '&x')"),
                cl::init(""));
-static cl::opt<int> SrcIDOpt("sample-src-id",
-                             cl::desc("Source ID for flow tracking"),
+static cl::opt<int> SrcIDOpt("src-id", cl::desc("Source ID for flow tracking"),
                              cl::init(-1));
 namespace {
 
@@ -125,6 +130,74 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
   static bool sameStatement(const DebugLoc &A, const DebugLoc &B) {
     return A.getLine() == B.getLine() && A.getScope() == B.getScope() &&
            A.getInlinedAt() == B.getInlinedAt();
+  }
+
+  // === Helper: check if debug location matches file path filter ===
+  static bool matchesFilename(const DebugLoc &DL,
+                              const std::string &FilePathFilter) {
+    if (FilePathFilter.empty())
+      return true; // No filter specified, match all files
+
+    DILocation *Loc = DL.get();
+    if (!Loc)
+      return false;
+
+    // Construct full path from directory + filename
+    std::string DebugFilePath;
+    if (!Loc->getDirectory().empty()) {
+      DebugFilePath = Loc->getDirectory().str();
+      if (DebugFilePath.back() != '/')
+        DebugFilePath += '/';
+    }
+    DebugFilePath += Loc->getFilename().str();
+
+    // Resolve both paths to canonical form (resolving .., ., symlinks)
+    std::error_code EC;
+
+    // Resolve the debug info path (may contain ../)
+    llvm::SmallString<256> ResolvedDebugPath;
+    EC = llvm::sys::fs::real_path(DebugFilePath, ResolvedDebugPath);
+    if (EC) {
+      // If real_path fails (file doesn't exist), try manual resolution
+      llvm::SmallString<256> AbsDebugPath(DebugFilePath);
+      if (llvm::sys::fs::make_absolute(AbsDebugPath)) {
+        // If make_absolute fails, use as-is
+        ResolvedDebugPath = DebugFilePath;
+      } else {
+        llvm::sys::path::remove_dots(AbsDebugPath, /*remove_dot_dot=*/true);
+        ResolvedDebugPath = AbsDebugPath;
+      }
+    }
+
+    // Resolve the filter path (may be relative or contain ../)
+    llvm::SmallString<256> ResolvedFilterPath;
+    EC = llvm::sys::fs::real_path(FilePathFilter, ResolvedFilterPath);
+    if (EC) {
+      // If real_path fails, make it absolute (relative to current working dir)
+      // and remove dots
+      llvm::SmallString<256> AbsFilterPath(FilePathFilter);
+      if (llvm::sys::fs::make_absolute(AbsFilterPath)) {
+        // If make_absolute fails, use as-is
+        ResolvedFilterPath = FilePathFilter;
+      } else {
+        llvm::sys::path::remove_dots(AbsFilterPath, /*remove_dot_dot=*/true);
+        ResolvedFilterPath = AbsFilterPath;
+      }
+    }
+
+    // Compare the canonical paths
+    bool matches = (ResolvedDebugPath == ResolvedFilterPath);
+
+    if (!matches) {
+      // Also try suffix match for relative paths
+      // e.g., filter "demo/flow_simple.c" should match
+      // "/path/to/demo/flow_simple.c"
+      StringRef DebugPathRef(ResolvedDebugPath.c_str());
+      StringRef FilterPathRef(ResolvedFilterPath.c_str());
+      matches = DebugPathRef.ends_with(FilterPathRef);
+    }
+
+    return matches;
   }
 
   // === Helper: strip to base object ===
@@ -782,7 +855,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     // to the actual use.
     for (Instruction &I : instructions(F)) {
       if (DebugLoc DL = I.getDebugLoc()) {
-        if (DL.getLine() == LineOpt && DL.getCol() >= ColStartOpt &&
+        if (matchesFilename(DL, FileNameOpt.getValue()) &&
+            DL.getLine() == LineOpt && DL.getCol() >= ColStartOpt &&
             DL.getCol() <= ColEndOpt) {
           Anchor = &I;
           // Don't break - keep looking for later instructions
@@ -896,12 +970,56 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
 } // namespace
 
+// === ModulePass wrapper that stops after first successful instrumentation ===
+namespace {
+
+struct SampleFlowSrcModulePass : public PassInfoMixin<SampleFlowSrcModulePass> {
+  PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
+    errs() << "=== SampleFlowSrcModulePass::run called on module ===\n";
+
+    auto &FAM =
+        MAM.getResult<FunctionAnalysisManagerModuleProxy>(M).getManager();
+
+    // Try each function until one succeeds
+    for (Function &F : M) {
+      if (F.isDeclaration())
+        continue;
+
+      // TODO:
+      // if (F.getFile() != ...)
+
+      errs() << "[sample-flow-src-module] Trying function: " << F.getName()
+             << "\n";
+
+      // Run the function pass
+      SampleFlowSrcPass FunctionPass;
+      PreservedAnalyses PA = FunctionPass.run(F, FAM);
+
+      // Check if instrumentation succeeded
+      // If all analyses are preserved, nothing was modified
+      if (!PA.areAllPreserved()) {
+        errs()
+            << "[sample-flow-src-module] Successfully instrumented function: "
+            << F.getName() << "\n";
+        return PreservedAnalyses::none();
+      }
+    }
+
+    errs() << "[sample-flow-src-module] No function was instrumented\n";
+    return PreservedAnalyses::all();
+  }
+};
+
+} // namespace
+
 // === Registration boilerplate ===
 llvm::PassPluginLibraryInfo getSamplePassPluginInfo() {
   return {
       LLVM_PLUGIN_API_VERSION, "SampleFlowSrcPass", LLVM_VERSION_STRING,
       [](PassBuilder &PB) {
         errs() << "=== SampleFlowSrcPass PASS PLUGIN LOADED ===\n";
+
+        // Register function pass
         PB.registerPipelineParsingCallback(
             [](StringRef Name, FunctionPassManager &FPM,
                ArrayRef<PassBuilder::PipelineElement>) {
@@ -912,6 +1030,19 @@ llvm::PassPluginLibraryInfo getSamplePassPluginInfo() {
                 errs()
                     << "[SampleFlowSrcPass] Registering SampleFlowSrcPass!\n";
                 FPM.addPass(SampleFlowSrcPass());
+                return true;
+              }
+              return false;
+            });
+
+        // Register module pass
+        PB.registerPipelineParsingCallback(
+            [](StringRef Name, ModulePassManager &MPM,
+               ArrayRef<PassBuilder::PipelineElement>) {
+              if (Name == "sample-flow-src-module") {
+                errs() << "[SampleFlowSrcPass] Registering "
+                          "SampleFlowSrcModulePass!\n";
+                MPM.addPass(SampleFlowSrcModulePass());
                 return true;
               }
               return false;

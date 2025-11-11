@@ -81,6 +81,8 @@
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Support/CommandLine.h"
+#include "llvm/Support/FileSystem.h"
+#include "llvm/Support/Path.h"
 
 using namespace llvm;
 
@@ -88,19 +90,22 @@ constexpr unsigned TargetLine = 10;
 constexpr unsigned ColStart = 7;
 constexpr unsigned ColEnd = 8;
 
-static cl::opt<unsigned> LineOpt("sample-line", cl::desc("Target line"),
+static cl::opt<unsigned> LineOpt("sink-line", cl::desc("Target line"),
                                  cl::init(TargetLine));
-static cl::opt<unsigned> ColStartOpt("sample-col-start",
-                                     cl::desc("Column start"),
+static cl::opt<unsigned> ColStartOpt("sink-col-start", cl::desc("Column start"),
                                      cl::init(ColStart));
-static cl::opt<unsigned> ColEndOpt("sample-col-end", cl::desc("Column end"),
+static cl::opt<unsigned> ColEndOpt("sink-col-end", cl::desc("Column end"),
                                    cl::init(ColEnd));
 static cl::opt<std::string>
-    VarNameOpt("sample-var-name",
+    FileNameOpt("sink-file",
+                cl::desc("Target file path for disambiguation (e.g., "
+                         "'src/main.c' or '/path/to/file.c')"),
+                cl::init(""));
+static cl::opt<std::string>
+    VarNameOpt("sink-var-name",
                cl::desc("Target variable name (e.g., 'x' from 'log(x)')"),
                cl::init(""));
-static cl::opt<int> SinkIDOpt("sample-sink-id",
-                              cl::desc("Sink ID for flow tracking"),
+static cl::opt<int> SinkIDOpt("sink-id", cl::desc("Sink ID for flow tracking"),
                               cl::init(-1));
 
 namespace {
@@ -111,6 +116,74 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
   static bool sameStatement(const DebugLoc &A, const DebugLoc &B) {
     return A.getLine() == B.getLine() && A.getScope() == B.getScope() &&
            A.getInlinedAt() == B.getInlinedAt();
+  }
+
+  // === Helper: check if debug location matches file path filter ===
+  static bool matchesFilename(const DebugLoc &DL,
+                              const std::string &FilePathFilter) {
+    if (FilePathFilter.empty())
+      return true; // No filter specified, match all files
+
+    DILocation *Loc = DL.get();
+    if (!Loc)
+      return false;
+
+    // Construct full path from directory + filename
+    std::string DebugFilePath;
+    if (!Loc->getDirectory().empty()) {
+      DebugFilePath = Loc->getDirectory().str();
+      if (DebugFilePath.back() != '/')
+        DebugFilePath += '/';
+    }
+    DebugFilePath += Loc->getFilename().str();
+
+    // Resolve both paths to canonical form (resolving .., ., symlinks)
+    std::error_code EC;
+
+    // Resolve the debug info path (may contain ../)
+    llvm::SmallString<256> ResolvedDebugPath;
+    EC = llvm::sys::fs::real_path(DebugFilePath, ResolvedDebugPath);
+    if (EC) {
+      // If real_path fails (file doesn't exist), try manual resolution
+      llvm::SmallString<256> AbsDebugPath(DebugFilePath);
+      if (llvm::sys::fs::make_absolute(AbsDebugPath)) {
+        // If make_absolute fails, use as-is
+        ResolvedDebugPath = DebugFilePath;
+      } else {
+        llvm::sys::path::remove_dots(AbsDebugPath, /*remove_dot_dot=*/true);
+        ResolvedDebugPath = AbsDebugPath;
+      }
+    }
+
+    // Resolve the filter path (may be relative or contain ../)
+    llvm::SmallString<256> ResolvedFilterPath;
+    EC = llvm::sys::fs::real_path(FilePathFilter, ResolvedFilterPath);
+    if (EC) {
+      // If real_path fails, make it absolute (relative to current working dir)
+      // and remove dots
+      llvm::SmallString<256> AbsFilterPath(FilePathFilter);
+      if (llvm::sys::fs::make_absolute(AbsFilterPath)) {
+        // If make_absolute fails, use as-is
+        ResolvedFilterPath = FilePathFilter;
+      } else {
+        llvm::sys::path::remove_dots(AbsFilterPath, /*remove_dot_dot=*/true);
+        ResolvedFilterPath = AbsFilterPath;
+      }
+    }
+
+    // Compare the canonical paths
+    bool matches = (ResolvedDebugPath == ResolvedFilterPath);
+
+    if (!matches) {
+      // Also try suffix match for relative paths
+      // e.g., filter "demo/flow_simple.c" should match
+      // "/path/to/demo/flow_simple.c"
+      StringRef DebugPathRef(ResolvedDebugPath.c_str());
+      StringRef FilterPathRef(ResolvedFilterPath.c_str());
+      matches = DebugPathRef.ends_with(FilterPathRef);
+    }
+
+    return matches;
   }
 
   // === Helper: strip to base object ===
@@ -532,12 +605,53 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
   static Instruction *verifyCallReadsBase(Value *&Base, Instruction &I,
                                           llvm::CallBase *&CB) {
     for (auto &Arg : CB->args()) {
-      SmallVector<const Value *, 4> Objects;
-      getUnderlyingObjects(Arg, Objects);
-      for (auto *Obj : Objects) {
-        if (Obj == Base) {
-          errs() << "[sample-flow-sink] Found taint sink call: " << I << "\n";
-          return &I;
+      // Case 1: Argument is a pointer that may alias Base
+      if (Arg->getType()->isPointerTy()) {
+        SmallVector<const Value *, 4> Objects;
+        getUnderlyingObjects(Arg, Objects);
+        for (auto *Obj : Objects) {
+          if (Obj == Base) {
+            errs() << "[sample-flow-sink] Found taint sink call (pointer arg): "
+                   << I << "\n";
+            return &I;
+          }
+        }
+      }
+      // Case 2: Argument is a scalar value that may be derived from Base
+      // Example: log(y*2) where y is loaded from Base
+      // We need to trace back through def-use chain to find the load
+      else {
+        // Trace back through SSA def-use chain to find loads
+        SmallVector<Value *, 8> Worklist;
+        SmallPtrSet<Value *, 8> Visited;
+        Worklist.push_back(Arg);
+
+        while (!Worklist.empty()) {
+          Value *V = Worklist.pop_back_val();
+          if (!Visited.insert(V).second)
+            continue;
+
+          // Check if this is a load from Base
+          if (auto *Load = dyn_cast<LoadInst>(V)) {
+            SmallVector<const Value *, 4> Objects;
+            getUnderlyingObjects(Load->getPointerOperand(), Objects);
+            for (auto *Obj : Objects) {
+              if (Obj == Base) {
+                errs() << "[sample-flow-sink] Found taint sink call (scalar "
+                          "derived from Base): "
+                       << I << "\n";
+                return &I;
+              }
+            }
+          }
+
+          // Continue tracing through operands (for instructions like add, mul,
+          // cast, etc.)
+          if (auto *Inst = dyn_cast<Instruction>(V)) {
+            for (Use &U : Inst->operands()) {
+              Worklist.push_back(U.get());
+            }
+          }
         }
       }
     }
@@ -620,8 +734,8 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
 
     for (Instruction &I : instructions(F)) {
       if (DebugLoc DL = I.getDebugLoc()) {
-        if (DL.getLine() == LineOpt && DL.getCol() >= ColStartOpt &&
-            DL.getCol() <= ColEndOpt) {
+        if (matchesFilename(DL, FileNameOpt) && DL.getLine() == LineOpt &&
+            DL.getCol() >= ColStartOpt && DL.getCol() <= ColEndOpt) {
           Anchor = &I;
         }
       }
@@ -674,14 +788,13 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
     }
 
   fallback:
-    LoadInst *LoadFromBase =
-        nullptr; // Track the load instruction for type inference
-
     if (!Anchor || !Base) {
-      errs() << "[sample-flow-sink] Fallback to using DILocalVariable "
+      errs() << "[sample-flow-sink] Fallback to using "
+                "DILocalVariable/DIGlobalVariable "
                 "approach with var name: "
              << VarNameOpt << "\n";
 
+      // Find the variable directly using debug info
       Base = findVariableByName(F, VarNameOpt, LineOpt);
 
       if (!Base) {
@@ -690,73 +803,33 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
         return PreservedAnalyses::all();
       }
 
-      // Find the ANCHOR: We need to find the load from Base, then trace
-      // forward to find the final consumer of that loaded value.
-      // Example: log(x) generates:
-      //   %5 = load i32, ptr %2    <- reads from Base
-      //   %6 = sitofp i32 %5       <- uses %5
-      //   %7 = call @log(double %6) <- final consumer (this is the anchor)
-
-      // Step 1: Find load from Base on target line
+      // Now find the ANCHOR: taint sink instruction (the instruction that reads
+      // from Base on target line) This mirrors the SrcPass logic but for
+      // readers instead of writers
       for (Instruction &I : instructions(F)) {
         if (DebugLoc DL = I.getDebugLoc()) {
           if (DL.getLine() == LineOpt) {
-            if (auto *Load = dyn_cast<LoadInst>(&I)) {
-              SmallVector<const Value *, 4> Objects;
-              getUnderlyingObjects(Load->getPointerOperand(), Objects);
-              for (auto *Obj : Objects) {
-                if (Obj == Base) {
-                  LoadFromBase = Load;
-                  errs() << "[sample-flow-sink] Found load from Base: " << *Load
-                         << "\n";
-                  break;
-                }
-              }
+            // Case 1: CallBase that reads from Base via an argument (e.g.,
+            // log(x))
+            if (auto *CB = dyn_cast<CallBase>(&I)) {
+              // Check if any argument aliases with Base
+              Anchor = verifyCallReadsBase(Base, I, CB);
+            }
+
+            // Case 2: Load that reads from Base (e.g., for scalar variables)
+            if (!Anchor && isa<LoadInst>(&I)) {
+              Anchor = verifyLoadReadsBase(Base, I, AA);
             }
           }
         }
       }
 
-      if (!LoadFromBase) {
-        errs()
-            << "[sample-flow-sink] ERROR: Could not find load from variable '"
-            << VarNameOpt << "' on line " << LineOpt << "\n";
+      if (!Anchor) {
+        errs() << "[sample-flow-sink] ERROR: Could not find taint sink "
+                  "instruction on line "
+               << LineOpt << "\n";
         return PreservedAnalyses::all();
       }
-
-      // Step 2: Find the final consumer of the loaded value on the same line
-      // Trace through the use-def chain to find the last instruction that uses
-      // the loaded value (directly or transitively)
-      Value *CurrentValue = LoadFromBase;
-      Instruction *LastConsumer = LoadFromBase;
-
-      // Follow the use chain forward
-      SmallVector<Value *, 8> Worklist;
-      Worklist.push_back(CurrentValue);
-      SmallPtrSet<Value *, 8> Visited;
-
-      while (!Worklist.empty()) {
-        Value *V = Worklist.pop_back_val();
-        if (!Visited.insert(V).second)
-          continue;
-
-        for (User *U : V->users()) {
-          if (auto *UserInst = dyn_cast<Instruction>(U)) {
-            if (DebugLoc DL = UserInst->getDebugLoc()) {
-              if (DL.getLine() == LineOpt) {
-                // This user is on the same line - update last consumer
-                LastConsumer = UserInst;
-                // Continue tracing through this instruction's users
-                Worklist.push_back(UserInst);
-              }
-            }
-          }
-        }
-      }
-
-      Anchor = LastConsumer;
-      errs() << "[sample-flow-sink] Found final consumer (anchor): " << *Anchor
-             << "\n";
     }
 
     errs() << "[sample-flow-sink] Base object: " << *Base << "\n";
@@ -785,10 +858,8 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
     Value *Ptr = nullptr;
     Type *PointedToType = nullptr;
 
-    // In varname fallback mode, we found LoadFromBase - use it to get precise
-    // pointer/type In line:col mode, LoadFromBase is null, so we use the Anchor
-    Instruction *TypeSource = LoadFromBase ? LoadFromBase : Anchor;
-    findPointedToType(DL, TypeSource, Base, AllocatedType, Ptr, PointedToType);
+    // Use the Anchor instruction to infer the pointed-to type
+    findPointedToType(DL, Anchor, Base, AllocatedType, Ptr, PointedToType);
 
     // Insert the tracking call BEFORE the sink
     insertReportCall(DL, Ctx, SampleReportSink, Base, SinkOp, AI, Ptr,
@@ -800,11 +871,56 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
 
 } // namespace
 
+// === ModulePass wrapper that stops after first successful instrumentation ===
+namespace {
+
+struct SampleFlowSinkModulePass
+    : public PassInfoMixin<SampleFlowSinkModulePass> {
+  PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
+    errs() << "=== SampleFlowSinkModulePass::run called on module ===\n";
+
+    auto &FAM =
+        MAM.getResult<FunctionAnalysisManagerModuleProxy>(M).getManager();
+
+    // Try each function until one succeeds
+    for (Function &F : M) {
+      if (F.isDeclaration())
+        continue;
+
+      // TODO:
+      // if (F.getFile() != ...)
+
+      errs() << "[sample-flow-sink-module] Trying function: " << F.getName()
+             << "\n";
+
+      // Run the function pass
+      SampleFlowSinkPass FunctionPass;
+      PreservedAnalyses PA = FunctionPass.run(F, FAM);
+
+      // Check if instrumentation succeeded
+      // If all analyses are preserved, nothing was modified
+      if (!PA.areAllPreserved()) {
+        errs()
+            << "[sample-flow-sink-module] Successfully instrumented function: "
+            << F.getName() << "\n";
+        return PreservedAnalyses::none();
+      }
+    }
+
+    errs() << "[sample-flow-sink-module] No function was instrumented\n";
+    return PreservedAnalyses::all();
+  }
+};
+
+} // namespace
+
 // === Registration boilerplate ===
 llvm::PassPluginLibraryInfo getSampleFlowSinkPassPluginInfo() {
   return {LLVM_PLUGIN_API_VERSION, "SampleFlowSinkPass", LLVM_VERSION_STRING,
           [](PassBuilder &PB) {
             errs() << "=== SampleFlowSinkPass PASS PLUGIN LOADED ===\n";
+
+            // Register function pass
             PB.registerPipelineParsingCallback(
                 [](StringRef Name, FunctionPassManager &FPM,
                    ArrayRef<PassBuilder::PipelineElement>) {
@@ -815,6 +931,19 @@ llvm::PassPluginLibraryInfo getSampleFlowSinkPassPluginInfo() {
                     errs() << "[SampleFlowSinkPass] Registering "
                               "SampleFlowSinkPass!\n";
                     FPM.addPass(SampleFlowSinkPass());
+                    return true;
+                  }
+                  return false;
+                });
+
+            // Register module pass
+            PB.registerPipelineParsingCallback(
+                [](StringRef Name, ModulePassManager &MPM,
+                   ArrayRef<PassBuilder::PipelineElement>) {
+                  if (Name == "sample-flow-sink-module") {
+                    errs() << "[SampleFlowSinkPass] Registering "
+                              "SampleFlowSinkModulePass!\n";
+                    MPM.addPass(SampleFlowSinkModulePass());
                     return true;
                   }
                   return false;

@@ -18,8 +18,9 @@ echo ""
 echo "2. Running SampleFlowSinkPass for s.age in printf (line 16, col 30-35)..."
 opt-20 -load-pass-plugin="$PASS_SO" \
   -passes='function(sample-flow-sink)' \
-  -sample-line=16 -sample-col-start=31 -sample-col-end=40 \
-  -sample-var-name=s -sample-sink-id=1 \
+  --sink-line=16 --sink-col-start=31 --sink-col-end=40 \
+  --sink-var-name=s --sink-id=1 \
+  --sink-file="$SOURCE_FILE" \
   -S "$BUILD_DIR/flow_struct.ll" -o "$BUILD_DIR/flow_struct_sink.ll"
 
 # Verify sink tracking
