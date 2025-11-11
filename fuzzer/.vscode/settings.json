@@ -22,5 +22,9 @@
   },
   "editor.formatOnSave": true,
   "C_Cpp.clang_format_style": "{ BasedOnStyle: LLVM, IndentWidth: 2, ColumnLimit: 100 }",
-  "cmake.ignoreCMakeListsMissing": true
+  "cmake.ignoreCMakeListsMissing": true,
+  "lldb.displayFormat": "auto",
+  "lldb.showDisassembly": "auto",
+  "lldb.dereferencePointers": true,
+  "lldb.consoleMode": "commands"
 }
