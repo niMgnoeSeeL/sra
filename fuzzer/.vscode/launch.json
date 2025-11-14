@@ -441,7 +441,7 @@
             "preLaunchTask": "sense:build-all"
         },
         {
-            "name": "Debug Flow Monitor (Python)",
+            "name": "Debug Flow Monitor (flow_simple)",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/sense/monitor/flow_monitor.py",
@@ -452,6 +452,31 @@
                 "${workspaceFolder}/sense/monitor/configs/development.yaml",
                 "--output",
                 "/tmp/flow_monitor_test.jsonl",
+                "--log-level",
+                "INFO",
+                "--cleanup-on-exit"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/sense/monitor",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/sense/monitor"
+            }
+        },
+        {
+            "name": "Debug Flow Monitor (totinfo)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/monitor/flow_monitor.py",
+            "args": [
+                "--flowdb",
+                "/tmp/totinfo_fuzz.ewaCYY/totinfo_nl_iruntrusted.instrumented.ll.flowdb",
+                "--config",
+                "${workspaceFolder}/sense/monitor/configs/development.yaml",
+                "--output",
+                "/tmp/totinfo_test.jsonl",
+                "--log-file",
+                "/tmp/totinfo.log",
                 "--log-level",
                 "INFO",
                 "--cleanup-on-exit"

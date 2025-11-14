@@ -12,6 +12,13 @@
 extern "C" {
 #endif
 
+// Shared memory header for coverage map
+typedef struct {
+  uint32_t map_size;  // Number of coverage locations
+  uint32_t completed; // Set to 1 when program exits (atomic)
+  uint8_t map[];      // Coverage map (flexible array)
+} DFCoverageBuffer;
+
 // Global coverage map (dynamically sized based on number of locations)
 extern uint8_t *__df_coverage_map;
 extern uint32_t __df_coverage_map_size;

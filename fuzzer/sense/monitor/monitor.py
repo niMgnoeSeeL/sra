@@ -19,12 +19,19 @@ from datetime import datetime
 
 from config import MonitorConfig
 from flow_db import FlowDatabase
-from shm_protocol import discover_executions, parse_execution
+from shm_protocol import discover_executions, parse_execution, ExecutionNotCompleteError
 from event_processor import EventProcessor, Statistics
+from enum import Enum, auto
 
 
 logger = logging.getLogger(__name__)
 
+class ProcessExecutionResult(Enum):
+    """Result of processing a single execution."""
+    SUCCESS = auto()
+    NOT_COMPLETE = auto()
+    FILE_NOT_FOUND = auto()
+    ERROR = auto()
 
 class FlowMonitor:
     """
@@ -51,6 +58,7 @@ class FlowMonitor:
         self.output_file: Optional[TextIO] = None
         self.running = False
         self.executions_processed = 0
+        self.failed_executions = 0
         
         logger.info(f"FlowMonitor initialized with {flow_db}")
     
@@ -80,8 +88,16 @@ class FlowMonitor:
                 # Process all discovered executions
                 for pid in pids:
                     try:
-                        self._process_execution(pid)
-                        self.executions_processed += 1
+                        exe_result = self._process_execution(pid)
+                        if exe_result == ProcessExecutionResult.SUCCESS:
+                            self.executions_processed += 1
+                        elif exe_result == ProcessExecutionResult.NOT_COMPLETE:
+                            continue
+                        elif exe_result == ProcessExecutionResult.FILE_NOT_FOUND:
+                            self.failed_executions += 1
+                            continue
+                        else: 
+                            self.failed_executions += 1
                         
                         # Check if we've hit max executions
                         if (self.config.processing.max_executions and 
@@ -148,7 +164,7 @@ class FlowMonitor:
             ))
             logger.info(f"Output: {output_path}")
     
-    def _process_execution(self, pid: int) -> None:
+    def _process_execution(self, pid: int) -> Optional[ProcessExecutionResult]:
         """
         Process a single execution.
         
@@ -180,10 +196,21 @@ class FlowMonitor:
                 self._cleanup_execution(pid)
             
             logger.info(f"Processed PID={pid}: {len(analysis.completed_flows)} flows completed")
-            
+
+        except ExecutionNotCompleteError:
+            # Execution still running, skip for now and will retry on next poll
+            logger.debug(f"Execution PID={pid} not yet complete, skipping")
+            return ProcessExecutionResult.NOT_COMPLETE
+        except FileNotFoundError as e:
+            # suppress if shared memory regions disappeared
+            # FIXME: this needs to be fixed later on, suppress this for now
+            logger.error(f"Failed to process PID={pid}: {e}", exc_info=True)
+            return ProcessExecutionResult.FILE_NOT_FOUND           
         except Exception as e:
             logger.error(f"Failed to process PID={pid}: {e}", exc_info=True)
             raise
+
+        return ProcessExecutionResult.SUCCESS
     
     def _output_analysis(self, analysis) -> None:
         """

@@ -15,6 +15,7 @@ uint8_t *__df_coverage_map = NULL;
 uint32_t __df_coverage_map_size __attribute__((weak)) = 0;
 
 // Shared memory state
+static DFCoverageBuffer *g_shm_buffer = NULL;
 static int g_shm_fd = -1;
 static char g_shm_name[256];
 
@@ -33,6 +34,9 @@ void df_coverage_init(void) {
   // Create shared memory region: /df_coverage_<pid>
   snprintf(g_shm_name, sizeof(g_shm_name), "/df_coverage_%d", getpid());
 
+  // Calculate total size: header + map
+  size_t total_size = sizeof(DFCoverageBuffer) + __df_coverage_map_size;
+
   g_shm_fd = shm_open(g_shm_name, O_CREAT | O_RDWR, 0600);
   if (g_shm_fd < 0) {
     perror("[df-coverage] ERROR: shm_open failed");
@@ -40,7 +44,7 @@ void df_coverage_init(void) {
   }
 
   // Resize shared memory
-  if (ftruncate(g_shm_fd, __df_coverage_map_size) < 0) {
+  if (ftruncate(g_shm_fd, total_size) < 0) {
     perror("[df-coverage] ERROR: ftruncate failed");
     close(g_shm_fd);
     shm_unlink(g_shm_name);
@@ -48,15 +52,24 @@ void df_coverage_init(void) {
   }
 
   // Map shared memory
-  __df_coverage_map =
-      (uint8_t *)mmap(NULL, __df_coverage_map_size, PROT_READ | PROT_WRITE,
-                      MAP_SHARED, g_shm_fd, 0);
-  if (__df_coverage_map == MAP_FAILED) {
+  g_shm_buffer = (DFCoverageBuffer *)mmap(
+      NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, g_shm_fd, 0);
+  if (g_shm_buffer == MAP_FAILED) {
     perror("[df-coverage] ERROR: mmap failed");
     close(g_shm_fd);
     shm_unlink(g_shm_name);
     exit(1);
   }
+
+  // Initialize header atomically
+  // Note: ftruncate() guarantees zero-initialization, so completed is already 0
+  // But we explicitly initialize all fields for clarity and safety
+  __atomic_store_n(&g_shm_buffer->map_size, __df_coverage_map_size,
+                   __ATOMIC_RELAXED);
+  __atomic_store_n(&g_shm_buffer->completed, 0, __ATOMIC_RELEASE);
+
+  // Point the global map to the buffer's map section
+  __df_coverage_map = g_shm_buffer->map;
 
   // Zero the map
   memset(__df_coverage_map, 0, __df_coverage_map_size);
@@ -145,9 +158,14 @@ void df_coverage_reset(void) {
 */
 
 __attribute__((destructor)) static void df_coverage_exit_handler(void) {
-  if (__df_coverage_map && __df_coverage_map != MAP_FAILED) {
+  // Mark coverage as completed (atomic write so monitor can detect it)
+  if (g_shm_buffer != NULL && g_shm_buffer != MAP_FAILED) {
+    __atomic_store_n(&g_shm_buffer->completed, 1, __ATOMIC_RELEASE);
+
     // Unmap shared memory
-    munmap(__df_coverage_map, __df_coverage_map_size);
+    size_t total_size = sizeof(DFCoverageBuffer) + __df_coverage_map_size;
+    munmap(g_shm_buffer, total_size);
+    g_shm_buffer = NULL;
     __df_coverage_map = NULL;
   }
 

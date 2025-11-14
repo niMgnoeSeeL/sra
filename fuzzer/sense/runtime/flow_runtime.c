@@ -71,9 +71,13 @@ static void init_shared_memory(void) {
     return;
   }
 
-  // Initialize header
-  g_shm_buffer->num_events = 0;
-  g_shm_buffer->max_events = FLOW_EVENT_MAX_EVENTS;
+  // Initialize header atomically
+  // Note: ftruncate() guarantees zero-initialization, so completed is already 0
+  // But we explicitly initialize all fields for clarity and safety
+  __atomic_store_n(&g_shm_buffer->num_events, 0, __ATOMIC_RELAXED);
+  __atomic_store_n(&g_shm_buffer->max_events, FLOW_EVENT_MAX_EVENTS,
+                   __ATOMIC_RELAXED);
+  __atomic_store_n(&g_shm_buffer->completed, 0, __ATOMIC_RELEASE);
   g_shm_buffer->padding = 0;
 
   if (g_verbose) {
@@ -140,6 +144,11 @@ void flow_shutdown(void) {
   if (!g_initialized)
     return;
 
+  // Mark buffer as completed (atomic write so monitor can detect it)
+  if (g_shm_buffer != NULL) {
+    __atomic_store_n(&g_shm_buffer->completed, 1, __ATOMIC_RELEASE);
+  }
+
   if (g_verbose) {
     fprintf(g_log_file, "[flow_runtime] Shutting down (recorded %u events)\n",
             g_shm_buffer ? g_shm_buffer->num_events : 0);
@@ -154,6 +163,11 @@ void flow_shutdown(void) {
   }
 
   g_initialized = 0;
+}
+
+// Destructor: automatically called at program exit
+__attribute__((destructor)) static void flow_exit_handler(void) {
+  flow_shutdown();
 }
 
 void flow_report_source(void *data, size_t size, int src_id) {

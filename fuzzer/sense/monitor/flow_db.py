@@ -230,26 +230,48 @@ class FlowDatabase:
     
     def _parse_flow(self, line: str) -> None:
         """Parse FLOW entry: FLOW,<flow_id>,<src_id>,<sink_id>,[<intermediate_ids>],<description>"""
-        parts = line.split(',', 5)
-        if len(parts) != 6:
-            raise ValueError(f"Invalid FLOW format: {line}")
+        # Format: FLOW,<flow_id>,<src_id>,<sink_id>,[<intermediate_ids>],<description>
+        # The challenge: intermediate_ids contains commas inside the brackets
         
-        flow_id = int(parts[1])
-        src_id = int(parts[2])
-        sink_id = int(parts[3])
+        # Find the bracket positions first
+        bracket_start = line.find('[')
+        bracket_end = line.find(']')
+        
+        if bracket_start == -1 or bracket_end == -1:
+            raise ValueError(f"Invalid FLOW format: missing brackets for intermediate_ids in: {line}")
+        
+        if bracket_end <= bracket_start:
+            raise ValueError(f"Invalid FLOW format: malformed brackets in: {line}")
+        
+        # Split the parts around the brackets
+        # Before brackets: "FLOW,<flow_id>,<src_id>,<sink_id>,"
+        before_bracket = line[:bracket_start]
+        # The bracket content: "[...]"
+        intermediate_str = line[bracket_start:bracket_end+1]
+        # After brackets: ",<description>"
+        after_bracket = line[bracket_end+1:]
+        
+        # Parse the parts before the bracket
+        before_parts = before_bracket.rstrip(',').split(',')
+        if len(before_parts) != 4:
+            raise ValueError(f"Invalid FLOW format: expected FLOW,flow_id,src_id,sink_id before brackets, got: {before_parts}")
+        
+        if before_parts[0] != 'FLOW':
+            raise ValueError(f"Invalid FLOW format: expected 'FLOW' prefix, got: {before_parts[0]}")
+        
+        flow_id = int(before_parts[1])
+        src_id = int(before_parts[2])
+        sink_id = int(before_parts[3])
         
         # Parse intermediate IDs: [1,2,3] or []
-        intermediate_str = parts[4].strip()
-        if not intermediate_str.startswith('[') or not intermediate_str.endswith(']'):
-            raise ValueError(f"Invalid intermediate_ids format: {intermediate_str}")
-        
         intermediate_content = intermediate_str[1:-1].strip()
         if intermediate_content:
             intermediate_ids = [int(x.strip()) for x in intermediate_content.split(',')]
         else:
             intermediate_ids = []
         
-        description = parts[5]
+        # Parse description (skip leading comma if present)
+        description = after_bracket.lstrip(',').strip()
         
         if flow_id in self.flows:
             raise ValueError(f"Duplicate FLOW id: {flow_id}")

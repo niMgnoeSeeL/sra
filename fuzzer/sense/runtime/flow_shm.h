@@ -42,7 +42,8 @@ typedef struct {
 typedef struct {
   uint32_t num_events; // Number of events written (atomic)
   uint32_t max_events; // Capacity (typically 1024)
-  uint64_t padding;    // Alignment
+  uint32_t completed;  // Set to 1 when program exits (atomic)
+  uint32_t padding;    // Alignment
   FlowEvent events[];  // Flexible array member
 } FlowEventBuffer;
 

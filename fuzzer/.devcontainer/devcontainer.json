@@ -18,7 +18,8 @@
   "runArgs": [
     "--cap-add=SYS_PTRACE",
     "--security-opt",
-    "seccomp=unconfined"
+    "seccomp=unconfined",
+    "--shm-size=32g"
   ],
   "containerEnv": {
     "AFL_SKIP_CPUFREQ": "1",

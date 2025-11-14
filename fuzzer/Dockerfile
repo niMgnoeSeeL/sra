@@ -37,7 +37,7 @@ RUN mkdir -p /etc/apt/keyrings && \
 # --- Install Fuzztastic dependencies ---
 RUN apt-get update && apt-get install -y --no-install-recommends \
     make cmake automake meson ninja-build pkg-config bison flex git \
-    nano jupp joe bash-completion less vim python3 python3-dev python3-pip \
+    nano jupp joe bash-completion less vim htop btop psmisc tmux python3 python3-dev python3-pip \
     python-is-python3 python3-venv libtool libtool-bin libglib2.0-dev \
     libpixman-1-dev libdwarf-dev libelf-dev gnuplot-nox bc lcov gdb bear ccache \
     gcc-${GCC_VERSION} g++-${GCC_VERSION} gcc-${GCC_VERSION}-plugin-dev \
