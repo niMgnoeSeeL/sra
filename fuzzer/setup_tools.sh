@@ -31,8 +31,8 @@ cd /workspaces/fuzzer
 
 # Merge AFL++ and Fuzztastic compile_commands.json files
 sudo apt-get install -y jq
-jq -s 'add' afl_compile_commands.json ft_compile_commands.json > compile_commands.json
-rm afl_compile_commands.json ft_compile_commands.json
+jq -s 'add' afl_compile_commands.json ft_compile_commands.json > compile_commands.json || true
+rm afl_compile_commands.json ft_compile_commands.json || true
 
 # Link FT Pass
 sudo mkdir -p /fuzztastic/instrumentation/build && \

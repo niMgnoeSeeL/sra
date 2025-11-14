@@ -743,6 +743,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
   }
 
   // Verify the call is anchor, by checking if any argument aliases the base
+  // TODO: check if this also suffer from the failing alias analysis problem
+  // when call arg is a scalar, AA doesn't see through it, needs IWA
   static Instruction *verifyCallWritesToBase(Value *&Base, Instruction &I,
                                              llvm::CallBase *&CB) {
     for (auto &Arg : CB->args()) {
