@@ -2,12 +2,14 @@
 #include <limits.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <sys/random.h>
+#include <time.h>
+#include <unistd.h>
 
 // Default values
-#define DEFAULT_SEED 0x1234567890ABCDEFull
 #define DEFAULT_BUDGET -1 // -1 means unlimited samples
 
-static uint64_t g_state = DEFAULT_SEED;
+static uint64_t g_state = 0;
 static int g_budget = DEFAULT_BUDGET;
 static int g_initialized = 0;
 
@@ -20,30 +22,51 @@ static uint64_t xorshift64star(void) {
   return x * 0x2545F4914F6CDD1Dull;
 }
 
-void sample_seed(uint64_t s) { g_state = s ? s : DEFAULT_SEED; }
+void sample_seed(uint64_t s) { g_state = s; }
 void sample_set_budget(int n) { g_budget = n; }
 
 static void init_from_env(void) {
+  // One-time initialization from environment variables
   if (g_initialized)
     return;
   g_initialized = 1;
 
-  // Set defaults first
-  g_state = DEFAULT_SEED;
+  // Initialize budget (default: unlimited)
   g_budget = DEFAULT_BUDGET;
-
-  // Override with environment variables if they exist
-  const char *seed_str = getenv("SAMPLE_SEED");
-  if (seed_str && *seed_str) { // Check for non-empty string
-    uint64_t seed = strtoull(seed_str, NULL, 0);
-    if (seed != 0 || seed_str[0] == '0') { // Handle explicit zero
-      g_state = seed;
-    }
+  const char *budget_str = getenv("SAMPLE_BUDGET");
+  if (budget_str && *budget_str) {
+    g_budget = atoi(budget_str);
   }
 
-  const char *budget_str = getenv("SAMPLE_BUDGET");
-  if (budget_str && *budget_str) { // Check for non-empty string
-    g_budget = atoi(budget_str);
+  // Initialize seed: use SAMPLE_SEED if set, otherwise use random entropy
+  const char *seed_str = getenv("SAMPLE_SEED");
+  if (seed_str && *seed_str) {
+    // User provided explicit seed
+    uint64_t seed = strtoull(seed_str, NULL, 0);
+    if (seed != 0 || seed_str[0] == '0') {
+      g_state = seed;
+    }
+  } else {
+    // No explicit seed: use random entropy
+    uint64_t newseed;
+
+    // High-quality entropy if available
+    if (getrandom(&newseed, sizeof(newseed), GRND_NONBLOCK) ==
+        sizeof(newseed)) {
+      g_state = newseed;
+    } else {
+      // Fallback entropy: rdtsc + time-based mixing
+      unsigned long t = 0;
+#ifdef __x86_64__
+      t = __builtin_ia32_rdtsc();
+#else
+      t = (unsigned long)clock();
+#endif
+      uint64_t fallback =
+          ((uint64_t)t << 32) ^ (uint64_t)time(NULL) ^ (uint64_t)getpid();
+
+      g_state = fallback;
+    }
   }
 }
 
