@@ -170,7 +170,8 @@ int main(int argc, char **argv) {
 
   // Step 3: Analyze source code with AST to extract variable names
   std::cout << "\n[Step 3] Analyzing source code with Clang AST\n";
-  taint::ASTAnalyzer astAnalyzer;
+  // Use one ASTAnalyzer instance per source file so we can keep per-TU state.
+  std::map<std::string, taint::ASTAnalyzer> astAnalyzers;
 
   // Load compilation database if provided
   std::unique_ptr<clang::tooling::CompilationDatabase> compileDb;
@@ -250,7 +251,9 @@ int main(int argc, char **argv) {
       fileCompileArgs = config.compileArgs;
     }
 
-    bool loaded = astAnalyzer.loadSourceFile(file, fileCompileArgs);
+    // Create/load an ASTAnalyzer for this file
+    auto &an = astAnalyzers[file];
+    bool loaded = an.loadSourceFile(file, fileCompileArgs);
     astLoadStatus[file] = loaded;
     if (!loaded) {
       std::cerr << "WARNING: Could not load AST for " << file
@@ -270,8 +273,13 @@ int main(int argc, char **argv) {
     assert(astLoadStatus[loc.filePath] &&
            "AST analysis failed - cannot generate instrumentation commands");
 
-    // Analyze location to extract variable name
-    taint::InstrumentationInfo info = astAnalyzer.analyzeLocation(loc);
+    // Analyze location to extract variable name using the per-file analyzer
+    auto it = astAnalyzers.find(loc.filePath);
+    if (it == astAnalyzers.end()) {
+      std::cerr << "ERROR: No ASTAnalyzer for " << loc.filePath << "\n";
+      continue;
+    }
+    taint::InstrumentationInfo info = it->second.analyzeLocation(loc);
 
     if (!info.isValid) {
       std::cerr << "WARNING: Location analysis failed for " << loc.toString()
@@ -295,7 +303,12 @@ int main(int argc, char **argv) {
     assert(astLoadStatus[loc.filePath] &&
            "AST analysis failed - cannot generate instrumentation commands");
 
-    taint::InstrumentationInfo info = astAnalyzer.analyzeLocation(loc);
+    auto it2 = astAnalyzers.find(loc.filePath);
+    if (it2 == astAnalyzers.end()) {
+      std::cerr << "ERROR: No ASTAnalyzer for " << loc.filePath << "\n";
+      assert(false);
+    }
+    taint::InstrumentationInfo info = it2->second.analyzeLocation(loc);
 
     if (!info.isValid) {
       std::cerr << "WARNING: Location analysis failed for " << loc.toString()
