@@ -594,8 +594,11 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
         LastWriter = I;
     }
 
+    // Note: If no writer found, we insert after the last inst
+    // in the slice that is not a terminator (ret, br, ...)
     if (!LastWriter && !Slice.empty())
-      LastWriter = Slice.back();
+      LastWriter =
+          Slice.back()->isTerminator() ? Slice[Slice.size() - 2] : Slice.back();
 
     errs() << "[sample-flow-src] Last writer: " << *LastWriter << "\n";
     return LastWriter;
