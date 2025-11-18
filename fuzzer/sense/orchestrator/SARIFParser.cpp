@@ -122,8 +122,12 @@ Flow SARIFParser::extractFlow(const json &codeFlow, const json &result,
   Flow flow;
 
   // Extract description from result message
+  // TODO: remove newlines from message, otherwise it will break schema of
+  // FlowDatabase
   if (result.contains("message") && result["message"].contains("text")) {
-    flow.description = result["message"]["text"];
+    std::string messageText = result["message"]["text"];
+    std::replace(messageText.begin(), messageText.end(), '\n', ' ');
+    flow.description = messageText;
   }
 
   // Extract threadFlows (SARIF supports multiple threads, we use first)
