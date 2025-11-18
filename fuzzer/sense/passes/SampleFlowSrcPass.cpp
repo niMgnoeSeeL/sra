@@ -896,8 +896,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
       Base = findVariableByName(F, VarNameOpt, LineOpt);
 
       if (!Base) {
-        errs() << "[sample-flow-src] ERROR: Could not find variable '"
-               << VarNameOpt << "' at line " << LineOpt << "\n";
+        errs() << "[sample-flow-src] Could not find variable '" << VarNameOpt
+               << "' at line " << LineOpt << ", skipping function\n";
         return PreservedAnalyses::all();
       }
 
