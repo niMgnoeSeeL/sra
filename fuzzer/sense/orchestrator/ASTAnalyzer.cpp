@@ -93,17 +93,18 @@ bool ASTAnalyzer::loadSourceFile(const std::string &filePath,
   std::string fileName = filePath.substr(filePath.find_last_of("/\\") + 1);
 
   // Build AST with proper compilation arguments
-  if (compileArgs.empty()) {
-    // No compile args provided - use simple parsing
-    std::cout << "[ASTAnalyzer] Building AST without compile arguments for: "
-              << fileName << "\n";
-    astUnit = clang::tooling::buildASTFromCode(sourceCode, fileName);
-  } else {
+  if (!compileArgs.empty()) {
     // Use provided compile arguments for proper parsing
     std::cout << "[ASTAnalyzer] Building AST with " << compileArgs.size()
               << " compile arguments for: " << fileName << "\n";
     astUnit = clang::tooling::buildASTFromCodeWithArgs(sourceCode, compileArgs,
                                                        fileName);
+  }
+  // fallback: build AST without compile arguments
+  if (astUnit == nullptr) {
+    std::cout << "[ASTAnalyzer] Building AST without compile arguments for: "
+              << fileName << "\n";
+    astUnit = clang::tooling::buildASTFromCode(sourceCode, fileName);
   }
 
   if (!astUnit) {

@@ -222,12 +222,28 @@ int main(int argc, char **argv) {
                   << "\n";
 
         // Extract arguments (skip the compiler name and source file)
+        // Normalize the source filename for comparison (absolute path)
+        std::string normalizedFilename = cmd.Filename;
+        if (!normalizedFilename.empty() && normalizedFilename[0] != '/') {
+          normalizedFilename = cmd.Directory + "/" + normalizedFilename;
+        }
+
         for (const auto &arg : cmd.CommandLine) {
-          // Skip compiler executable and the source file itself
-          if (arg == cmd.Filename || arg.find("clang") != std::string::npos ||
+          // Skip compiler executable
+          if (arg.find("clang") != std::string::npos ||
               arg.find("gcc") != std::string::npos ||
               arg.find("g++") != std::string::npos ||
               arg.find("c++") != std::string::npos) {
+            continue;
+          }
+
+          // Skip the source file itself (handle both relative and absolute
+          // paths)
+          std::string normalizedArg = arg;
+          if (!normalizedArg.empty() && normalizedArg[0] != '/') {
+            normalizedArg = cmd.Directory + "/" + normalizedArg;
+          }
+          if (normalizedArg == normalizedFilename) {
             continue;
           }
           fileCompileArgs.push_back(arg);
