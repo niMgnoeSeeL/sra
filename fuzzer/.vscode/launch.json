@@ -246,6 +246,36 @@
             "preLaunchTask": "sense:build-all",
         },
         {
+            "name": "Debug SampleFlowSrcPass (orchestrator command - mini_httpd)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=sample-flow-src-module",
+                "--src-line=2522",
+                "--src-col-start=24",
+                "--src-col-end=27",
+                "--src-id=1",
+                "--src-var-name=buf",
+                "--src-file=${workspaceFolder}/subjects/mini_httpd-1.29/mini_httpd.c",
+                "${workspaceFolder}/sense/build/harness.instrumented.ll.src2.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/harness.instrumented.ll.src1.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/tests",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all",
+        },
+        {
             "name": "Debug SampleFlowSinkPass (orchestrator command - SINK_ID=1)",
             "type": "lldb",
             "request": "launch",
@@ -386,6 +416,34 @@
             "preLaunchTask": "sense:build-all"
         },
         {
+            "name": "Debug taint-orchestrator (mini_httpd)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/build/taint-orchestrator",
+            "args": [
+                "--sarif",
+                "${workspaceFolder}/subjects/mini_httpd-1.29/mini_httpd_iruntrusted.sarif",
+                "--input",
+                "${workspaceFolder}/subjects/mini_httpd-1.29/harness.ll",
+                "--output",
+                "${workspaceFolder}/sense/build/harness.instrumented.ll",
+                "--compile-db",
+                "${workspaceFolder}/subjects/mini_httpd-1.29/compile_commands.json",
+                "--pass-dir",
+                "${workspaceFolder}/sense/build",
+                "--verbose"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all"
+        },
+        {
             "name": "Debug DataFlowCoveragePass (flow_simple)",
             "type": "lldb",
             "request": "launch",
@@ -487,6 +545,48 @@
             "env": {
                 "PYTHONPATH": "${workspaceFolder}/sense/monitor"
             }
+        },
+        {
+            "name": "Debug Flow Monitor (mini_httpd)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/monitor/flow_monitor.py",
+            "args": [
+                "--flowdb",
+                "/tmp/mini_httpd_fuzz.KT95PJ/harness.instrumented.ll.flowdb",
+                "--config",
+                "${workspaceFolder}/sense/monitor/configs/development.yaml",
+                "--output",
+                "/tmp/mini_httpd_test.jsonl",
+                "--log-file",
+                "/tmp/mini_httpd_test.log",
+                "--log-level",
+                "INFO",
+                "--cleanup-on-exit"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/sense/monitor",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/sense/monitor"
+            }
+        },
+        {
+            "name": "Debug mini_httpd harness",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/subjects/mini_httpd-1.29/harness",
+            "args": [
+                "${workspaceFolder}/subjects/mini_httpd-1.29/seed_corpus2/1"
+            ],
+            "cwd": "${workspaceFolder}/subjects/mini_httpd-1.29",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
         },
     ]
 }

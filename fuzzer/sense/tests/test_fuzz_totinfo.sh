@@ -48,8 +48,8 @@ export AFL_TRY_AFFINITY=1
 export AFL_NO_SYNC=1
 
 # Launch Flow Monitor
-rm /dev/shm/flow_events_* || true
-rm /dev/shm/df_coverage_* || true
+find /dev/shm/ -maxdepth 1 -name 'flow_events_*' -delete
+find /dev/shm/ -maxdepth 1 -name 'df_coverage_*' -delete
 echo "🚀 Launching Flow Monitor"
 python3 $WORKDIR/sense/monitor/flow_monitor.py \
     --flowdb "$OUTPUT.flowdb" \
@@ -70,7 +70,10 @@ poetry run fuzztastic/ monitor --input "$FT_OUTPUT_JSON" --command "$fuzzing_cmd
 
 # Cleanup
 kill $FLOW_MONITOR_PID
-rm /dev/shm/flow_events_* || true
-rm /dev/shm/df_coverage_* || true
+echo "Waiting for Flow Monitor to exit gracefully..."
+wait $FLOW_MONITOR_PID 2>/dev/null || true
+echo "Flow Monitor stopped. Cleaning up shared memory..."
+find /dev/shm/ -maxdepth 1 -name 'flow_events_*' -delete
+find /dev/shm/ -maxdepth 1 -name 'df_coverage_*' -delete
 
 echo "=== Fuzzing campaign completed ==="

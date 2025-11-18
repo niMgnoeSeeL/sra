@@ -26,5 +26,12 @@
   "lldb.displayFormat": "auto",
   "lldb.showDisassembly": "auto",
   "lldb.dereferencePointers": true,
-  "lldb.consoleMode": "commands"
+  "lldb.consoleMode": "commands",
+  "git.ignoreLimitWarning": true,
+  "git.ignoredRepositories": [
+    "openssl",
+    "mini_httpd-1.29",
+    "/workspaces/fuzzer/openssl/*",
+    "/workspaces/fuzzer/mini_httpd-1.29/*"
+  ]
 }
