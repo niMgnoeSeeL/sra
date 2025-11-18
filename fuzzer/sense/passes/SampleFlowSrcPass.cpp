@@ -814,6 +814,23 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
           }
         }
       }
+    } else if (auto *Load = dyn_cast<LoadInst>(Anchor)) {
+      // === Case 3: Anchor is a Load instruction ===
+      // This happens when a direct pointer is passed to the taint source
+      // Example:
+      // void read_data(int fd, char *buf, int size) {
+      //   read(fd, buf, size); // Anchor is the load of 'buf'
+      // }
+      // here buf is passes directly to read, there is no need for GEP,
+      // and the load of buf is the anchor instruction
+      // This is actually good because we can avoid scanning the arguments for
+      // alias of Base
+      Ptr = Load->getPointerOperand();
+
+      // Infer the pointed-to type directly from the load's pointer operand type
+      PointedToType = Ptr->getType();
+      errs() << "[sample-flow-src] Inferred pointed-to type from Load ptr: "
+             << *PointedToType << "\n";
     }
 
     // === Fallback: The argument is the base allocation directly ===
@@ -880,6 +897,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
       Base = nullptr;
       errs() << "[sample-flow-src] CallBase anchor - forcing varname "
                 "fallback\n";
+    } else if (auto *Load = dyn_cast<LoadInst>(Anchor)) {
+      Base = getBaseObject(Load->getPointerOperand(), DL);
     }
     // if (!Base)
     //   return PreservedAnalyses::all();
@@ -960,6 +979,13 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     Value *Ptr = nullptr;
     Type *PointedToType = nullptr;
     findPointedToType(DL, Anchor, Base, AllocatedType, Ptr, PointedToType);
+
+    // Abort: we do not support sampling pointer types
+    if (PointedToType && PointedToType->isPointerTy()) {
+      errs()
+          << "[sample-flow-src] Pointer types are not supported for sampling\n";
+      return PreservedAnalyses::all();
+    }
 
     // Finally, dispatch based on the pointed-to type
     insertSampleCalls(DL, Ctx, SampleInt, SampleDouble, SampleBytes,

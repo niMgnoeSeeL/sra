@@ -861,6 +861,13 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
     // Use the Anchor instruction to infer the pointed-to type
     findPointedToType(DL, Anchor, Base, AllocatedType, Ptr, PointedToType);
 
+    // Abort: we do not support sampling pointer types
+    if (PointedToType && PointedToType->isPointerTy()) {
+      errs() << "[sample-flow-sink] Pointer types are not supported for "
+                "reporting\n";
+      return PreservedAnalyses::all();
+    }
+
     // Insert the tracking call BEFORE the sink
     insertReportCall(DL, Ctx, SampleReportSink, Base, SinkOp, AI, Ptr,
                      PointedToType, SinkIDOpt);
