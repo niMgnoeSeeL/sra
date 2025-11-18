@@ -21,6 +21,7 @@ from config import MonitorConfig
 from flow_db import FlowDatabase
 from shm_protocol import discover_executions, parse_execution, ExecutionNotCompleteError
 from event_processor import EventProcessor, Statistics
+from analysis_db import SensitivityAnalysisDatabase
 from enum import Enum, auto
 
 
@@ -53,6 +54,7 @@ class FlowMonitor:
         self.flow_db = flow_db
         self.processor = EventProcessor(flow_db)
         self.statistics = Statistics()
+        self.analysis_db = SensitivityAnalysisDatabase(flow_db)
         
         self.shm_dir = Path(config.shared_memory.shm_dir)
         self.output_file: Optional[TextIO] = None
@@ -126,9 +128,6 @@ class FlowMonitor:
                         except:
                             pass
                 
-                
-                # TODO: Update sensitivity
-                
                 # Print periodic statistics
                 if self.config.statistics.print_interval > 0:
                     now = time.time()
@@ -157,6 +156,11 @@ class FlowMonitor:
         # Print final statistics
         if self.config.statistics.print_summary:
             self._print_statistics(final=True)
+        
+        # Print sensitivity analysis
+        if self.analysis_db.total_executions > 0:
+            logger.info("Generating flow sensitivity analysis...")
+            self.analysis_db.statistic()
         
         # Flush and close output file
         if self.output_file:
@@ -207,6 +211,9 @@ class FlowMonitor:
             
             # Analyze events
             analysis = self.processor.process_execution(execution)
+
+            # Store analysis in database
+            self.analysis_db.add(analysis)
             
             # Update statistics
             self.statistics.update(analysis)
