@@ -6,6 +6,7 @@ Monitor fuzzing executions for dataflow coverage and taint flow completion.
 """
 
 import sys
+import signal
 from pathlib import Path
 
 # Add monitor directory to path
@@ -15,6 +16,9 @@ import click
 from config import MonitorConfig
 from flow_db import FlowDatabase
 from monitor import FlowMonitor, setup_logging
+
+# Global reference to monitor for signal handler
+_monitor: FlowMonitor = None
 
 
 @click.command()
@@ -108,6 +112,19 @@ def main(flowdb, config, output, output_format, log_level, log_file,
       flow-monitor --flowdb flows.flowdb --max-executions 100
     """
     
+    global _monitor
+    
+    # Setup signal handlers for graceful shutdown
+    def signal_handler(signum, frame):
+        """Handle SIGTERM and SIGINT for graceful shutdown."""
+        signame = 'SIGTERM' if signum == signal.SIGTERM else 'SIGINT'
+        click.echo(f"\nReceived {signame}, shutting down gracefully...", err=True)
+        if _monitor:
+            _monitor.request_shutdown()
+    
+    signal.signal(signal.SIGTERM, signal_handler)
+    signal.signal(signal.SIGINT, signal_handler)
+    
     try:
         # Load configuration
         monitor_config = load_config(
@@ -135,8 +152,8 @@ def main(flowdb, config, output, output_format, log_level, log_file,
         flow_db = FlowDatabase.from_file(flowdb)
         
         # Create and start monitor
-        monitor = FlowMonitor(monitor_config, flow_db)
-        monitor.start()
+        _monitor = FlowMonitor(monitor_config, flow_db)
+        _monitor.start()
         
     except KeyboardInterrupt:
         click.echo("\nInterrupted by user", err=True)

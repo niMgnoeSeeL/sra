@@ -85,8 +85,16 @@ class FlowMonitor:
                     self.config.shared_memory.flow_events_prefix
                 )
                 
+                # Check if we should stop before processing
+                if not self.running:
+                    break
+                
                 # Process all discovered executions
                 for pid in pids:
+                    # Check if we should stop during processing
+                    if not self.running:
+                        break
+                    
                     try:
                         exe_result = self._process_execution(pid)
                         if exe_result == ProcessExecutionResult.SUCCESS:
@@ -107,6 +115,10 @@ class FlowMonitor:
                             break
                             
                     except Exception as e:
+                        if not self.running:
+                            # Exit requested, we just tried to access shared memory that may no longer exist
+                            break
+                        
                         logger.error(f"Error processing PID {pid}: {e}", exc_info=True)
                         # If processing fails, try to cleanup to avoid retry loop
                         try:
@@ -133,6 +145,11 @@ class FlowMonitor:
         finally:
             self.stop()
     
+    def request_shutdown(self) -> None:
+        """Request graceful shutdown of the monitor."""
+        logger.info("Shutdown requested")
+        self.running = False
+    
     def stop(self) -> None:
         """Stop the monitoring service and cleanup."""
         logger.info("Stopping flow monitor service")
@@ -141,9 +158,15 @@ class FlowMonitor:
         if self.config.statistics.print_summary:
             self._print_statistics(final=True)
         
-        # Cleanup output
-        if self.output_file and self.output_file != sys.stdout:
-            self.output_file.close()
+        # Flush and close output file
+        if self.output_file:
+            try:
+                self.output_file.flush()  # Ensure all data is written
+                if self.output_file != sys.stdout:
+                    self.output_file.close()
+                logger.info("Output file closed successfully")
+            except Exception as e:
+                logger.error(f"Error closing output file: {e}")
         
         # Cleanup shared memory if configured
         if self.config.cleanup.cleanup_on_exit:
