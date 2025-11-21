@@ -77,6 +77,7 @@
  *===----------------------------------------------------------------------===//
  */
 
+#include "PassUtils.h"
 #include "llvm/Analysis/AliasAnalysis.h"
 #include "llvm/Analysis/MemoryBuiltins.h"
 #include "llvm/Analysis/TargetLibraryInfo.h"
@@ -987,7 +988,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     if (PointedToType && PointedToType->isPointerTy()) {
       errs()
           << "[sample-flow-src] Pointer types are not supported for sampling\n";
-      return PreservedAnalyses::all();
+      throw NotImplementedError(
+          "[sample-flow-src] Pointer types are not supported for sampling");
     }
 
     // Finally, dispatch based on the pointed-to type
@@ -1005,6 +1007,7 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 namespace {
 
 struct SampleFlowSrcModulePass : public PassInfoMixin<SampleFlowSrcModulePass> {
+
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     errs() << "=== SampleFlowSrcModulePass::run called on module ===\n";
 
@@ -1016,23 +1019,35 @@ struct SampleFlowSrcModulePass : public PassInfoMixin<SampleFlowSrcModulePass> {
       if (F.isDeclaration())
         continue;
 
-      // TODO:
-      // if (F.getFile() != ...)
+      auto FuncPathOpt = getFunctionSourcePath(F);
+      errs() << "[sample-flow-src-module] Function: " << F.getName()
+             << ", source path: "
+             << (FuncPathOpt ? *FuncPathOpt : "<no debug info>") << "\n";
+      if (FuncPathOpt.value() != FileNameOpt.getValue()) {
+        errs() << "[sample-flow-src-module] Skipping function " << F.getName()
+               << " from file " << FuncPathOpt.value() << "\n";
+        continue;
+      }
 
       errs() << "[sample-flow-src-module] Trying function: " << F.getName()
              << "\n";
 
       // Run the function pass
       SampleFlowSrcPass FunctionPass;
-      PreservedAnalyses PA = FunctionPass.run(F, FAM);
-
-      // Check if instrumentation succeeded
-      // If all analyses are preserved, nothing was modified
-      if (!PA.areAllPreserved()) {
-        errs()
-            << "[sample-flow-src-module] Successfully instrumented function: "
-            << F.getName() << "\n";
-        return PreservedAnalyses::none();
+      try {
+        PreservedAnalyses PA = FunctionPass.run(F, FAM);
+        // Check if instrumentation succeeded
+        // If all analyses are preserved, nothing was modified
+        if (!PA.areAllPreserved()) {
+          errs()
+              << "[sample-flow-src-module] Successfully instrumented function: "
+              << F.getName() << "\n";
+          return PreservedAnalyses::none();
+        }
+      } catch (NotImplementedError &E) {
+        errs() << "[sample-flow-src-module] NotImplementedError: " << E.what()
+               << "\n";
+        break;
       }
     }
 
