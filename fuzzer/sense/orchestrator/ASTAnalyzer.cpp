@@ -141,13 +141,21 @@ InstrumentationInfo ASTAnalyzer::analyzeLocation(const SourceLocation &loc) {
     // by searching more broadly
     info.errorMessage = "Could not find exact AST node at location";
     info.isValid = true; // Still valid, pass will use var-name fallback
-    info.varName = "";   // TODO: could try broader search here
     return info;
   }
 
   // Successfully found node - extract variable name
   info.isValid = true;
-  info.varName = extractVarName(node);
+  try {
+    info.varName = extractVarName(node);
+    if (info.varName.empty()) {
+      info.errorMessage = "Could not extract variable name from AST node";
+      return info;
+    }
+  } catch (const std::exception &e) {
+    info.errorMessage = e.what();
+    return info;
+  } // info is still valid, just no var name
 
   // Try to infer type (optional, for validation)
   if (auto *DRE = llvm::dyn_cast<clang::DeclRefExpr>(node)) {
@@ -185,6 +193,12 @@ std::string ASTAnalyzer::extractVarName(clang::Expr *node) {
   // Strip implicit casts to get to the real expression
   node = node->IgnoreImpCasts();
 
+  // Handle RecoveryExpr (error recovery) - skip
+  if (auto *RE = llvm::dyn_cast<clang::RecoveryExpr>(node)) {
+    throw std::runtime_error(
+        "[ASTAnalyzer] Cannot extract variable name from RecoveryExpr");
+  }
+
   // DeclRefExpr: direct variable reference (e.g., "x", "buf")
   if (auto *DRE = llvm::dyn_cast<clang::DeclRefExpr>(node)) {
     return DRE->getNameInfo().getAsString();
@@ -213,6 +227,12 @@ std::string ASTAnalyzer::extractVarName(clang::Expr *node) {
       return SubName;
   }
 
+  if (auto *UOE = llvm::dyn_cast<clang::UnaryExprOrTypeTraitExpr>(node)) {
+    std::string SubName = extractVarName(UOE->getArgumentExpr());
+    if (!SubName.empty())
+      return SubName;
+  }
+
   // BinaryOperator: binary operations (e.g., "a + b", "x * y")
   if (auto *BO = llvm::dyn_cast<clang::BinaryOperator>(node)) {
     // Try left side first
@@ -221,8 +241,7 @@ std::string ASTAnalyzer::extractVarName(clang::Expr *node) {
       return LeftVar;
     // Then right side
     std::string RightVar = extractVarName(BO->getRHS());
-    if (!RightVar.empty())
-      return RightVar;
+    return RightVar;
   }
 
   // ConditionalOperator: ternary operator (e.g., "cond ? a : b")
@@ -283,6 +302,11 @@ std::string ASTAnalyzer::extractVarName(clang::Expr *node) {
     // This is rare, just try to find any DeclRefExpr inside
     // For now, return empty
     return "";
+  }
+
+  if (auto *CDSME = llvm::dyn_cast<clang::CXXDependentScopeMemberExpr>(node)) {
+    // Returns the name of the
+    return extractVarName(CDSME->getBase());
   }
 
   // Literals have no variable names - return empty

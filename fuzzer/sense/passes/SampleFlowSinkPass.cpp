@@ -64,6 +64,7 @@
  *===----------------------------------------------------------------------===//
  */
 
+#include "PassUtils.h"
 #include "llvm/Analysis/AliasAnalysis.h"
 #include "llvm/Analysis/MemoryBuiltins.h"
 #include "llvm/Analysis/TargetLibraryInfo.h"
@@ -863,9 +864,10 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
 
     // Abort: we do not support sampling pointer types
     if (PointedToType && PointedToType->isPointerTy()) {
-      errs() << "[sample-flow-sink] Pointer types are not supported for "
-                "reporting\n";
-      return PreservedAnalyses::all();
+      errs()
+          << "[sample-flow-sink] Pointer types are not supported for reporting\n";
+      throw NotImplementedError(
+          "[sample-flow-sink] Pointer types are not supported for reporting");
     }
 
     // Insert the tracking call BEFORE the sink
@@ -894,23 +896,35 @@ struct SampleFlowSinkModulePass
       if (F.isDeclaration())
         continue;
 
-      // TODO:
-      // if (F.getFile() != ...)
+      auto FuncPathOpt = getFunctionSourcePath(F);
+      errs() << "[sample-flow-sink-module] Function: " << F.getName()
+             << ", source path: "
+             << (FuncPathOpt ? *FuncPathOpt : "<no debug info>") << "\n";
+      if (FuncPathOpt.value() != FileNameOpt.getValue()) {
+        errs() << "[sample-flow-sink-module] Skipping function " << F.getName()
+               << " from file " << FuncPathOpt.value() << "\n";
+        continue;
+      }
 
       errs() << "[sample-flow-sink-module] Trying function: " << F.getName()
              << "\n";
 
       // Run the function pass
       SampleFlowSinkPass FunctionPass;
-      PreservedAnalyses PA = FunctionPass.run(F, FAM);
-
-      // Check if instrumentation succeeded
-      // If all analyses are preserved, nothing was modified
-      if (!PA.areAllPreserved()) {
-        errs()
-            << "[sample-flow-sink-module] Successfully instrumented function: "
-            << F.getName() << "\n";
-        return PreservedAnalyses::none();
+      try {
+        PreservedAnalyses PA = FunctionPass.run(F, FAM);
+        // Check if instrumentation succeeded
+        // If all analyses are preserved, nothing was modified
+        if (!PA.areAllPreserved()) {
+          errs()
+              << "[sample-flow-sink-module] Successfully instrumented function: "
+              << F.getName() << "\n";
+          return PreservedAnalyses::none();
+        }
+      } catch (NotImplementedError &E) {
+        errs() << "[sample-flow-sink-module] NotImplementedError: " << E.what()
+               << "\n";
+        break;
       }
     }
 

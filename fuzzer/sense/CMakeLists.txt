@@ -65,6 +65,14 @@ add_llvm_pass_plugin(DataFlowCoveragePass
 add_llvm_pass_plugin(DummyIOPass
   passes/DummyIOPass.cpp
 )
+
+# Enable exceptions for our pass plugins (LLVM disables them by default)
+set_target_properties(MutArgsPass SampleArgsPass SampleFlowSrcPass 
+                      SampleFlowSinkPass DataFlowCoveragePass DummyIOPass
+  PROPERTIES
+    COMPILE_FLAGS "-fexceptions"
+)
+
 # Link to nothing extra; pass plugins link LLVM bits implicitly via the macro.
 # We expose symbols that will be referenced from the runtime libraries at link time of the final program.
 
