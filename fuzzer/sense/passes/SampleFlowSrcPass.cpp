@@ -1008,25 +1008,6 @@ namespace {
 
 struct SampleFlowSrcModulePass : public PassInfoMixin<SampleFlowSrcModulePass> {
 
-  static std::optional<std::string> getFunctionSourcePath(const Function &F) {
-    if (const DISubprogram *SP = F.getSubprogram()) {
-      const DIFile *File = SP->getFile();
-      if (!File)
-        return std::nullopt;
-
-      // These are StringRef
-      StringRef Dir = File->getDirectory();
-      StringRef Name = File->getFilename();
-
-      if (!Dir.empty())
-        return (Dir + "/" + Name).str();
-      return Name.str();
-    }
-
-    // No attached subprogram → probably no debug info
-    return std::nullopt;
-  }
-
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     errs() << "=== SampleFlowSrcModulePass::run called on module ===\n";
 
@@ -1038,15 +1019,6 @@ struct SampleFlowSrcModulePass : public PassInfoMixin<SampleFlowSrcModulePass> {
       if (F.isDeclaration())
         continue;
 
-      auto FuncPathOpt = getFunctionSourcePath(F);
-      errs() << "[sample-flow-src-module] Function: " << F.getName()
-             << ", source path: "
-             << (FuncPathOpt ? *FuncPathOpt : "<no debug info>") << "\n";
-      if (FuncPathOpt.value() != FileNameOpt.getValue()) {
-        errs() << "[sample-flow-src-module] Skipping function " << F.getName()
-               << " from file " << FuncPathOpt.value() << "\n";
-        continue;
-      }
       auto FuncPathOpt = getFunctionSourcePath(F);
       errs() << "[sample-flow-src-module] Function: " << F.getName()
              << ", source path: "
