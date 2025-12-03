@@ -144,6 +144,37 @@
         "cwd": "${workspaceFolder}/sense/build"
       },
       "problemMatcher": []
+    },
+    {
+      "label": "dynamo:cmake-config",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "mkdir -p build && cd build && cmake -DDynamoRIO_DIR=$DYNAMORIO_HOME/cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/dynamo"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "dynamo:build",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cmake --build build -j"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/sense/dynamo"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "dependsOn": [
+        "dynamo:cmake-config"
+      ]
     }
   ]
 }

@@ -36,7 +36,7 @@ RUN mkdir -p /etc/apt/keyrings && \
 # --- Install dependencies (LLVM 20 toolchain + utilities; NO libc++) ---
 # --- Install Fuzztastic dependencies ---
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    make cmake automake meson ninja-build pkg-config bison flex git \
+    make cmake automake meson ninja-build pkg-config bison flex git jq \
     nano jupp joe bash-completion less vim htop btop psmisc tmux python3 python3-dev python3-pip \
     python-is-python3 python3-venv libtool libtool-bin libglib2.0-dev \
     libpixman-1-dev libdwarf-dev libelf-dev gnuplot-nox bc lcov gdb bear ccache \
@@ -69,6 +69,18 @@ ENV PATH="${PATH}:/etc/cargo/bin"
 RUN go install github.com/SRI-CSL/gllvm/cmd/...@latest
 ENV GOPATH="/opt/go"
 ENV PATH="${GOPATH}/bin:${PATH}"
+
+# --- Install DynamoRIO for dynamic instrumentation ---
+# Using stable release 11.3.0 (10.0.0 has critical bugs causing SIGFPE crashes)
+# See: https://github.com/DynamoRIO/dynamorio/issues/5437
+ARG DYNAMORIO_VERSION=11.3.0
+RUN cd /tmp && \
+    wget -q https://github.com/DynamoRIO/dynamorio/releases/download/release_${DYNAMORIO_VERSION}-1/DynamoRIO-Linux-${DYNAMORIO_VERSION}.tar.gz && \
+    tar xzf DynamoRIO-Linux-${DYNAMORIO_VERSION}.tar.gz && \
+    mv DynamoRIO-Linux-${DYNAMORIO_VERSION}-1 /opt/dynamorio && \
+    rm DynamoRIO-Linux-${DYNAMORIO_VERSION}.tar.gz
+ENV DYNAMORIO_HOME="/opt/dynamorio"
+ENV PATH="${DYNAMORIO_HOME}/bin64:${PATH}"
 
 # --- Install Poetry for Fuzztastic CLI ---
 ENV POETRY_HOME="/opt/poetry"
