@@ -41,7 +41,8 @@
         "twxs.cmake",
         "ms-azuretools.vscode-docker",
         "foxundermoon.shell-format",
-        "vadimcn.vscode-lldb"
+        "vadimcn.vscode-lldb",
+        "pejmannikram.vscode-auto-scroll"
       ]
     }
   }

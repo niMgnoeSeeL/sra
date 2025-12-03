@@ -18,7 +18,8 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/build/**": true,
-    "**/out/**": true
+    "**/out/**": true,
+    "/workspaces/fuzzer/subjects/**": true
   },
   "editor.formatOnSave": true,
   "C_Cpp.clang_format_style": "{ BasedOnStyle: LLVM, IndentWidth: 2, ColumnLimit: 100 }",
