@@ -101,7 +101,10 @@ bool InstrumentationStrategy::executeCommand(const OptCommand &cmd,
       std::cerr << "[InstrumentationStrategy] ERROR: Instrumentation failed\n";
     }
     std::cerr << "  Command: " << cmd.command << "\n";
-    std::cerr << "  Error output: " << errorOutput << "\n";
+    std::cerr << "  Error output[:-200]: "
+              << errorOutput.substr(
+                     errorOutput.size() > 200 ? errorOutput.size() - 200 : 0)
+              << "\n";
   }
 
   return success;
@@ -190,8 +193,9 @@ bool InstrumentationStrategy::runShellCommand(const std::string &cmd,
   output.clear();
 
   // Use popen to capture output
-  std::array<char, 128> buffer;
-  std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"),
+  std::string cmd_both = cmd + " 2>&1";
+  std::array<char, 1048576> buffer;
+  std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd_both.c_str(), "r"),
                                                 pclose);
 
   if (!pipe) {
@@ -202,6 +206,15 @@ bool InstrumentationStrategy::runShellCommand(const std::string &cmd,
   // Read command output
   while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
     output += buffer.data();
+  }
+
+  // If stderr contains "No function was instrumented"
+  // Then treat as as failure
+  if (output.find("[sample-flow-src-module] No function was instrumented") !=
+          std::string::npos ||
+      output.find("[sample-flow-sink-module] No function was instrumented") !=
+          std::string::npos) {
+    return false;
   }
 
   // Check exit status

@@ -359,7 +359,6 @@ int main(int argc, char **argv) {
 
   if (!strategy.executeAll(commands)) {
     std::cerr << "\nERROR: Some instrumentation passes failed\n";
-    return 1;
   }
 
   // Step 6: Create final output file (rename last intermediate)
