@@ -109,6 +109,11 @@ static cl::opt<std::string>
 static cl::opt<int> SinkIDOpt("sink-id", cl::desc("Sink ID for flow tracking"),
                               cl::init(-1));
 
+static cl::opt<bool>
+    DynamicModeOpt("dynamic-sink",
+                   cl::desc("Instrument buffers with dynamic tracking markers"),
+                   cl::init(false));
+
 namespace {
 
 struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
@@ -160,8 +165,8 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
     llvm::SmallString<256> ResolvedFilterPath;
     EC = llvm::sys::fs::real_path(FilePathFilter, ResolvedFilterPath);
     if (EC) {
-      // If real_path fails, make it absolute (relative to current working dir)
-      // and remove dots
+      // If real_path fails, make it absolute (relative to current working
+      // dir) and remove dots
       llvm::SmallString<256> AbsFilterPath(FilePathFilter);
       if (llvm::sys::fs::make_absolute(AbsFilterPath)) {
         // If make_absolute fails, use as-is
@@ -200,6 +205,12 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
     Type *SourceType = GEP->getSourceElementType();
     errs() << "[sample-flow-sink]   GEP source type: " << *SourceType << "\n";
 
+    if (SourceType->isIntegerTy() || SourceType->isFloatingPointTy() ||
+        SourceType->isPointerTy()) {
+      errs() << "[sample-flow-sink]   Scalar type detected: " << *SourceType
+             << "\n";
+      return SourceType;
+    }
     if (SourceType->isArrayTy()) {
       errs() << "[sample-flow-sink]   Array detected - using whole array type: "
              << *SourceType << "\n";
@@ -442,6 +453,83 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
                            Type::getInt32Ty(Ctx)},
                           false));
     SampleReportSink = cast<Function>(SampleReportSinkFn.getCallee());
+  }
+
+  static void declareDynamicMarkers(Module &M, Function *&StartTrackingSink,
+                                    Function *&EndTrackingSink) {
+    LLVMContext &Ctx = M.getContext();
+
+    // declare the stub functions for dynamic tracking
+    // void __dr_start_tracking_sink(uint32_t sink_id, void *ptr);
+    FunctionCallee StartTrackingSinkFn = M.getOrInsertFunction(
+        "__dr_start_tracking_sink",
+        FunctionType::get(Type::getVoidTy(Ctx),
+                          {Type::getInt32Ty(Ctx), PointerType::getUnqual(Ctx)},
+                          false));
+    StartTrackingSink = cast<Function>(StartTrackingSinkFn.getCallee());
+
+    // If the function has no body, provide a trivial no-op definition so
+    // targets compiled without the external DynamoRIO runtime still link.
+    if (StartTrackingSink->isDeclaration()) {
+      BasicBlock *BB = BasicBlock::Create(Ctx, "entry", StartTrackingSink);
+      IRBuilder<> B(BB);
+      B.CreateRetVoid();
+    }
+
+    // size_t __dr_end_tracking_sink(uint32_t sink_id);
+    FunctionCallee EndTrackingSinkFn = M.getOrInsertFunction(
+        "__dr_end_tracking_sink",
+        FunctionType::get(Type::getInt64Ty(Ctx), {Type::getInt32Ty(Ctx)},
+                          false));
+    EndTrackingSink = cast<Function>(EndTrackingSinkFn.getCallee());
+
+    // If the function has no body, provide a trivial definition that returns
+    // zero. This allows builds that don't link the DynamoRIO client to still
+    // compile and run the instrumented binaries.
+    if (EndTrackingSink->isDeclaration()) {
+      BasicBlock *BB2 = BasicBlock::Create(Ctx, "entry", EndTrackingSink);
+      IRBuilder<> B2(BB2);
+      B2.CreateRet(ConstantInt::get(Type::getInt64Ty(Ctx), 0));
+    }
+  }
+
+  // insert dynamic start/end marker calls around SINK OP
+  // and report AFTER end
+  static void insertDynamicMarkerCalls(LLVMContext &Ctx, Instruction *SinkOp,
+                                       Value *ReportPtr,
+                                       Function *StartTrackingSink,
+                                       Function *EndTrackingSink,
+                                       Function *SampleReportSink, int sinkID) {
+    Type *I32Ty = Type::getInt32Ty(Ctx);
+
+    // Insert start call before sink
+    IRBuilder<> Bstart(Ctx);
+    Bstart.SetInsertPoint(SinkOp);
+    Value *SinkIDVal = ConstantInt::get(I32Ty, sinkID);
+    Value *ReportPtrCast = ReportPtr;
+    if (!ReportPtr->getType()->isPointerTy()) {
+      ReportPtrCast =
+          Bstart.CreateBitCast(ReportPtr, PointerType::getUnqual(Ctx));
+    }
+    Bstart.CreateCall(StartTrackingSink, {SinkIDVal, ReportPtrCast});
+
+    // Insert end call after sink, then report using returned max-read
+    Instruction *InsertPos = SinkOp->getNextNode();
+    IRBuilder<> Bend(Ctx);
+    if (InsertPos)
+      Bend.SetInsertPoint(InsertPos);
+    else
+      Bend.SetInsertPoint(SinkOp->getParent()->getTerminator());
+
+    CallInst *EndCall = Bend.CreateCall(EndTrackingSink, {SinkIDVal});
+    Value *EndRet = EndCall;
+    Value *ReportSize32 = nullptr;
+    if (EndRet->getType() != I32Ty)
+      ReportSize32 = Bend.CreateTrunc(EndRet, I32Ty);
+    else
+      ReportSize32 = EndRet;
+
+    Bend.CreateCall(SampleReportSink, {ReportPtrCast, ReportSize32, SinkIDVal});
   }
 
   static SmallVector<Instruction *, 8> buildStmtSlice(Instruction *Anchor) {
@@ -862,17 +950,46 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
     // Use the Anchor instruction to infer the pointed-to type
     findPointedToType(DL, Anchor, Base, AllocatedType, Ptr, PointedToType);
 
-    // Abort: we do not support sampling pointer types
-    if (PointedToType && PointedToType->isPointerTy()) {
-      errs()
-          << "[sample-flow-sink] Pointer types are not supported for reporting\n";
-      throw NotImplementedError(
-          "[sample-flow-sink] Pointer types are not supported for reporting");
+    // if dynamic instrumentation is turned off, we have restrictions
+    if (!DynamicModeOpt) {
+      // Abort: we do not support sampling pointer types
+      if (PointedToType && PointedToType->isPointerTy()) {
+        errs() << "[sample-flow-sink] Pointer types are not supported for "
+                  "reporting\n";
+        throw NotImplementedError(
+            "[sample-flow-sink] Pointer types are not supported for reporting");
+      }
+
+      // Abort: we do not support sampling raw byte pointers (void*)
+      // In LLVM IR, void* is represented as i8* or ptr with i8 pointed-to type
+      if (PointedToType && PointedToType->isIntegerTy(8)) {
+        errs() << "[sample-flow-sink] Raw byte pointer (void*) detected - "
+                  "skipping instrumentation\n";
+        errs() << "[sample-flow-sink] Cannot meaningfully sample without "
+                  "knowing actual data type\n";
+        throw NotImplementedError(
+            "[sample-flow-sink] Raw byte pointer (void*) not supported - "
+            "unknown data type");
+      }
+    } else {
+      errs() << "[sample-flow-sink] Dynamic instrumentation mode enabled\n";
+
+      // instrument the dynamic marker stubs
+      Function *StartTrackingSink = nullptr;
+      Function *EndTrackingSink = nullptr;
+      declareDynamicMarkers(M, StartTrackingSink, EndTrackingSink);
+
+      // Prepare ReportPtr and delegate insertion to helper
+      Value *ReportPtr = Ptr ? Ptr : Base;
+      insertDynamicMarkerCalls(Ctx, SinkOp, ReportPtr, StartTrackingSink,
+                               EndTrackingSink, SampleReportSink, SinkIDOpt);
     }
 
-    // Insert the tracking call BEFORE the sink
-    insertReportCall(DL, Ctx, SampleReportSink, Base, SinkOp, AI, Ptr,
-                     PointedToType, SinkIDOpt);
+    // For non-dynamic mode we still insert the static report BEFORE the sink
+    if (!DynamicModeOpt) {
+      insertReportCall(DL, Ctx, SampleReportSink, Base, SinkOp, AI, Ptr,
+                       PointedToType, SinkIDOpt);
+    }
 
     return PreservedAnalyses::none();
   }
@@ -916,9 +1033,9 @@ struct SampleFlowSinkModulePass
         // Check if instrumentation succeeded
         // If all analyses are preserved, nothing was modified
         if (!PA.areAllPreserved()) {
-          errs()
-              << "[sample-flow-sink-module] Successfully instrumented function: "
-              << F.getName() << "\n";
+          errs() << "[sample-flow-sink-module] Successfully instrumented "
+                    "function: "
+                 << F.getName() << "\n";
           return PreservedAnalyses::none();
         }
       } catch (NotImplementedError &E) {
