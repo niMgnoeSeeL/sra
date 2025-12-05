@@ -276,6 +276,65 @@
             "preLaunchTask": "sense:build-all",
         },
         {
+            "name": "Debug SampleFlowSrcPass (orchestrator command - openssl_x509 test_corpus.c)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=sample-flow-src-module",
+                "--src-line=53",
+                "--src-col-start=19",
+                "--src-col-end=22",
+                "--src-id=2",
+                "--src-var-name=buf",
+                "--src-file=${workspaceFolder}/subjects/openssl/fuzz/test-corpus.c",
+                "${workspaceFolder}/subjects/openssl/fuzz/x509.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/openssl_x509_testcorpus_src2.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/tests",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all",
+        },
+        {
+            "name": "Debug SampleFlowSrcPass (orchestrator command - openssl_x509 driver.c)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=sample-flow-src-module",
+                "--src-line=53",
+                "--src-col-start=25",
+                "--src-col-end=28",
+                "--src-id=1",
+                "--src-file=${workspaceFolder}/subjects/openssl/fuzz/driver.c",
+                "${workspaceFolder}/subjects/openssl/fuzz/x509.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/openssl_x509_driver_src1.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/tests",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all",
+        },
+        {
             "name": "Debug SampleFlowSinkPass (orchestrator command - SINK_ID=1)",
             "type": "lldb",
             "request": "launch",
@@ -324,6 +383,66 @@
                 "-S",
                 "-o",
                 "${workspaceFolder}/sense/build/flow_scalars.instrumented.ll.sink.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/tests",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all",
+        },
+        {
+            "name": "Debug SampleFlowSinkPass (orchestrator command - openssl_x509 SINK_ID=189)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSinkPass.so",
+                "-passes=sample-flow-sink-module",
+                "--sink-line=309",
+                "--sink-col-start=25",
+                "--sink-col-end=41",
+                "--sink-id=189",
+                "--sink-var-name=str",
+                "--sink-file=/workspaces/fuzzer/subjects/openssl/crypto/mem.c",
+                "${workspaceFolder}/subjects/openssl/fuzz/x509.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/openssl_x509_mem_sink189.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/tests",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all",
+        },
+        {
+            "name": "Debug SampleFlowSinkPass (orchestrator command - openssl_x509 SINK_ID=4)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSinkPass.so",
+                "-passes=sample-flow-sink-module",
+                "--dynamic-sink",
+                "--sink-line=968",
+                "--sink-col-start=21",
+                "--sink-col-end=26",
+                "--sink-id=4",
+                "--sink-file=/workspaces/fuzzer/subjects/openssl/crypto/bn/bn_exp.c",
+                "${workspaceFolder}/subjects/openssl/fuzz/x509.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/openssl_x509_bn_exp_sink4.ll"
             ],
             "cwd": "${workspaceFolder}/sense/tests",
             "env": {
@@ -429,6 +548,34 @@
                 "${workspaceFolder}/sense/build/harness.instrumented.ll",
                 "--compile-db",
                 "${workspaceFolder}/subjects/mini_httpd-1.29/compile_commands.json",
+                "--pass-dir",
+                "${workspaceFolder}/sense/build",
+                "--verbose"
+            ],
+            "cwd": "${workspaceFolder}/sense/build",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all"
+        },
+        {
+            "name": "Debug taint-orchestrator (openssl)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/sense/build/taint-orchestrator",
+            "args": [
+                "--sarif",
+                "${workspaceFolder}/subjects/openssl/openssl_iruntrusted.sarif",
+                "--input",
+                "${workspaceFolder}/subjects/openssl/fuzz/x509.ll",
+                "--output",
+                "${workspaceFolder}/sense/build/x509.instrumented.ll",
+                "--compile-db",
+                "${workspaceFolder}/subjects/openssl/compile_commands.json",
                 "--pass-dir",
                 "${workspaceFolder}/sense/build",
                 "--verbose"
