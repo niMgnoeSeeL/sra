@@ -190,11 +190,11 @@ static dr_emit_flags_t event_app_instruction(void *drcontext, void *tag,
                                              void *user_data) {
   if (!instr_reads_memory(instr))
     return DR_EMIT_DEFAULT;
-  
+
   /* SELECTIVE INSTRUMENTATION: Only instrument if we're inside taint_sink */
   if (!g_sink_active)
     return DR_EMIT_DEFAULT;
-  
+
   /* Check if this instruction is within the taint_sink function bounds */
   app_pc pc = instr_get_app_pc(instr);
   if (g_taint_sink_start != NULL && g_taint_sink_end != NULL) {
@@ -204,7 +204,8 @@ static dr_emit_flags_t event_app_instruction(void *drcontext, void *tag,
     }
   }
 
-  dr_fprintf(STDERR, "[DR] Instrumenting instruction at %p (inside taint_sink)\n", pc);
+  dr_fprintf(STDERR,
+             "[DR] Instrumenting instruction at %p (inside taint_sink)\n", pc);
 
   // For each memory read operand, insert code to compute its address and call
   // on_mem_read(addr, size)
@@ -286,25 +287,27 @@ static void event_module_load(void *drcontext, const module_data_t *info,
   if (f != NULL) {
     /* Save the function boundaries for selective instrumentation */
     g_taint_sink_start = f;
-    
+
     /* Get exact function size using drsym_lookup_address */
     drsym_error_t symres;
     drsym_info_t sym_info;
     char name_buf[256];
-    
+
     sym_info.struct_size = sizeof(sym_info);
     sym_info.name = name_buf;
     sym_info.name_size = sizeof(name_buf);
     sym_info.file = NULL;
     sym_info.file_size = 0;
-    
+
     size_t offset = (size_t)(f - info->start);
-    symres = drsym_lookup_address(info->full_path, offset, &sym_info, DRSYM_DEFAULT_FLAGS);
-    
+    symres = drsym_lookup_address(info->full_path, offset, &sym_info,
+                                  DRSYM_DEFAULT_FLAGS);
+
     if (symres == DRSYM_SUCCESS && sym_info.end_offs > sym_info.start_offs) {
       size_t func_size = sym_info.end_offs - sym_info.start_offs;
       g_taint_sink_end = info->start + sym_info.end_offs;
-      dr_fprintf(STDERR, "[DR] taint_sink exact bounds: [%p .. %p) size=%zu bytes\n",
+      dr_fprintf(STDERR,
+                 "[DR] taint_sink exact bounds: [%p .. %p) size=%zu bytes\n",
                  g_taint_sink_start, g_taint_sink_end, func_size);
     } else {
       /* Fallback: conservative estimate */
@@ -312,7 +315,7 @@ static void event_module_load(void *drcontext, const module_data_t *info,
       dr_fprintf(STDERR, "[DR] taint_sink bounds (estimated): [%p .. %p)\n",
                  g_taint_sink_start, g_taint_sink_end);
     }
-    
+
     if (!drwrap_wrap_ex(f, pre_taint_sink, post_taint_sink, NULL /*wrap_data*/,
                         0 /*flags*/)) {
       dr_fprintf(STDERR, "[DR] failed to wrap taint_sink in %s\n", name);

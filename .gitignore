@@ -6,6 +6,7 @@
 *.pyo
 __pycache__/
 .pytest_cache/
+**/.cache/**
 
 # fuzz data
 rq2/fuzz-data/**
@@ -34,3 +35,6 @@ fuzzer/sense/demo/**
 !fuzzer/sense/demo/*.c
 !fuzzer/sense/demo/*.ll
 !fuzzer/sense/demo/*.sarif
+
+# Dynamo
+fuzzer/sense/dynamo/build/**

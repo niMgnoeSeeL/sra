@@ -36,7 +36,7 @@ RUN mkdir -p /etc/apt/keyrings && \
 # --- Install dependencies (LLVM 20 toolchain + utilities; NO libc++) ---
 # --- Install Fuzztastic dependencies ---
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    make cmake automake meson ninja-build pkg-config bison flex git jq \
+    make cmake automake meson ninja-build pkg-config bison flex git jq locales \
     nano jupp joe bash-completion less vim htop btop psmisc tmux python3 python3-dev python3-pip \
     python-is-python3 python3-venv libtool libtool-bin libglib2.0-dev \
     libpixman-1-dev libdwarf-dev libelf-dev gnuplot-nox bc lcov gdb bear ccache \
@@ -94,6 +94,13 @@ ENV LLVM_DIR="/usr/lib/llvm-${LLVM_VERSION}/lib/cmake/llvm"
 ENV FT_RUNTIME_LIB_DIR="${FT_DIR}/instrumentation/build/runtime-lib"
 ENV LD_LIBRARY_PATH="${FT_RUNTIME_LIB_DIR}:$LD_LIBRARY_PATH"
 ENV LIBRARY_PATH="${FT_RUNTIME_LIB_DIR}:$LIBRARY_PATH"
+
+# --- Locales ---
+RUN locale-gen en_US.utf8
+# Set locale environment variables
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 # --- AFL-friendly environment vars ---
 ENV LLVM_CONFIG=llvm-config-${LLVM_VERSION} \
