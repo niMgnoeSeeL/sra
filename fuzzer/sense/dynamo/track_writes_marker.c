@@ -1,4 +1,4 @@
-// track_reads_marker.c
+// track_writes_marker.c
 // Production DynamoRIO client using marker functions for LLVM pass integration
 // Supports: multi-threading, nested sinks, selective instrumentation
 
@@ -35,15 +35,15 @@ event_app_instruction_inline_guard(void *drcontext, void *tag, instrlist_t *bb,
 
 typedef struct {
   bool active;            // Is tracking currently active?
-  uint32_t sink_id;       // Current sink ID
+  uint32_t src_id;        // Current sink ID
   app_pc region_base;     // Base address of tracked allocation
   size_t region_size;     // Size of tracked allocation
   app_pc ptr_offset_addr; // Original ptr passed (may be base + offset)
   size_t ptr_offset;      // Offset from base (ptr - base)
-  byte *read_mask;        // Byte-level read tracking (for full allocation)
+  byte *write_mask;       // Byte-level write tracking (for full allocation)
   /* debug counters */
-  uint64_t memread_calls;
-  uint64_t memread_hits;
+  uint64_t memwrite_calls;
+  uint64_t memwrite_hits;
 } per_thread_data_t;
 
 static int tls_idx = -1; // TLS slot index
@@ -161,7 +161,7 @@ static void pre_free(void *wrapcxt, void **user_data) {
 
 /* --- Wrappers for marker functions --- */
 
-static void pre_start_tracking_sink(void *wrapcxt, void **user_data) {
+static void pre_start_tracking_src(void *wrapcxt, void **user_data) {
   void *drcontext = drwrap_get_drcontext(wrapcxt);
   per_thread_data_t *tdata = get_thread_data(drcontext);
 
@@ -176,8 +176,8 @@ static void pre_start_tracking_sink(void *wrapcxt, void **user_data) {
     return;
   }
 
-  // Extract arguments: sink_id, ptr (no len - we do dynamic lookup)
-  uint32_t sink_id = (uint32_t)(size_t)drwrap_get_arg(wrapcxt, 0);
+  // Extract arguments: src_id, ptr (no len - we do dynamic lookup)
+  uint32_t src_id = (uint32_t)(size_t)drwrap_get_arg(wrapcxt, 0);
   const byte *ptr = (const byte *)drwrap_get_arg(wrapcxt, 1);
 
   // Find the allocation containing this pointer (dynamic lookup)
@@ -192,24 +192,24 @@ static void pre_start_tracking_sink(void *wrapcxt, void **user_data) {
   size_t offset = (size_t)((app_pc)ptr - base);
 
   dr_fprintf(STDERR,
-             "[DR] Start tracking sink_id=%u ptr=%p (base=%p, offset=%zu, "
+             "[DR] Start tracking src=%u ptr=%p (base=%p, offset=%zu, "
              "alloc_size=%zu)\n",
-             sink_id, ptr, base, offset, size);
+             src_id, ptr, base, offset, size);
 
   // Set up tracking state (track full allocation)
   tdata->active = true;
-  tdata->sink_id = sink_id;
+  tdata->src_id = src_id;
   tdata->region_base = base;
   tdata->region_size = size;
   tdata->ptr_offset_addr = (app_pc)ptr;
   tdata->ptr_offset = offset;
-  tdata->read_mask = dr_global_alloc(size);
-  tdata->memread_calls = 0;
-  tdata->memread_hits = 0;
-  memset(tdata->read_mask, 0, size);
+  tdata->write_mask = dr_global_alloc(size);
+  tdata->memwrite_calls = 0;
+  tdata->memwrite_hits = 0;
+  memset(tdata->write_mask, 0, size);
 }
 
-static void pre_end_tracking_sink(void *wrapcxt, void **user_data) {
+static void pre_end_tracking_src(void *wrapcxt, void **user_data) {
   void *drcontext = drwrap_get_drcontext(wrapcxt);
   per_thread_data_t *tdata = get_thread_data(drcontext);
 
@@ -218,22 +218,22 @@ static void pre_end_tracking_sink(void *wrapcxt, void **user_data) {
     return;
   }
 
-  uint32_t sink_id = (uint32_t)(size_t)drwrap_get_arg(wrapcxt, 0);
+  uint32_t src_id = (uint32_t)(size_t)drwrap_get_arg(wrapcxt, 0);
 
-  if (tdata->sink_id != sink_id) {
+  if (tdata->src_id != src_id) {
     dr_fprintf(STDERR,
-               "[DR] WARNING: mismatched sink_id (expected %u, got %u)\n",
-               tdata->sink_id, sink_id);
+               "[DR] WARNING: mismatched src_id (expected %u, got %u)\n",
+               tdata->src_id, src_id);
   }
 
-  dr_fprintf(STDERR, "[DR] on_mem_read calls=%u hits=%u\n",
-             tdata->memread_calls, tdata->memread_hits);
+  dr_fprintf(STDERR, "[DR] on_mem_write calls=%u hits=%u\n",
+             tdata->memwrite_calls, tdata->memwrite_hits);
 
-  // Store sink_id in user_data for post callback
-  *user_data = (void *)(size_t)sink_id;
+  // Store src_id in user_data for post callback
+  *user_data = (void *)(size_t)src_id;
 }
 
-static void post_end_tracking_sink(void *wrapcxt, void *user_data) {
+static void post_end_tracking_src(void *wrapcxt, void *user_data) {
   void *drcontext = drwrap_get_drcontext(wrapcxt);
   per_thread_data_t *tdata = get_thread_data(drcontext);
 
@@ -242,20 +242,20 @@ static void post_end_tracking_sink(void *wrapcxt, void *user_data) {
     return;
   }
 
-  uint32_t sink_id = (uint32_t)(size_t)user_data;
+  uint32_t src_id = (uint32_t)(size_t)user_data;
 
-  // Count bytes read in full allocation
-  size_t bytes_read_full = 0;
+  // Count bytes write in full allocation
+  size_t bytes_write_full = 0;
   size_t first_full = tdata->region_size, last_full = 0;
 
-  // Count bytes read from offset onwards
-  size_t bytes_read_from_offset = 0;
+  // Count bytes write from offset onwards
+  size_t bytes_write_from_offset = 0;
   size_t first_from_offset = tdata->region_size, last_from_offset = 0;
   size_t max_distance_from_offset = 0;
 
   for (size_t i = 0; i < tdata->region_size; ++i) {
-    if (tdata->read_mask[i]) {
-      bytes_read_full++;
+    if (tdata->write_mask[i]) {
+      bytes_write_full++;
       if (i < first_full)
         first_full = i;
       if (i > last_full)
@@ -263,7 +263,7 @@ static void post_end_tracking_sink(void *wrapcxt, void *user_data) {
 
       // Track reads from offset onwards
       if (i >= tdata->ptr_offset) {
-        bytes_read_from_offset++;
+        bytes_write_from_offset++;
         if (i < first_from_offset)
           first_from_offset = i;
         if (i > last_from_offset)
@@ -278,21 +278,21 @@ static void post_end_tracking_sink(void *wrapcxt, void *user_data) {
   }
 
   dr_fprintf(STDERR,
-             "[DR] End tracking sink_id=%u: read %zu bytes in full allocation "
+             "[DR] End tracking src_id=%u: write %zu bytes in full allocation "
              "[%p .. %p) (size=%zu)\n",
-             sink_id, bytes_read_full, tdata->region_base,
+             src_id, bytes_write_full, tdata->region_base,
              tdata->region_base + tdata->region_size, tdata->region_size);
 
-  if (bytes_read_full > 0) {
+  if (bytes_write_full > 0) {
     dr_fprintf(STDERR, "[DR]   Full alloc: first offset=%zu, last offset=%zu\n",
                first_full, last_full);
   }
 
   if (tdata->ptr_offset > 0) {
-    dr_fprintf(STDERR,
-               "[DR]   From ptr offset=%zu: read %zu bytes, max distance=%zu\n",
-               tdata->ptr_offset, bytes_read_from_offset,
-               max_distance_from_offset);
+    dr_fprintf(
+        STDERR,
+        "[DR]   From ptr offset=%zu: write %zu bytes, max distance=%zu\n",
+        tdata->ptr_offset, bytes_write_from_offset, max_distance_from_offset);
   } else {
     dr_fprintf(STDERR, "[DR]   Max distance from ptr: %zu\n",
                max_distance_from_offset);
@@ -301,22 +301,22 @@ static void post_end_tracking_sink(void *wrapcxt, void *user_data) {
   // Set return value: max distance from offset (MUST be in post callback!)
   drwrap_set_retval(wrapcxt, (void *)max_distance_from_offset);
 
-  // Free read mask and deactivate
-  dr_global_free(tdata->read_mask, tdata->region_size);
-  tdata->read_mask = NULL;
+  // Free write mask and deactivate
+  dr_global_free(tdata->write_mask, tdata->region_size);
+  tdata->write_mask = NULL;
   tdata->active = false;
 }
 
-/* --- Memory read callback --- */
+/* --- Memory write callback --- */
 
-static void on_mem_read(app_pc addr, uint size) {
+static void on_mem_write(app_pc addr, uint size) {
   void *drcontext = dr_get_current_drcontext();
   per_thread_data_t *tdata = get_thread_data(drcontext);
 
   if (tdata)
-    tdata->memread_calls++; // count even if we bail
+    tdata->memwrite_calls++; // count even if we bail
 
-  if (tdata == NULL || !tdata->active || tdata->read_mask == NULL)
+  if (tdata == NULL || !tdata->active || tdata->write_mask == NULL)
     return;
 
   app_pc start = addr;
@@ -328,36 +328,48 @@ static void on_mem_read(app_pc addr, uint size) {
   if (end <= reg_start || start >= reg_end)
     return; // no overlap
 
-  tdata->memread_hits++; // overlaps tracked region
+  tdata->memwrite_hits++; // overlaps tracked region
 
   // Calculate overlapping range
   size_t off_start = (size_t)(start < reg_start ? 0 : start - reg_start);
   size_t off_end =
       (size_t)(end > reg_end ? tdata->region_size : end - reg_start);
 
+  /* Debugging: occasionally print the computed offsets to verify mapping
+   * between EA and tracked allocation. Print the first few hits and then
+   * every 50th hit to keep output manageable.
+   */
+  if (tdata->memwrite_hits <= 5 || (tdata->memwrite_hits % 50) == 0) {
+    dr_fprintf(STDERR,
+               "[DR] on_mem_write: addr=%p size=%u region=[%p..%p) "
+               "off_start=%zu off_end=%zu memwrite_hits=%llu\n",
+               (void *)addr, size, (void *)reg_start, (void *)reg_end,
+               off_start, off_end, (unsigned long long)tdata->memwrite_hits);
+  }
+
   for (size_t i = off_start; i < off_end; ++i) {
-    tdata->read_mask[i] = 1;
+    tdata->write_mask[i] = 1;
   }
 }
 
 /*
- * track_reads_marker (old implementation): always-instrument memory reads
+ * track_writes_marker (old implementation): always-instrument memory writes
  * ----------------------------------------------------------------------
  *
  * What this version does
  *   This instrumentation callback runs while DynamoRIO is translating
- *   application code into the code cache. For each instruction that *reads
- *   memory*, we insert a clean call to `on_mem_read(addr, size)` for each
+ *   application code into the code cache. For each instruction that *writes
+ *   memory*, we insert a clean call to `on_mem_write(addr, size)` for each
  *   explicit memory-reference source operand.
  *
  * How it works
  *   - DynamoRIO calls this function once per instruction while building a
  *     basic block in the code cache.
- *   - If `instr_reads_memory(instr)` is false, we do nothing.
+ *   - If `instr_writes_memory(instr)` is false, we do nothing.
  *   - Otherwise, we iterate over all source operands and for each memory
  *     reference operand:
  *       1) compute its effective address (EA)
- *       2) call `on_mem_read(EA, mem_size)`
+ *       2) call `on_mem_write(EA, mem_size)`
  *
  * Register usage and state preservation
  *   - We use RCX (DR_REG_XCX) as the temporary register to hold the computed
@@ -386,8 +398,8 @@ event_app_instruction_naive(void *drcontext, void *tag, instrlist_t *bb,
   if (pc && pc_in_skip_module(pc))
     return DR_EMIT_DEFAULT;
 
-  /* Fast reject: ignore instructions that do not read memory. */
-  if (!instr_reads_memory(instr)) {
+  /* Fast reject: ignore instructions that do not write memory. */
+  if (!instr_writes_memory(instr)) {
     // dr_fprintf(STDERR, "[TRANSLATE] PC=%p BB=%p\n", pc, bbpc);
     return DR_EMIT_DEFAULT;
   }
@@ -397,7 +409,7 @@ event_app_instruction_naive(void *drcontext, void *tag, instrlist_t *bb,
    */
   per_thread_data_t *tdata = get_thread_data(drcontext);
 
-  /* Debug: log translation of memory-reading instructions and observed state.
+  /* Debug: log translation of memory-writing instructions and observed state.
    */
   // ADD THIS: Log every time we translate
   // dr_fprintf(STDERR, "[TRANSLATE] PC=%p BB=%p active=%d\n", pc, bbpc,
@@ -409,21 +421,22 @@ event_app_instruction_naive(void *drcontext, void *tag, instrlist_t *bb,
   //   if (tdata == NULL || !tdata->active)
   //     return DR_EMIT_DEFAULT;
 
-  /* For each explicit memory-read operand, insert a clean call. */
-  int num_srcs = instr_num_srcs(instr);
-  for (int i = 0; i < num_srcs; ++i) {
-    opnd_t src = instr_get_src(instr, i);
-    if (!opnd_is_memory_reference(src))
+  /* For each explicit memory-write operand (destination), insert a clean call.
+   */
+  int num_dsts = instr_num_dsts(instr);
+  for (int i = 0; i < num_dsts; ++i) {
+    opnd_t dst = instr_get_dst(instr, i);
+    if (!opnd_is_memory_reference(dst))
       continue;
 
     /* Compute effective address (EA) into RCX. */
     reg_id_t reg = DR_REG_XCX;
     dr_save_reg(drcontext, bb, instr, reg, SPILL_SLOT_1);
-    drutil_insert_get_mem_addr(drcontext, bb, instr, src, reg, SPILL_SLOT_2);
+    drutil_insert_get_mem_addr(drcontext, bb, instr, dst, reg, SPILL_SLOT_2);
 
-    /* Insert clean call: on_mem_read(addr, size). */
-    uint mem_size = opnd_size_in_bytes(opnd_get_size(src));
-    dr_insert_clean_call(drcontext, bb, instr, (void *)on_mem_read, false, 2,
+    /* Insert clean call: on_mem_write(addr, size). */
+    uint mem_size = opnd_size_in_bytes(opnd_get_size(dst));
+    dr_insert_clean_call(drcontext, bb, instr, (void *)on_mem_write, false, 2,
                          opnd_create_reg(reg), OPND_CREATE_INT32(mem_size));
 
     /* Restore RCX for the application instruction stream. */
@@ -434,12 +447,13 @@ event_app_instruction_naive(void *drcontext, void *tag, instrlist_t *bb,
 }
 
 /*
- * track_reads_marker: selective, runtime-gated memory-read instrumentation
+ * track_writes_marker: selective, runtime-gated memory-write instrumentation
  * -----------------------------------------------------------------------
  *
  * Goal
- *   Track which bytes of a heap allocation are *read* between two marker calls
- *   (__dr_start_tracking_sink / __dr_end_tracking_sink), with near-zero
+ *   Track which bytes of a heap allocation are *written* between two marker
+ * calls
+ *   (__dr_start_tracking_src / __dr_end_tracking_src), with near-zero
  * overhead outside the marked region.
  *
  * Key idea (robust + fast)
@@ -449,7 +463,7 @@ event_app_instruction_naive(void *drcontext, void *tag, instrlist_t *bb,
  *   cache that checks thread-local state:
  *
  *       if (!tdata->active)  => skip instrumentation (fast path)
- *       else                 => compute EA + call on_mem_read (slow path)
+ *       else                 => compute EA + call on_mem_write (slow path)
  *
  * Why we use JECXZ (and a trampoline)
  *   JECXZ is a short jump, so we route it through a nearby "inactive_stub"
@@ -463,7 +477,7 @@ event_app_instruction_naive(void *drcontext, void *tag, instrlist_t *bb,
  *
  * Registers and spill slots
  *   - RDX (reg_tdata): initially holds per-thread data pointer from TLS; reused
- *     as the effective address (EA) when calling on_mem_read.
+ *     as the effective address (EA) when calling on_mem_write.
  *   - RCX (reg_active): holds the active flag in ECX (required for JECXZ).
  *   - R8  (reg_scratch): scratch register required by
  * drutil_insert_get_mem_addr.
@@ -478,21 +492,21 @@ event_app_instruction_inline_guard(void *drcontext, void *tag, instrlist_t *bb,
                                    instr_t *instr, bool for_trace,
                                    bool translating, void *user_data) {
   /* Never instrument meta instructions inserted by DynamoRIO or other helpers.
-   * Meta instructions may read memory (e.g., TLS loads), and instrumenting them
-   * can create recursion and crashes.
+   * Meta instructions may write memory (e.g., TLS loads), and instrumenting
+   * them can create recursion and crashes.
    */
   if (instr_is_meta(instr))
     return DR_EMIT_DEFAULT;
 
-  /* Only consider instructions that read memory at all. */
-  if (!instr_reads_memory(instr))
+  /* Only consider instructions that write memory at all. */
+  if (!instr_writes_memory(instr))
     return DR_EMIT_DEFAULT;
 
   /* Register plan:
    *   - RDX: TLS per-thread data pointer.
    *   - RCX: active flag (ECX) for JECXZ; used only for the guard.
    *   - R8 : scratch register used by drutil_insert_get_mem_addr.
-   *   - RAX: dedicated EA register
+   *   - RAX: dedicated EA register.
    */
   const reg_id_t reg_tdata = DR_REG_XDX;
   const reg_id_t reg_active = DR_REG_XCX;
@@ -547,28 +561,28 @@ event_app_instruction_inline_guard(void *drcontext, void *tag, instrlist_t *bb,
   instrlist_meta_preinsert(
       bb, instr, INSTR_CREATE_jmp(drcontext, opnd_create_instr(epilogue)));
 
-  /* Slow path: for each explicit memory-reference source operand, compute the
-   * effective address (EA) and invoke on_mem_read(EA, size).
+  /* Slow path: for each explicit memory-reference destination operand, compute
+   * the effective address (EA) and invoke on_mem_write(EA, size).
    */
   instrlist_meta_preinsert(bb, instr, slow_label);
 
-  int num_srcs = instr_num_srcs(instr);
-  for (int i = 0; i < num_srcs; ++i) {
-    opnd_t src = instr_get_src(instr, i);
-    if (!opnd_is_memory_reference(src))
+  int num_dsts = instr_num_dsts(instr);
+  for (int i = 0; i < num_dsts; ++i) {
+    opnd_t dst = instr_get_dst(instr, i);
+    if (!opnd_is_memory_reference(dst))
       continue;
 
     /* Compute EA into the dedicated reg_ea.
      * drutil needs a separate scratch register: we use R8.
      */
-    drutil_insert_get_mem_addr(drcontext, bb, instr, src, reg_ea, reg_scratch);
+    drutil_insert_get_mem_addr(drcontext, bb, instr, dst, reg_ea, reg_scratch);
 
-    uint mem_size = opnd_size_in_bytes(opnd_get_size(src));
+    uint mem_size = opnd_size_in_bytes(opnd_get_size(dst));
 
-    /* Clean call to analysis routine: on_mem_read(addr, size).
+    /* Clean call to analysis routine: on_mem_write(addr, size).
      * This is the expensive part we avoid when inactive.
      */
-    dr_insert_clean_call_ex(drcontext, bb, instr, (void *)on_mem_read,
+    dr_insert_clean_call_ex(drcontext, bb, instr, (void *)on_mem_write,
                             false /* no fp save */, 2, opnd_create_reg(reg_ea),
                             OPND_CREATE_INT32(mem_size));
   }
@@ -621,29 +635,29 @@ static void event_module_load(void *drcontext, const module_data_t *info,
     drwrap_wrap_ex(f, pre_free, NULL, NULL, 0);
   }
 
-  /* Wrap marker functions: __dr_start_tracking_sink */
+  /* Wrap marker functions: __dr_start_tracking_src */
   // Markers are not exported, lookup via debug symbols
   drsym_error_t symres;
-  symres = drsym_lookup_symbol(info->full_path, "__dr_start_tracking_sink",
+  symres = drsym_lookup_symbol(info->full_path, "__dr_start_tracking_src",
                                (size_t *)&f, DRSYM_DEFAULT_FLAGS);
   if (symres == DRSYM_SUCCESS) {
     f = info->start + (size_t)f;
     g_start_marker_addr = f;
-    if (drwrap_wrap_ex(f, pre_start_tracking_sink, NULL, NULL, 0)) {
+    if (drwrap_wrap_ex(f, pre_start_tracking_src, NULL, NULL, 0)) {
       dr_fprintf(STDERR, "[DR] Wrapped __dr_start_tracking_sink at %p in %s\n",
                  f, name);
     }
   }
 
-  /* Wrap marker functions: __dr_end_tracking_sink */
+  /* Wrap marker functions: __dr_end_tracking_src */
   // Markers are not exported, lookup via debug symbols
-  symres = drsym_lookup_symbol(info->full_path, "__dr_end_tracking_sink",
+  symres = drsym_lookup_symbol(info->full_path, "__dr_end_tracking_src",
                                (size_t *)&f, DRSYM_DEFAULT_FLAGS);
   if (symres == DRSYM_SUCCESS) {
     f = info->start + (size_t)f;
     g_end_marker_addr = f;
     // Need post callback to set return value!
-    if (drwrap_wrap_ex(f, pre_end_tracking_sink, post_end_tracking_sink, NULL,
+    if (drwrap_wrap_ex(f, pre_end_tracking_src, post_end_tracking_src, NULL,
                        0)) {
       dr_fprintf(STDERR, "[DR] Wrapped __dr_end_tracking_sink at %p in %s\n", f,
                  name);
@@ -668,8 +682,8 @@ static void event_thread_exit(void *drcontext) {
 
   if (tdata != NULL) {
     // Clean up if tracking is still active
-    if (tdata->active && tdata->read_mask != NULL) {
-      dr_global_free(tdata->read_mask, tdata->region_size);
+    if (tdata->active && tdata->write_mask != NULL) {
+      dr_global_free(tdata->write_mask, tdata->region_size);
     }
 
     dr_thread_free(drcontext, tdata, sizeof(per_thread_data_t));
@@ -681,7 +695,7 @@ static void event_thread_exit(void *drcontext) {
 /* --- Client init/exit --- */
 
 DR_EXPORT void dr_client_main(client_id_t id, int argc, const char *argv[]) {
-  dr_set_client_name("track_reads_marker", "https://example.com");
+  dr_set_client_name("track_write_marker", "https://example.com");
 
   drmgr_init();
   drwrap_init();
@@ -708,7 +722,7 @@ DR_EXPORT void dr_client_main(client_id_t id, int argc, const char *argv[]) {
   drmgr_register_module_load_event(event_module_load);
   drmgr_register_bb_instrumentation_event(NULL, event_app_instruction, NULL);
 
-  dr_fprintf(STDERR, "== track_reads_marker loaded ==\n");
+  dr_fprintf(STDERR, "== track_write_marker loaded ==\n");
   dr_fprintf(STDERR, "Client DLL used  = %s\n", dr_get_client_path(id));
   dr_fprintf(STDERR, "PID              = %u (0x%x)\n", dr_get_process_id(),
              dr_get_process_id());
@@ -717,7 +731,7 @@ DR_EXPORT void dr_client_main(client_id_t id, int argc, const char *argv[]) {
 }
 
 static void event_exit(void) {
-  dr_fprintf(STDERR, "== track_reads_marker exiting ==\n");
+  dr_fprintf(STDERR, "== track_write_marker exiting ==\n");
 
   // Clean up
   dr_mutex_destroy(g_alloc_lock);
