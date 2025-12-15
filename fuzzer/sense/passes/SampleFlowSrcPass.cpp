@@ -123,6 +123,12 @@ static cl::opt<std::string>
                cl::init(""));
 static cl::opt<int> SrcIDOpt("src-id", cl::desc("Source ID for flow tracking"),
                              cl::init(-1));
+
+static cl::opt<bool>
+    DynamicModeOpt("dynamic-src",
+                   cl::desc("Instrument buffers with dynamic tracking markers"),
+                   cl::init(false));
+
 namespace {
 
 struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
@@ -218,6 +224,12 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     Type *SourceType = GEP->getSourceElementType();
     errs() << "[sample-flow-src]   GEP source type: " << *SourceType << "\n";
 
+    if (SourceType->isIntegerTy() || SourceType->isFloatingPointTy() ||
+        SourceType->isPointerTy()) {
+      errs() << "[sample-flow-src]   Scalar type detected: " << *SourceType
+             << "\n";
+      return SourceType;
+    }
     // Case 1: Array - taint the entire array conservatively
     // Example: GEP [16 x i8], ptr %buf, 0, 5 → taint whole [16 x i8]
     // Example: GEP [16 x [16 x i8]], ptr %buf, 0, 1, 3 → taint whole [16 x [16
@@ -986,16 +998,31 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
     // Abort: we do not support sampling pointer types
     if (PointedToType && PointedToType->isPointerTy()) {
-      errs()
-          << "[sample-flow-src] Pointer types are not supported for sampling\n";
+        errs() << "[sample-flow-src] Pointer types are not supported for "
+                  "sampling\n";
       throw NotImplementedError(
           "[sample-flow-src] Pointer types are not supported for sampling");
     }
+    } else {
+      errs() << "[sample-flow-src] Dynamic instrumentation mode enabled\n";
 
-    // Finally, dispatch based on the pointed-to type
+      // instrument the dynamic marker stubs
+      Function *StartTrackingSrc = nullptr;
+      Function *EndTrackingSrc = nullptr;
+      declareDynamicMarkers(M, StartTrackingSrc, EndTrackingSrc);
+
+      // Prepare ReportPtr and delegate insertion to helper
+      Value *ReportPtr = Ptr ? Ptr : Base;
+      insertDynamicMarkerCalls(Ctx, LastWriter, ReportPtr, StartTrackingSrc,
+                               EndTrackingSrc, SampleReportSource, SrcIDOpt);
+    }
+
+    // For non-dynamic mode we still insert the static report BEFORE the sink
+    if (!DynamicModeOpt) {
     insertSampleCalls(DL, Ctx, SampleInt, SampleDouble, SampleBytes,
                       SampleReportSource, Base, LastWriter, AI, GV, Ptr,
                       PointedToType, SrcIDOpt);
+    }
 
     return PreservedAnalyses::none();
   }
