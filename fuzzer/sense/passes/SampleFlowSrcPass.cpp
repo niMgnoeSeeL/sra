@@ -555,6 +555,82 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     SampleReportSource = cast<Function>(SampleReportSourceFn.getCallee());
   }
 
+  static void declareDynamicMarkers(Module &M, Function *&StartTrackingSrc,
+                                    Function *&EndTrackingSrc) {
+    LLVMContext &Ctx = M.getContext();
+
+    // declare the stub functions for dynamic tracking
+    // void __dr_start_tracking_src(uint32_t src_id, void *ptr);
+    FunctionCallee StartTrackingSrcFn = M.getOrInsertFunction(
+        "__dr_start_tracking_src",
+        FunctionType::get(Type::getVoidTy(Ctx),
+                          {Type::getInt32Ty(Ctx), PointerType::getUnqual(Ctx)},
+                          false));
+    StartTrackingSrc = cast<Function>(StartTrackingSrcFn.getCallee());
+
+    // If the function has no body, provide a trivial no-op definition so
+    // targets compiled without the external DynamoRIO runtime still link.
+    if (StartTrackingSrc->isDeclaration()) {
+      BasicBlock *BB = BasicBlock::Create(Ctx, "entry", StartTrackingSrc);
+      IRBuilder<> B(BB);
+      B.CreateRetVoid();
+    }
+
+    // size_t __dr_end_tracking_src(uint32_t src_id);
+    FunctionCallee EndTrackingSrcFn = M.getOrInsertFunction(
+        "__dr_end_tracking_src",
+        FunctionType::get(Type::getInt64Ty(Ctx), {Type::getInt32Ty(Ctx)},
+                          false));
+    EndTrackingSrc = cast<Function>(EndTrackingSrcFn.getCallee());
+    // If the function has no body, provide a trivial definition that returns
+    // zero. This allows builds that don't link the DynamoRIO client to still
+    // compile and run the instrumented binaries.
+    if (EndTrackingSrc->isDeclaration()) {
+      BasicBlock *BB2 = BasicBlock::Create(Ctx, "entry", EndTrackingSrc);
+      IRBuilder<> B2(BB2);
+      B2.CreateRet(ConstantInt::get(Type::getInt64Ty(Ctx), 0));
+    }
+  }
+
+  // insert dynamic start/end marker calls around SRC OP
+  // and report AFTER end
+  static void insertDynamicMarkerCalls(LLVMContext &Ctx, Instruction *SrcOp,
+                                       Value *ReportPtr,
+                                       Function *StartTrackingSrc,
+                                       Function *EndTrackingSrc,
+                                       Function *SampleReportSrc, int srcID) {
+    Type *I32Ty = Type::getInt32Ty(Ctx);
+
+    // Insert start call before src
+    IRBuilder<> Bstart(Ctx);
+    Bstart.SetInsertPoint(SrcOp);
+    Value *SinkIDVal = ConstantInt::get(I32Ty, srcID);
+    Value *ReportPtrCast = ReportPtr;
+    if (!ReportPtr->getType()->isPointerTy()) {
+      ReportPtrCast =
+          Bstart.CreateBitCast(ReportPtr, PointerType::getUnqual(Ctx));
+    }
+    Bstart.CreateCall(StartTrackingSrc, {SinkIDVal, ReportPtrCast});
+
+    // Insert end call after src, then report using returned max-written size
+    Instruction *InsertPos = SrcOp->getNextNode();
+    IRBuilder<> Bend(Ctx);
+    if (InsertPos)
+      Bend.SetInsertPoint(InsertPos);
+    else
+      Bend.SetInsertPoint(SrcOp->getParent()->getTerminator());
+
+    CallInst *EndCall = Bend.CreateCall(EndTrackingSrc, {SinkIDVal});
+    Value *EndRet = EndCall;
+    Value *ReportSize32 = nullptr;
+    if (EndRet->getType() != I32Ty)
+      ReportSize32 = Bend.CreateTrunc(EndRet, I32Ty);
+    else
+      ReportSize32 = EndRet;
+
+    Bend.CreateCall(SampleReportSrc, {ReportPtrCast, ReportSize32, SinkIDVal});
+  }
+
   static SmallVector<Instruction *, 8> buildStmtSlice(Instruction *Anchor) {
     SmallVector<Instruction *, 8> Slice;
     DebugLoc TargetLoc = Anchor->getDebugLoc();
@@ -738,6 +814,108 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     }
   }
 
+  // Handle function return value as tainted payload
+  // When Base == CallBase, the return register is the tainted value
+  static void insertSampleCallsNoAlloc(
+      LLVMContext &Ctx, const DataLayout &DL, Instruction *LastWriter,
+      Value *Base, Function *SampleInt, Function *SampleDouble,
+      Function *SampleBytes, Function *SampleReportSource, int srcID) {
+    Type *RetType = Base->getType();
+    errs() << "[sample-flow-src] Base is function return value (register), "
+              "type: "
+           << *RetType << "\n";
+
+    IRBuilder<> B(Ctx);
+    B.SetInsertPoint(LastWriter->getParent(), ++LastWriter->getIterator());
+
+    // Case A: Pointer return type (char*, void*, struct*, etc.)
+    if (RetType->isPointerTy()) {
+      errs() << "[sample-flow-src] Pointer return - checking if byte buffer\n";
+
+      Value *Ptr = Base;
+
+      // Strategy: Check if we can determine the pointed-to type
+      // Modern LLVM uses opaque pointers, but we can try to infer from context
+      Type *PointedToType = nullptr;
+
+      // Try to get type from the function signature if available
+      if (auto *CB = dyn_cast<CallBase>(Base)) {
+        if (auto *FT = CB->getFunctionType()) {
+          // Function type is available, but return type is still opaque ptr
+          // We can't get element type from opaque pointers
+          errs() << "[sample-flow-src] Function type: " << *FT << "\n";
+        }
+      }
+
+      // With opaque pointers, we can't determine pointed-to type from the type
+      // system alone. We have two options:
+      // 1. Use heuristics (assume strings are common)
+      // 2. Throw NotImplementedError to be safe
+      //
+      // For now: Assume byte buffers (i8*) for common string-returning
+      // functions This covers getenv, strerror, strdup, etc. The runtime
+      // sample_bytes(-1) should safely handle this.
+
+      errs() << "[sample-flow-src] Cannot determine pointed-to type with "
+                "opaque pointers\n";
+      errs() << "[sample-flow-src] Assuming byte buffer/string (i8*), "
+                "using size=-1\n";
+
+      Value *Size = ConstantInt::get(Type::getInt32Ty(Ctx), -1);
+      CallInst *SampleCall = B.CreateCall(SampleBytes, {Ptr, Size});
+      errs() << "[sample-flow-src] Inserted sample_bytes(ptr, -1): "
+             << *SampleCall << "\n";
+
+      if (srcID >= 0 && SampleReportSource) {
+        Value *SrcIDVal = ConstantInt::get(Type::getInt32Ty(Ctx), srcID);
+        CallInst *ReportCall =
+            B.CreateCall(SampleReportSource, {Ptr, Size, SrcIDVal});
+        errs() << "[sample-flow-src] Inserted sample_report_source(ptr, -1, "
+               << srcID << ")\n";
+      }
+    }
+    // Case B: Scalar return type (i32, double, etc.)
+    // Sample the register value directly and replace all uses
+    // TODO: needs test coverage
+    else if (RetType->isIntegerTy() || RetType->isFloatingPointTy()) {
+      errs() << "[sample-flow-src] Scalar return - sampling register "
+                "directly\n";
+
+      CallInst *SampledValue = nullptr;
+      uint64_t TypeSize = 0;
+
+      if (RetType->isIntegerTy(32)) {
+        SampledValue = B.CreateCall(SampleInt, {Base});
+        TypeSize = 4;
+      } else if (RetType->isDoubleTy()) {
+        SampledValue = B.CreateCall(SampleDouble, {Base});
+        TypeSize = 8;
+      } else {
+        errs() << "[sample-flow-src] WARNING: Unsupported scalar type\n";
+        return;
+      }
+
+      // Replace all uses: original call -> sampled value
+      Base->replaceAllUsesWith(SampledValue);
+      SampledValue->setOperand(0, Base); // Fix the sample call's operand
+
+      errs() << "[sample-flow-src] Replaced return value uses with sampled "
+                "value\n";
+
+      // For reporting scalars, store to temp alloca to get a pointer
+      if (srcID >= 0 && SampleReportSource) {
+        AllocaInst *TempAlloca = B.CreateAlloca(RetType);
+        B.CreateStore(SampledValue, TempAlloca);
+        Value *Size = ConstantInt::get(Type::getInt32Ty(Ctx), TypeSize);
+        Value *SrcIDVal = ConstantInt::get(Type::getInt32Ty(Ctx), srcID);
+        B.CreateCall(SampleReportSource, {TempAlloca, Size, SrcIDVal});
+        errs() << "[sample-flow-src] Reported scalar via temp alloca\n";
+      }
+    } else {
+      errs() << "[sample-flow-src] WARNING: Unsupported return type\n";
+    }
+  }
+
   // Given a base address (allocation, for example), a function call, find the
   // call's argument that aliases the base
   // char buf[16]
@@ -908,11 +1086,20 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     if (auto *GEP = dyn_cast<GetElementPtrInst>(Anchor))
       Base = getBaseObject(GEP, DL);
     else if (auto *Call = dyn_cast<CallBase>(Anchor)) {
-      // Note: For now, for calls, we don't know which argument the line:col
-      // spans. Always fallback to varname mode for correct identification.
-      Base = nullptr;
-      errs() << "[sample-flow-src] CallBase anchor - forcing varname "
-                "fallback\n";
+      // Check if the parsed varName is the callee name
+      // if so, the return value of the func call is the tainted payload
+      if (VarNameOpt == Call->getCalledFunction()->getName()) {
+        Base = Call;
+        errs() << "[sample-flow-src] CallBase anchor - return value is base: "
+               << *Base << "\n";
+      } else {
+        // Otherwise, for now, we don't know which argument the
+        // line:col spans. Always fallback to varname mode for correct
+        // identification.
+        Base = nullptr;
+        errs() << "[sample-flow-src] CallBase anchor - forcing varname "
+                  "fallback\n";
+      }
     } else if (auto *Load = dyn_cast<LoadInst>(Anchor)) {
       Base = getBaseObject(Load->getPointerOperand(), DL);
     }
@@ -986,6 +1173,13 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
       AllocatedType = GV->getValueType();
       errs() << "[sample-flow-src] Base is global, value type: "
              << *AllocatedType << "\n";
+    } else if (Base == dyn_cast<CallBase>(Anchor)) {
+      // Function return value is the tainted payload (register value)
+      // The return register itself serves as BASE - no allocation needed
+      insertSampleCallsNoAlloc(Ctx, DL, LastWriter, Base, SampleInt,
+                               SampleDouble, SampleBytes, SampleReportSource,
+                               SrcIDOpt);
+      return PreservedAnalyses::none();
     }
 
     // Try to infer the pointed-to type from the pointer used in the
@@ -996,13 +1190,15 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     Type *PointedToType = nullptr;
     findPointedToType(DL, Anchor, Base, AllocatedType, Ptr, PointedToType);
 
-    // Abort: we do not support sampling pointer types
-    if (PointedToType && PointedToType->isPointerTy()) {
+    // if dynamic instrumentation is turned off, we have restrictions
+    if (!DynamicModeOpt) {
+      // Abort: we do not support sampling pointer types
+      if (PointedToType && PointedToType->isPointerTy()) {
         errs() << "[sample-flow-src] Pointer types are not supported for "
                   "sampling\n";
-      throw NotImplementedError(
-          "[sample-flow-src] Pointer types are not supported for sampling");
-    }
+        throw NotImplementedError(
+            "[sample-flow-src] Pointer types are not supported for sampling");
+      }
     } else {
       errs() << "[sample-flow-src] Dynamic instrumentation mode enabled\n";
 
@@ -1019,9 +1215,9 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
     // For non-dynamic mode we still insert the static report BEFORE the sink
     if (!DynamicModeOpt) {
-    insertSampleCalls(DL, Ctx, SampleInt, SampleDouble, SampleBytes,
-                      SampleReportSource, Base, LastWriter, AI, GV, Ptr,
-                      PointedToType, SrcIDOpt);
+      insertSampleCalls(DL, Ctx, SampleInt, SampleDouble, SampleBytes,
+                        SampleReportSource, Base, LastWriter, AI, GV, Ptr,
+                        PointedToType, SrcIDOpt);
     }
 
     return PreservedAnalyses::none();
@@ -1087,7 +1283,7 @@ struct SampleFlowSrcModulePass : public PassInfoMixin<SampleFlowSrcModulePass> {
     else if (!NotImplemented.empty())
       errs() << NotImplemented;
     else
-    errs() << "[sample-flow-src-module] No function was instrumented\n";
+      errs() << "[sample-flow-src-module] No function was instrumented\n";
 
     return PreservedAnalyses::all();
   }

@@ -335,6 +335,37 @@
             "preLaunchTask": "sense:build-all",
         },
         {
+            "name": "Debug SampleFlowSrcPass (orchestrator command - openssl_x509 getenv.c)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/usr/bin/opt-20",
+            "args": [
+                "-load-pass-plugin",
+                "${workspaceFolder}/sense/build/SampleFlowSrcPass.so",
+                "-passes=sample-flow-src-module",
+                "--dynamic-src",
+                "--src-line=94",
+                "--src-col-start=12",
+                "--src-col-end=25",
+                "--src-id=1",
+                "--src-var-name=secure_getenv",
+                "--src-file=${workspaceFolder}/subjects/openssl/crypto/getenv.c",
+                "${workspaceFolder}/subjects/openssl/fuzz/x509.ll",
+                "-S",
+                "-o",
+                "${workspaceFolder}/sense/build/openssl_x509_getenv_src1.ll"
+            ],
+            "cwd": "${workspaceFolder}/sense/tests",
+            "env": {
+                "LLVM_SYMBOLIZER_PATH": "/usr/bin/llvm-symbolizer-20"
+            },
+            "initCommands": [
+                "settings set target.disable-aslr true",
+                "settings set target.inline-breakpoint-strategy always"
+            ],
+            "preLaunchTask": "sense:build-all",
+        },
+        {
             "name": "Debug SampleFlowSinkPass (orchestrator command - SINK_ID=1)",
             "type": "lldb",
             "request": "launch",
@@ -569,7 +600,7 @@
             "program": "${workspaceFolder}/sense/build/taint-orchestrator",
             "args": [
                 "--sarif",
-                "${workspaceFolder}/subjects/openssl/openssl_iruntrusted.sarif",
+                "${workspaceFolder}/subjects/openssl/openssl_path_traversal_x509.sarif",
                 "--input",
                 "${workspaceFolder}/subjects/openssl/fuzz/x509.ll",
                 "--output",
@@ -578,7 +609,8 @@
                 "${workspaceFolder}/subjects/openssl/compile_commands.json",
                 "--pass-dir",
                 "${workspaceFolder}/sense/build",
-                "--verbose"
+                "--verbose",
+                "--dynamic-tracking"
             ],
             "cwd": "${workspaceFolder}/sense/build",
             "env": {
