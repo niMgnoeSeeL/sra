@@ -80,38 +80,74 @@ InstrumentationStrategy::generateCoverageCommand(const std::string &flowDbPath,
   return cmd;
 }
 
+static std::string_view last_line(std::string_view s) {
+  // drop trailing '\n'
+  while (!s.empty() && s.back() == '\n')
+    s.remove_suffix(1);
+
+  if (s.empty())
+    return {};
+
+  // take after last '\n'
+  auto pos = s.find_last_of('\n');
+  return (pos == std::string_view::npos) ? s : s.substr(pos + 1);
+}
+
 bool InstrumentationStrategy::executeCommand(const OptCommand &cmd,
                                              std::string &errorOutput) {
   std::cout << "[InstrumentationStrategy] Executing: " << cmd.command << "\n";
 
-  bool success = runShellCommand(cmd.command, errorOutput);
+  InstrumentationResult result = runShellCommand(cmd.command, errorOutput);
 
-  if (success) {
+  if (result.code == InstrumentationResultCode::Success) {
     if (cmd.id >= 0) {
       // Source or sink instrumentation
-      std::cout << "[InstrumentationStrategy] Successfully instrumented "
+      std::cout << "[InstrumentationStrategy] ✅ SUCCESS: instrumented "
                 << (cmd.isSource ? "source" : "sink") << " at "
-                << cmd.location.toString() << "\n";
+                << cmd.location.toString() << "\n\n";
     } else {
       // Coverage or other instrumentation
-      std::cout << "[InstrumentationStrategy] Successfully completed "
-                   "instrumentation\n";
+      std::cout << "[InstrumentationStrategy] ✅ SUCCESS: completed "
+                   "instrumentation\n\n";
     }
-  } else {
+  } else if (result.code == InstrumentationResultCode::NotFound) {
     if (cmd.id >= 0) {
-      std::cerr << "[InstrumentationStrategy] ERROR: Instrumentation failed at "
-                << cmd.location.toString() << "\n";
+      std::cerr
+          << "[InstrumentationStrategy] ⚠️  WARNING: Instrumentation point ("
+          << cmd.location.toString() << ") not found in the module\n\n";
     } else {
-      std::cerr << "[InstrumentationStrategy] ERROR: Instrumentation failed\n";
+      std::cerr << "[InstrumentationStrategy] ⚠️  WARNING: Instrumentation point"
+                   " not found in the module\n\n";
+    }
+  } else if (result.code == InstrumentationResultCode::NotImplemented) {
+    if (cmd.id >= 0) {
+      std::cerr << "[InstrumentationStrategy] ❓ WARNING: Instrumentation for "
+                   "point at "
+                << cmd.location.toString() << " is not implemented\n\n";
+    } else {
+      std::cerr
+          << "[InstrumentationStrategy] ❓ WARNING: Instrumentation is not "
+             "implemented\n\n";
+    }
+    if (auto line = last_line(errorOutput); !line.empty()) {
+      std::cerr << "  Error output (last line): " << line << "\n\n";
+    }
+  } else if (result.code == InstrumentationResultCode::Error) {
+    if (cmd.id >= 0) {
+      std::cerr
+          << "[InstrumentationStrategy] ❌ ERROR: Instrumentation failed at "
+          << cmd.location.toString() << "\n\n";
+    } else {
+      std::cerr
+          << "[InstrumentationStrategy] ❌ ERROR: Instrumentation failed\n\n";
     }
     std::cerr << "  Command: " << cmd.command << "\n";
-    std::cerr << "  Error output[:-200]: "
-              << errorOutput.substr(
-                     errorOutput.size() > 200 ? errorOutput.size() - 200 : 0)
-              << "\n";
+    if (auto line = last_line(errorOutput); !line.empty()) {
+      std::cerr << "  Error output (last line): " << line << "\n\n";
+    }
   }
 
-  return success;
+  return result.code == InstrumentationResultCode::Success;
 }
 
 bool InstrumentationStrategy::executeAll(
@@ -197,10 +233,9 @@ std::string InstrumentationStrategy::buildOptCommand(
   return oss.str();
 }
 
-bool InstrumentationStrategy::runShellCommand(const std::string &cmd,
-                                              std::string &output) {
-  output.clear();
-
+InstrumentationResult
+InstrumentationStrategy::runShellCommand(const std::string &cmd,
+                                         std::string &errorOutput) {
   // Use popen to capture output
   std::string cmd_both = cmd + " 2>&1";
   std::array<char, 1048576> buffer;
@@ -208,27 +243,41 @@ bool InstrumentationStrategy::runShellCommand(const std::string &cmd,
                                                 pclose);
 
   if (!pipe) {
-    output = "Failed to execute command";
-    return false;
+    return {InstrumentationResultCode::Error, "Failed to execute command"};
   }
 
   // Read command output
   while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
-    output += buffer.data();
+    errorOutput += buffer.data();
   }
 
-  // If stderr contains "No function was instrumented"
-  // Then treat as as failure
-  if (output.find("[sample-flow-src-module] No function was instrumented") !=
-          std::string::npos ||
-      output.find("[sample-flow-sink-module] No function was instrumented") !=
-          std::string::npos) {
-    return false;
-  }
-
-  // Check exit status
+  // Check exit status. pclose returns -1 on error.
   int exitStatus = pclose(pipe.release());
-  return (exitStatus == 0);
+
+  // Check for specific output messages to determine the result
+  if (errorOutput.find("[sample-flow-src-module] Source not found in module") !=
+          std::string::npos ||
+      errorOutput.find("[sample-flow-sink-module] Sink not found in module") !=
+          std::string::npos) {
+    return {InstrumentationResultCode::NotFound, errorOutput};
+  }
+
+  if (errorOutput.find(
+          "[sample-flow-src-module] No function was instrumented") !=
+          std::string::npos ||
+      errorOutput.find(
+          "[sample-flow-sink-module] No function was instrumented") !=
+          std::string::npos) {
+    return {InstrumentationResultCode::NotImplemented, errorOutput};
+  }
+
+  // Check the command's exit status
+  if (exitStatus == 0) {
+    return {InstrumentationResultCode::Success, errorOutput};
+  }
+
+  // Any other non-zero exit status is a general error
+  return {InstrumentationResultCode::Error, errorOutput};
 }
 
 } // namespace taint

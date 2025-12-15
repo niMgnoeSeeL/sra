@@ -1013,6 +1013,9 @@ struct SampleFlowSrcModulePass : public PassInfoMixin<SampleFlowSrcModulePass> {
 
     auto &FAM =
         MAM.getResult<FunctionAnalysisManagerModuleProxy>(M).getManager();
+    bool Found = false;         // if the sink is in the module, regardless of
+                                // instrumented or not
+    std::string NotImplemented; // collect NotImplemented errors
 
     // Try each function until one succeeds
     for (Function &F : M) {
@@ -1042,16 +1045,23 @@ struct SampleFlowSrcModulePass : public PassInfoMixin<SampleFlowSrcModulePass> {
           errs()
               << "[sample-flow-src-module] Successfully instrumented function: "
               << F.getName() << "\n";
+          Found = true;
           return PreservedAnalyses::none();
         }
       } catch (NotImplementedError &E) {
-        errs() << "[sample-flow-src-module] NotImplementedError: " << E.what()
-               << "\n";
+        NotImplemented = "[sample-flow-src-module] NotImplementedError: " +
+                         std::string(E.what()) + "\n";
         break;
       }
     }
 
+    if (!Found)
+      errs() << "[sample-flow-src-module] Source not found in module\n";
+    else if (!NotImplemented.empty())
+      errs() << NotImplemented;
+    else
     errs() << "[sample-flow-src-module] No function was instrumented\n";
+
     return PreservedAnalyses::all();
   }
 };

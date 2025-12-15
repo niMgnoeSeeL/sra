@@ -43,6 +43,18 @@
 
 namespace taint {
 
+enum class InstrumentationResultCode {
+  Success,
+  NotFound,       // Instrumentation point not found, but not a hard error
+  NotImplemented, // Instrumentation for this case is not implemented
+  Error           // A genuine error occurred
+};
+
+struct InstrumentationResult {
+  InstrumentationResultCode code;
+  std::string output;
+};
+
 struct OptCommand {
   std::string command;     // Full opt command line
   std::string inputFile;   // Input LLVM IR file
@@ -100,7 +112,8 @@ private:
                               const std::string &outputLL, bool isSource);
 
   // Helper: Execute shell command
-  bool runShellCommand(const std::string &cmd, std::string &output);
+  InstrumentationResult runShellCommand(const std::string &cmd,
+                                        std::string &output);
 };
 
 } // namespace taint
