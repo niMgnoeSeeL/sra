@@ -57,6 +57,7 @@ struct Config {
   std::string compileDbPath; // Optional: path to compile_commands.json
   std::vector<std::string> compileArgs;
   bool verbose = false;
+  bool dynamicTracking = false;
 };
 
 void printUsage(const char *progName) {
@@ -70,6 +71,11 @@ void printUsage(const char *progName) {
   std::cout << "  --pass-dir <dir>     Directory containing pass plugin .so "
                "files\n\n";
   std::cout << "Optional options:\n";
+  std::cout << "  --dynamic-tracking   Enable dynamic tracking of tainted "
+               "payload reads\n";
+  std::cout << "                       and writes at taint sources and sinks, "
+               "requires\n";
+  std::cout << "                       DynamoRIO client (default: false)\n";
   std::cout << "  --opt-path <path>    Path to opt binary (default: opt)\n";
   std::cout << "  --compile-db <path>  Path to compile_commands.json for "
                "proper AST parsing\n";
@@ -103,6 +109,8 @@ bool parseArgs(int argc, char **argv, Config &config) {
       config.outputLL = argv[++i];
     } else if (arg == "--pass-dir" && i + 1 < argc) {
       config.passDir = argv[++i];
+    } else if (arg == "--dynamic-tracking") {
+      config.dynamicTracking = true;
     } else if (arg == "--opt-path" && i + 1 < argc) {
       config.optPath = argv[++i];
     } else if (arg == "--compile-db" && i + 1 < argc) {
@@ -309,7 +317,8 @@ int main(int argc, char **argv) {
     std::string output =
         config.outputLL + ".src" + std::to_string(srcID) + ".ll";
 
-    auto cmd = strategy.generateSourceCommand(loc, srcID, info, input, output);
+    auto cmd = strategy.generateSourceCommand(
+        loc, srcID, info, config.dynamicTracking, input, output);
     commands.push_back(cmd);
   }
 
@@ -338,7 +347,8 @@ int main(int argc, char **argv) {
     std::string output =
         config.outputLL + ".sink" + std::to_string(sinkID) + ".ll";
 
-    auto cmd = strategy.generateSinkCommand(loc, sinkID, info, input, output);
+    auto cmd = strategy.generateSinkCommand(
+        loc, sinkID, info, config.dynamicTracking, input, output);
     commands.push_back(cmd);
   }
 

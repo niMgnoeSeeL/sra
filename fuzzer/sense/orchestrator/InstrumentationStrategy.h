@@ -48,6 +48,7 @@ struct OptCommand {
   std::string inputFile;   // Input LLVM IR file
   std::string outputFile;  // Output LLVM IR file
   int id;                  // SRC_ID or SINK_ID
+  bool dynamicTracking;    // Whether dynamic tracking is enabled
   bool isSource;           // true = source, false = sink
   SourceLocation location; // Location being instrumented
 };
@@ -61,12 +62,14 @@ public:
   // Generate source instrumentation command
   OptCommand generateSourceCommand(const SourceLocation &loc, int srcID,
                                    const InstrumentationInfo &info,
+                                   bool dynamicTracking,
                                    const std::string &inputLL,
                                    const std::string &outputLL);
 
   // Generate sink instrumentation command
   OptCommand generateSinkCommand(const SourceLocation &loc, int sinkID,
                                  const InstrumentationInfo &info,
+                                 bool dynamicTracking,
                                  const std::string &inputLL,
                                  const std::string &outputLL);
 
@@ -93,7 +96,7 @@ private:
   std::string buildOptCommand(const std::string &passName,
                               const SourceLocation &loc,
                               const InstrumentationInfo &info, int id,
-                              const std::string &inputLL,
+                              bool dynamicTracking, const std::string &inputLL,
                               const std::string &outputLL, bool isSource);
 
   // Helper: Execute shell command

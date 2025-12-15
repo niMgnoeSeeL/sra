@@ -16,13 +16,15 @@ namespace taint {
 
 OptCommand InstrumentationStrategy::generateSourceCommand(
     const SourceLocation &loc, int srcID, const InstrumentationInfo &info,
-    const std::string &inputLL, const std::string &outputLL) {
+    bool dynamicTracking, const std::string &inputLL,
+    const std::string &outputLL) {
   OptCommand cmd;
   cmd.command = buildOptCommand("sample-flow-src-module", loc, info, srcID,
-                                inputLL, outputLL, true);
+                                dynamicTracking, inputLL, outputLL, true);
   cmd.inputFile = inputLL;
   cmd.outputFile = outputLL;
   cmd.id = srcID;
+  cmd.dynamicTracking = dynamicTracking;
   cmd.isSource = true;
   cmd.location = loc;
 
@@ -33,13 +35,15 @@ OptCommand InstrumentationStrategy::generateSourceCommand(
 
 OptCommand InstrumentationStrategy::generateSinkCommand(
     const SourceLocation &loc, int sinkID, const InstrumentationInfo &info,
-    const std::string &inputLL, const std::string &outputLL) {
+    bool dynamicTracking, const std::string &inputLL,
+    const std::string &outputLL) {
   OptCommand cmd;
   cmd.command = buildOptCommand("sample-flow-sink-module", loc, info, sinkID,
-                                inputLL, outputLL, false);
+                                dynamicTracking, inputLL, outputLL, false);
   cmd.inputFile = inputLL;
   cmd.outputFile = outputLL;
   cmd.id = sinkID;
+  cmd.dynamicTracking = dynamicTracking;
   cmd.isSource = false;
   cmd.location = loc;
 
@@ -133,8 +137,8 @@ bool InstrumentationStrategy::executeAll(
 
 std::string InstrumentationStrategy::buildOptCommand(
     const std::string &passName, const SourceLocation &loc,
-    const InstrumentationInfo &info, int id, const std::string &inputLL,
-    const std::string &outputLL, bool isSource) {
+    const InstrumentationInfo &info, int id, bool dynamicTracking,
+    const std::string &inputLL, const std::string &outputLL, bool isSource) {
   std::ostringstream oss;
 
   // Build pass plugin path
@@ -180,6 +184,11 @@ std::string InstrumentationStrategy::buildOptCommand(
     oss << " --src-id=" << id;
   } else {
     oss << " --sink-id=" << id;
+  }
+
+  // Add dynamic tracking flag
+  if (dynamicTracking) {
+    oss << (isSource ? " --dynamic-src" : " --dynamic-sink");
   }
 
   // Input/output files
