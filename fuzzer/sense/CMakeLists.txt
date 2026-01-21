@@ -66,6 +66,11 @@ add_llvm_pass_plugin(DummyIOPass
   passes/DummyIOPass.cpp
 )
 
+add_llvm_pass_plugin(DemoUnderlyingObjectsPass
+  passes/DemoUnderlyingObjectsPass.cpp
+)
+
+
 # Enable exceptions for our pass plugins (LLVM disables them by default)
 set_target_properties(MutArgsPass SampleArgsPass SampleFlowSrcPass 
                       SampleFlowSinkPass DataFlowCoveragePass DummyIOPass
