@@ -70,6 +70,10 @@ add_llvm_pass_plugin(DemoUnderlyingObjectsPass
   passes/DemoUnderlyingObjectsPass.cpp
 )
 
+add_llvm_pass_plugin(PointeeRecoveryPass
+  passes/PointeeRecoveryPass.cpp
+  passes/PointeeBaseRecovery.cpp
+)
 
 # Enable exceptions for our pass plugins (LLVM disables them by default)
 set_target_properties(MutArgsPass SampleArgsPass SampleFlowSrcPass 
