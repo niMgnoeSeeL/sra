@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include <xxhash.h>
 
+#define MAX_CSTR (1u << 20) // 1 MiB cap for C-string lengths
+
 // Shared memory state
 static FlowEventBuffer *g_shm_buffer = NULL;
 static int g_shm_fd = -1;
@@ -26,6 +28,12 @@ static uint64_t get_monotonic_ns(void) {
   struct timespec ts;
   clock_gettime(CLOCK_MONOTONIC, &ts);
   return (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec;
+}
+
+static size_t clamp_cstr_len(const char *s) {
+  if (s == NULL)
+    return 0;
+  return strnlen(s, MAX_CSTR);
 }
 
 // Hash data using xxHash64
@@ -270,9 +278,24 @@ void flow_report_sink(void *data, size_t size, int sink_id) {
 
 // Compatibility wrappers for LLVM pass (maintains existing function names)
 void sample_report_source(void *data, int size, int src_id) {
+  if (data == NULL)
+    return;
+  if (size == -1) {
+    size = (int)clamp_cstr_len((const char *)data);
+  }
+  if (size <= 0)
+    return;
+
   flow_report_source(data, (size_t)size, src_id);
 }
 
 void sample_report_sink(void *data, int size, int sink_id) {
+  if (data == NULL)
+    return;
+  if (size == -1) {
+    size = (int)clamp_cstr_len((const char *)data);
+  }
+  if (size <= 0)
+    return;
   flow_report_sink(data, (size_t)size, sink_id);
 }

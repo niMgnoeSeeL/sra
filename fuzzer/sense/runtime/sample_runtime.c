@@ -2,12 +2,14 @@
 #include <limits.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/random.h>
 #include <time.h>
 #include <unistd.h>
 
 // Default values
-#define DEFAULT_BUDGET -1 // -1 means unlimited samples
+#define DEFAULT_BUDGET -1   // -1 means unlimited samples
+#define MAX_CSTR (1u << 20) // 1 MiB cap for C-string lengths
 
 static uint64_t g_state = 0;
 static int g_budget = DEFAULT_BUDGET;
@@ -20,6 +22,12 @@ static uint64_t xorshift64star(void) {
   x ^= x >> 27;
   g_state = x;
   return x * 0x2545F4914F6CDD1Dull;
+}
+
+static size_t clamp_cstr_len(const char *s) {
+  if (s == NULL)
+    return 0;
+  return strnlen(s, MAX_CSTR);
 }
 
 void sample_seed(uint64_t s) { g_state = s; }
@@ -110,9 +118,16 @@ double sample_double(double original) {
 
 void sample_bytes(void *data, int size) {
   if (!budget_ok())
-    return; // Don't mutate when budget exhausted
+    return;
 
-  if (!data || size <= 0)
+  if (data == NULL)
+    return;
+
+  if (size == -1) {
+    size = (int)clamp_cstr_len((const char *)data);
+  }
+
+  if (size <= 0)
     return;
 
   unsigned char *bytes = (unsigned char *)data;
