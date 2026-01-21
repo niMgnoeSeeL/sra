@@ -594,11 +594,12 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
 
   // insert dynamic start/end marker calls around SRC OP
   // and report AFTER end
-  static void insertDynamicMarkerCalls(LLVMContext &Ctx, Instruction *SrcOp,
-                                       Value *ReportPtr,
-                                       Function *StartTrackingSrc,
-                                       Function *EndTrackingSrc,
-                                       Function *SampleReportSrc, int srcID) {
+  static void
+  insertDynamicMarkerCalls(LLVMContext &Ctx, Instruction *SrcOp,
+                           Value *ReportPtr, Function *StartTrackingSrc,
+                           Function *EndTrackingSrc, Function *SampleInt,
+                           Function *SampleDouble, Function *SampleBytes,
+                           Function *SampleReportSrc, int srcID) {
     Type *I32Ty = Type::getInt32Ty(Ctx);
 
     // Insert start call before src
@@ -628,6 +629,10 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
     else
       ReportSize32 = EndRet;
 
+    // Insert sample call
+    Bend.CreateCall(SampleBytes, {ReportPtrCast, ReportSize32});
+
+    // Insert report call
     Bend.CreateCall(SampleReportSrc, {ReportPtrCast, ReportSize32, SinkIDVal});
   }
 
@@ -1210,7 +1215,8 @@ struct SampleFlowSrcPass : public PassInfoMixin<SampleFlowSrcPass> {
       // Prepare ReportPtr and delegate insertion to helper
       Value *ReportPtr = Ptr ? Ptr : Base;
       insertDynamicMarkerCalls(Ctx, LastWriter, ReportPtr, StartTrackingSrc,
-                               EndTrackingSrc, SampleReportSource, SrcIDOpt);
+                               EndTrackingSrc, SampleInt, SampleDouble,
+                               SampleBytes, SampleReportSource, SrcIDOpt);
     }
 
     // For non-dynamic mode we still insert the static report BEFORE the sink
