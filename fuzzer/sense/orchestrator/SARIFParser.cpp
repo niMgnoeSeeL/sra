@@ -12,9 +12,11 @@ using json = nlohmann::json;
 
 namespace taint {
 
-bool SARIFParser::parseSARIFFile(const std::string &filePath) {
+bool SARIFParser::parseSARIFFile(const std::string &filePath,
+                                 const std::string &sourceDir) {
   flows.clear();
   errorMessage.clear();
+  std::string baseDir;
 
   // Check file exists
   if (!fs::exists(filePath)) {
@@ -23,7 +25,15 @@ bool SARIFParser::parseSARIFFile(const std::string &filePath) {
   }
 
   // Get base directory for resolving relative paths
-  std::string baseDir = fs::path(filePath).parent_path().string();
+  if (!sourceDir.empty()) {
+    std::cout << "[SARIFParser] Using provided source directory: " << sourceDir
+              << "\n";
+    baseDir = sourceDir;
+  } else {
+    std::cout << "[SARIFParser] No source directory provided, using SARIF "
+                 "file's directory\n";
+    baseDir = fs::path(filePath).parent_path().string();
+  }
 
   // Read and parse JSON
   std::ifstream ifs(filePath);

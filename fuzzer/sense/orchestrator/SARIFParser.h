@@ -34,7 +34,8 @@ public:
   SARIFParser() = default;
 
   // Parse SARIF file and extract flows
-  bool parseSARIFFile(const std::string &filePath);
+  bool parseSARIFFile(const std::string &filePath,
+                      const std::string &sourceDir);
 
   // Get extracted flows
   const std::vector<Flow> &getFlows() const { return flows; }
@@ -49,11 +50,11 @@ private:
 
   // Helper: Convert SARIF location to SourceLocation
   SourceLocation convertLocation(const nlohmann::json &location,
-                                  const std::string &baseDir);
+                                 const std::string &baseDir);
 
   // Helper: Extract flow from SARIF codeFlow object
-  Flow extractFlow(const nlohmann::json &codeFlow,
-                   const nlohmann::json &result, const std::string &baseDir);
+  Flow extractFlow(const nlohmann::json &codeFlow, const nlohmann::json &result,
+                   const std::string &baseDir);
 
   // Helper: Resolve relative file paths
   std::string resolveFilePath(const std::string &uriOrPath,

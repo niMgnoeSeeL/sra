@@ -50,6 +50,7 @@ namespace fs = std::filesystem;
 
 struct Config {
   std::string sarifFile;
+  std::string sourceDir;
   std::string inputLL;
   std::string outputLL;
   std::string passDir;
@@ -66,6 +67,7 @@ void printUsage(const char *progName) {
   std::cout
       << "  --sarif <file>       SARIF file with taint flow specifications\n";
   std::cout << "  --input <file>       Input LLVM IR file (.ll)\n";
+  std::cout << "  --source-dir <dir>   Source directory for AST analysis\n";
   std::cout
       << "  --output <file>      Output instrumented LLVM IR file (.ll)\n";
   std::cout << "  --pass-dir <dir>     Directory containing pass plugin .so "
@@ -103,6 +105,8 @@ bool parseArgs(int argc, char **argv, Config &config) {
       return false;
     } else if (arg == "--sarif" && i + 1 < argc) {
       config.sarifFile = argv[++i];
+    } else if (arg == "--source-dir" && i + 1 < argc) {
+      config.sourceDir = argv[++i];
     } else if (arg == "--input" && i + 1 < argc) {
       config.inputLL = argv[++i];
     } else if (arg == "--output" && i + 1 < argc) {
@@ -156,7 +160,7 @@ int main(int argc, char **argv) {
   // Step 1: Parse SARIF file
   std::cout << "[Step 1] Parsing SARIF file: " << config.sarifFile << "\n";
   taint::SARIFParser parser;
-  if (!parser.parseSARIFFile(config.sarifFile)) {
+  if (!parser.parseSARIFFile(config.sarifFile, config.sourceDir)) {
     std::cerr << "ERROR: " << parser.getError() << "\n";
     return 1;
   }
