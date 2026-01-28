@@ -311,9 +311,9 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
         if (auto *DIGV = GVE->getVariable()) {
           if (DIGV->getName() == VarName) {
             GlobalCandidates.push_back({&GV, DIGV});
-            errs() << "[sample-flow-sink]   Found global candidate: "
-                   << GV.getName() << " declared at line " << DIGV->getLine()
-                   << "\n";
+            // errs() << "[sample-flow-sink]   Found global candidate: "
+            //        << GV.getName() << " declared at line " << DIGV->getLine()
+            //        << "\n";
           }
         }
       }
@@ -413,12 +413,12 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
 
       if (UsedOnTaintLine) {
         BestGlobalMatch = GV;
-        errs() << "[sample-flow-sink]   Accepted global: " << GV->getName()
-               << "\n";
+        // errs() << "[sample-flow-sink]   Accepted global: " << GV->getName()
+        //        << "\n";
         break;
       } else {
-        errs() << "[sample-flow-sink]   Rejecting global " << GV->getName()
-               << " - not used on line " << TaintLine << "\n";
+        // errs() << "[sample-flow-sink]   Rejecting global " << GV->getName()
+        //        << " - not used on line " << TaintLine << "\n";
       }
     }
 
@@ -570,17 +570,9 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
       // Check if this is a call that reads from Base
       if (auto *CB = dyn_cast<CallBase>(I)) {
         // Check arguments for aliasing with Base
-        for (auto &Arg : CB->args()) {
-          SmallVector<const Value *, 4> Objects;
-          getUnderlyingObjects(Arg, Objects);
-          for (auto *Obj : Objects) {
-            if (Obj == Base) {
-              Reads = true;
-              break;
-            }
-          }
-          if (Reads)
-            break;
+        Instruction *CBReads = verifyCallReadsBase(Base, CB);
+        if (CBReads) {
+          Reads = true;
         }
 
         // Also check via alias analysis
@@ -684,6 +676,11 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
           errs() << "[sample-flow-sink] Found argument aliasing with Base: "
                  << *Arg << "\n";
           return Arg;
+        } else if (auto *Load = dyn_cast<LoadInst>(Obj)) {
+          Instruction *AnchorCndt =
+              verifyLoadReadsBase(Base, const_cast<LoadInst *>(Load));
+          if (AnchorCndt)
+            return Arg;
         }
       }
     }
@@ -691,18 +688,30 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
   }
 
   // Verify the call reads from Base
-  static Instruction *verifyCallReadsBase(Value *&Base, Instruction &I,
-                                          llvm::CallBase *&CB) {
+  static Instruction *verifyCallReadsBase(Value *&Base, CallBase *CB) {
+    errs() << "[sample-flow-sink] Verifying call" << *CB
+           << "reads from Base: " << *Base << "\n";
+
     for (auto &Arg : CB->args()) {
       // Case 1: Argument is a pointer that may alias Base
       if (Arg->getType()->isPointerTy()) {
+        errs() << "[sample-flow-sink]   Checking pointer arg: "
+               << Arg->getValueName() << "\n";
+
         SmallVector<const Value *, 4> Objects;
         getUnderlyingObjects(Arg, Objects);
         for (auto *Obj : Objects) {
+          errs() << "[sample-flow-sink]     Underlying object: " << *Obj
+                 << "\n";
           if (Obj == Base) {
             errs() << "[sample-flow-sink] Found taint sink call (pointer arg): "
-                   << I << "\n";
-            return &I;
+                   << *CB << "\n";
+            return (Instruction *)CB;
+          } else if (auto *Load = dyn_cast<LoadInst>(Obj)) {
+            Instruction *AnchorCndt =
+                verifyLoadReadsBase(Base, const_cast<LoadInst *>(Load));
+            if (AnchorCndt)
+              return (Instruction *)CB;
           }
         }
       }
@@ -728,8 +737,8 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
               if (Obj == Base) {
                 errs() << "[sample-flow-sink] Found taint sink call (scalar "
                           "derived from Base): "
-                       << I << "\n";
-                return &I;
+                       << *CB << "\n";
+                return (Instruction *)CB;
               }
             }
           }
@@ -748,17 +757,44 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
   }
 
   // Verify the load reads from Base
-  static Instruction *verifyLoadReadsBase(Value *&Base, Instruction &I,
-                                          AliasAnalysis &AA) {
-    auto *Load = cast<LoadInst>(&I);
+  static Instruction *verifyLoadReadsBase(Value *&Base, LoadInst *Load) {
     SmallVector<const Value *, 4> Objects;
     getUnderlyingObjects(Load->getPointerOperand(), Objects);
     for (auto *Obj : Objects) {
       if (Obj == Base) {
-        errs() << "[sample-flow-sink] Found taint sink load: " << I << "\n";
-        return &I;
+        errs() << "[sample-flow-sink] Found taint sink load: " << *Load << "\n";
+        return (Instruction *)Load;
       }
     }
+    return nullptr;
+  }
+
+  static llvm::Type *inferPointedToTypeFromUses(llvm::Value *Ptr) {
+    if (!Ptr || !Ptr->getType()->isPointerTy())
+      return nullptr;
+
+    // Walk through casts/aliases to the “real” pointer value.
+    Ptr = Ptr->stripPointerCasts();
+
+    llvm::Type *Candidate = nullptr;
+
+    for (llvm::User *U : Ptr->users()) {
+      if (auto *LI = llvm::dyn_cast<llvm::LoadInst>(U)) {
+        if (LI->getPointerOperand()->stripPointerCasts() == Ptr)
+          Candidate = LI->getType(); // load <Ty>, ptr %p  ==> pointee Ty
+      } else if (auto *SI = llvm::dyn_cast<llvm::StoreInst>(U)) {
+        if (SI->getPointerOperand()->stripPointerCasts() == Ptr)
+          Candidate = SI->getValueOperand()->getType(); // store <Ty> %v, ptr %p
+      } else if (auto *GEP = llvm::dyn_cast<llvm::GetElementPtrInst>(U)) {
+        if (GEP->getPointerOperand()->stripPointerCasts() == Ptr)
+          Candidate =
+              GEP->getSourceElementType(); // GEP carries source element type
+      }
+
+      if (Candidate)
+        return Candidate; // good enough: first strong signal
+    }
+
     return nullptr;
   }
 
@@ -784,13 +820,16 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
                       "GEP: "
                    << *PointedToType << "\n";
           }
+        } else {
+          PointedToType = inferPointedToTypeFromUses(Ptr);
         }
       }
     } else if (auto *Load = dyn_cast<LoadInst>(Anchor)) {
       // For loads, the type is the loaded type
       PointedToType = Load->getType();
       Ptr = Load->getPointerOperand();
-      errs() << "[sample-flow-sink] Load type: " << *PointedToType << "\n";
+      errs() << "[sample-flow-sink] Inferred pointed-to type from Load: "
+             << *PointedToType << "\n";
     }
 
     if (!PointedToType && AllocatedType) {
@@ -902,12 +941,17 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
             // log(x))
             if (auto *CB = dyn_cast<CallBase>(&I)) {
               // Check if any argument aliases with Base
-              Anchor = verifyCallReadsBase(Base, I, CB);
+              Instruction *AnchorCndt = verifyCallReadsBase(Base, CB);
+              if (AnchorCndt)
+                Anchor = AnchorCndt;
             }
 
             // Case 2: Load that reads from Base (e.g., for scalar variables)
             if (!Anchor && isa<LoadInst>(&I)) {
-              Anchor = verifyLoadReadsBase(Base, I, AA);
+              auto *LI = cast<LoadInst>(&I);
+              Instruction *AnchorCndt = verifyLoadReadsBase(Base, LI);
+              if (AnchorCndt)
+                Anchor = AnchorCndt;
             }
           }
         }
@@ -1000,6 +1044,23 @@ struct SampleFlowSinkPass : public PassInfoMixin<SampleFlowSinkPass> {
 // === ModulePass wrapper that stops after first successful instrumentation ===
 namespace {
 
+static bool taintLocationIsInModule(Module &M) {
+  if (FileNameOpt.getValue().empty())
+    return false;
+
+  for (Function &F : M) {
+    if (F.isDeclaration())
+      continue;
+
+    auto FuncPathOpt = getFunctionSourcePath(F);
+    if (FuncPathOpt.value() == FileNameOpt.getValue()) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 struct SampleFlowSinkModulePass
     : public PassInfoMixin<SampleFlowSinkModulePass> {
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
@@ -1007,8 +1068,10 @@ struct SampleFlowSinkModulePass
 
     auto &FAM =
         MAM.getResult<FunctionAnalysisManagerModuleProxy>(M).getManager();
-    bool Found = false;         // if the source is in the module, regardless of
-                                // instrumented or not
+    if (!taintLocationIsInModule(M)) {
+      errs() << "[sample-flow-sink-module] Source not found in module\n";
+      return PreservedAnalyses::all();
+    }
     std::string NotImplemented; // collect NotImplemented errors
 
     // Try each function until one succeeds
@@ -1039,7 +1102,6 @@ struct SampleFlowSinkModulePass
           errs() << "[sample-flow-sink-module] Successfully instrumented "
                     "function: "
                  << F.getName() << "\n";
-          Found = true;
           return PreservedAnalyses::none();
         }
       } catch (NotImplementedError &E) {
@@ -1049,12 +1111,10 @@ struct SampleFlowSinkModulePass
       }
     }
 
-    if (!Found)
-      errs() << "[sample-flow-src-module] Source not found in module\n";
-    else if (!NotImplemented.empty())
+    if (!NotImplemented.empty())
       errs() << NotImplemented;
     else
-      errs() << "[sample-flow-src-module] No function was instrumented\n";
+      errs() << "[sample-flow-sink-module] No function was instrumented\n";
 
     return PreservedAnalyses::all();
   }
