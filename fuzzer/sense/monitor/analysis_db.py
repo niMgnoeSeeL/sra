@@ -25,7 +25,7 @@ class FlowSensitivity:
     flow_id: int
     total_executions: int  # Total number of executions monitored
     completions: int  # Number of times this flow completed
-    sensitivity: float  # Probability of same sink hash from 2 random executions
+    sensitivity: float  # Probability of different sink hash from 2 random executions
     num_samples: int = 0  # Number of random samples used for sensitivity calculation
     
     # Detailed metrics
@@ -174,14 +174,14 @@ class SensitivityAnalysisDatabase(ExecutionAnalysisDatabase):
         super().add(analysis)
         self._sensitivity_cache = None  # Invalidate cache
     
-    def analysis(self, num_samples: int = 100) -> Dict[int, FlowSensitivity]:
+    def analysis(self, num_samples: int = 10000) -> Dict[int, FlowSensitivity]:
         """
         Compute sensitivity metrics for all flows using sampling.
         
         Sensitivity is defined as the probability that two randomly sampled
-        executions produce the same sink hash for a given flow. This is estimated
-        by randomly sampling pairs of executions and computing the fraction that
-        have matching sink hashes.
+        executions produce different sink hashes for a given flow. This is
+        estimated by randomly sampling pairs of executions and computing the
+        fraction that have differing sink hashes.
         
         Args:
             num_samples: Number of random execution pairs to sample per flow
@@ -224,25 +224,28 @@ class SensitivityAnalysisDatabase(ExecutionAnalysisDatabase):
             unique_sink_hashes = set(sink_hashes)
             
             # Compute sensitivity via sampling
+            # sensitivity = P(different sink hash | two random completions)
             if num_completions == 1:
-                # Only one completion, sensitivity is 1.0 (trivially same)
+                # Only one completion observed; assume deterministic (no evidence
+                # of variability) so probability of different outputs is 1.0
                 sensitivity_score = 1.0
                 samples_used = 1
             else:
-                # Sample pairs of executions and check if sink hashes match
+                # Sample pairs of completions and check if sink hashes differ
                 matching_pairs = 0
                 samples_used = min(num_samples, num_completions * (num_completions - 1) // 2)
-                
+
                 for _ in range(samples_used):
                     # Randomly sample two different completions
                     idx1, idx2 = random.sample(range(num_completions), 2)
                     hash1 = completions[idx1].sink_event.data_hash
                     hash2 = completions[idx2].sink_event.data_hash
-                    
+
                     if hash1 == hash2:
                         matching_pairs += 1
-                
-                sensitivity_score = matching_pairs / samples_used if samples_used > 0 else 0.0
+
+                # matching_pairs / samples_used estimates P(same). We want P(different)
+                sensitivity_score = 1.0 - (matching_pairs / samples_used) if samples_used > 0 else 0.0
             
             # Collect timing metrics
             total_time_ns = sum(fc.time_delta_ns for fc in completions)
@@ -276,9 +279,9 @@ class SensitivityAnalysisDatabase(ExecutionAnalysisDatabase):
         Print sensitivity statistics visualization to stdout and log.
         
         Sensitivity is the probability that two randomly sampled executions
-        produce the same sink hash. Higher sensitivity means the flow is more
-        deterministic/stable, while lower sensitivity means the sink hash varies
-        more across executions.
+        produce different sink hashes. Higher sensitivity means the flow is
+        more deterministic, while lower sensitivity means the
+        flow is more variable across executions.
         
         This method displays:
         - Overview statistics
@@ -310,7 +313,7 @@ class SensitivityAnalysisDatabase(ExecutionAnalysisDatabase):
         lines = []
         lines.append("=" * 90)
         lines.append("FLOW SENSITIVITY ANALYSIS")
-        lines.append("Sensitivity = P(same sink hash | 2 random executions)")
+        lines.append("Sensitivity = P(different sink hash | 2 random executions)")
         lines.append("=" * 90)
         lines.append(f"Total Executions: {self.total_executions}")
         lines.append(f"Unique Flows Detected: {len(sensitivity)}")
@@ -351,7 +354,7 @@ class SensitivityAnalysisDatabase(ExecutionAnalysisDatabase):
         # Summary statistics
         lines.append("")
         lines.append("SUMMARY:")
-        lines.append(f"  Sens = Sensitivity (higher = more deterministic sink hash)")
+        lines.append(f"  Sens = Sensitivity (higher = more deterministic / less variable sink hash)")
         lines.append(f"  Compl = Completions (times flow completed / total executions)")
         lines.append(f"  Uniq = Unique sink hashes observed")
         lines.append("")

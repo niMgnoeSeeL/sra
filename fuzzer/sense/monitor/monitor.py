@@ -13,8 +13,9 @@ import time
 import json
 import sys
 import logging
+import csv
 from pathlib import Path
-from typing import Optional, Set, TextIO
+from typing import Optional, Set, TextIO, Dict, List
 from datetime import datetime
 
 from config import MonitorConfig
@@ -62,7 +63,27 @@ class FlowMonitor:
         self.executions_processed = 0
         self.failed_executions = 0
         
+        # CSV tracking for sensitivity over time
+        self.csv_enabled = config.sensitivity_csv.enabled
+        self.csv_interval = config.sensitivity_csv.interval_seconds
+        self.csv_num_samples = config.sensitivity_csv.num_samples
+        
+        # Determine CSV output path - if relative, place it in same dir as output file
+        csv_path = Path(config.sensitivity_csv.output_path)
+        if not csv_path.is_absolute() and config.output.destination != "-":
+            # Place CSV in same directory as the output JSONL file
+            output_dir = Path(config.output.destination).parent
+            self.csv_output_path = output_dir / csv_path
+        else:
+            self.csv_output_path = csv_path
+        
+        self.csv_data: Dict[int, List[float]] = {}  # flow_id -> [sensitivity_at_t0, sensitivity_at_t1, ...]
+        self.csv_timestamps: List[float] = []  # [0, 5, 10, 15, ...]
+        self.start_time: Optional[float] = None
+        
         logger.info(f"FlowMonitor initialized with {flow_db}")
+        if self.csv_enabled:
+            logger.info(f"CSV tracking enabled: {self.csv_output_path} (interval={self.csv_interval}s)")
     
     def start(self) -> None:
         """Start the monitoring service."""
@@ -77,7 +98,9 @@ class FlowMonitor:
         
         # Main monitoring loop
         self.running = True
+        self.start_time = time.time()
         last_stats_time = time.time()
+        last_csv_time = time.time()
         
         try:
             while self.running:
@@ -135,6 +158,13 @@ class FlowMonitor:
                         self._print_statistics()
                         last_stats_time = now
                 
+                # Update CSV data periodically
+                if self.csv_enabled:
+                    now = time.time()
+                    if now - last_csv_time >= self.csv_interval:
+                        self._update_csv_data()
+                        last_csv_time = now
+                
                 # Sleep before next poll
                 time.sleep(self.config.shared_memory.poll_interval)
                 
@@ -161,6 +191,10 @@ class FlowMonitor:
         if self.analysis_db.total_executions > 0:
             logger.info("Generating flow sensitivity analysis...")
             self.analysis_db.statistic()
+        
+        # Write final CSV output
+        if self.csv_enabled and self.csv_data:
+            self._write_csv_file()
         
         # Flush and close output file
         if self.output_file:
@@ -331,6 +365,80 @@ class FlowMonitor:
         
         for pid in pids:
             self._cleanup_execution(pid)
+    
+    def _update_csv_data(self) -> None:
+        """
+        Update CSV data with current sensitivity values.
+        
+        This method is called periodically (every csv_interval seconds) to
+        capture a snapshot of flow sensitivities at the current timestamp.
+        """
+        if not self.start_time:
+            return
+        
+        # Calculate elapsed time since monitoring started
+        elapsed = time.time() - self.start_time
+        timestamp = int(elapsed / self.csv_interval) * self.csv_interval
+        
+        # Get current sensitivity analysis
+        sensitivity_results = self.analysis_db.analysis(num_samples=self.csv_num_samples)
+        
+        # Record timestamp if this is a new timepoint
+        if not self.csv_timestamps or timestamp > self.csv_timestamps[-1]:
+            self.csv_timestamps.append(timestamp)
+            logger.debug(f"CSV snapshot at t={timestamp}s: {len(sensitivity_results)} flows")
+        
+        # Update sensitivity values for all flows at this timestamp
+        for flow_id, flow_sens in sensitivity_results.items():
+            if flow_id not in self.csv_data:
+                # Initialize this flow's data with None for all previous timestamps
+                self.csv_data[flow_id] = [None] * (len(self.csv_timestamps) - 1)
+            
+            # Ensure the flow has entries for all timestamps (pad with None if needed)
+            while len(self.csv_data[flow_id]) < len(self.csv_timestamps) - 1:
+                self.csv_data[flow_id].append(None)
+            
+            # Add current sensitivity value
+            self.csv_data[flow_id].append(flow_sens.sensitivity)
+        
+        # Pad flows that didn't complete at this timestamp with None
+        for flow_id in self.csv_data:
+            if len(self.csv_data[flow_id]) < len(self.csv_timestamps):
+                self.csv_data[flow_id].append(None)
+    
+    def _write_csv_file(self) -> None:
+        """
+        Write the sensitivity CSV file to disk.
+        
+        CSV format:
+        - First column: flow_id
+        - Subsequent columns: sensitivity values at each timestamp (t=0s, t=5s, t=10s, ...)
+        - Header row contains timestamps
+        """
+        try:
+            # Create output directory if needed
+            self.csv_output_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            with open(self.csv_output_path, 'w', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+                
+                # Write header row: flow_id, t=0s, t=5s, t=10s, ...
+                header = ['flow_id'] + [f't={int(t)}s' for t in self.csv_timestamps]
+                writer.writerow(header)
+                
+                # Write data rows: one row per flow
+                for flow_id in sorted(self.csv_data.keys()):
+                    row = [flow_id] + [
+                        f'{val:.6f}' if val is not None else ''
+                        for val in self.csv_data[flow_id]
+                    ]
+                    writer.writerow(row)
+            
+            logger.info(f"Wrote sensitivity CSV to {self.csv_output_path}")
+            logger.info(f"  {len(self.csv_data)} flows × {len(self.csv_timestamps)} timestamps")
+            
+        except Exception as e:
+            logger.error(f"Failed to write CSV file: {e}", exc_info=True)
 
 
 def setup_logging(config: MonitorConfig) -> None:

@@ -69,6 +69,15 @@ class CleanupConfig:
 
 
 @dataclass
+class SensitivityCSVConfig:
+    """Sensitivity CSV output configuration."""
+    enabled: bool = True
+    output_path: str = "sense.csv"
+    interval_seconds: int = 5
+    num_samples: int = 10000  # Number of samples for sensitivity calculation
+
+
+@dataclass
 class MonitorConfig:
     """Complete monitor configuration."""
     shared_memory: SharedMemoryConfig = field(default_factory=SharedMemoryConfig)
@@ -78,6 +87,7 @@ class MonitorConfig:
     logging: LoggingConfig = field(default_factory=LoggingConfig)
     statistics: StatisticsConfig = field(default_factory=StatisticsConfig)
     cleanup: CleanupConfig = field(default_factory=CleanupConfig)
+    sensitivity_csv: SensitivityCSVConfig = field(default_factory=SensitivityCSVConfig)
 
     @classmethod
     def from_yaml(cls, config_path: str) -> "MonitorConfig":

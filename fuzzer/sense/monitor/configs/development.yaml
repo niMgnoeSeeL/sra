@@ -25,3 +25,10 @@ cleanup:
   auto_cleanup: true  # always auto cleanup, otherwise monitor will detect processed executions
   cleanup_on_startup: false
   cleanup_on_exit: false
+
+# Enable sensitivity CSV output for analysis
+sensitivity_csv:
+  enabled: true
+  output_path: "sense.csv"
+  interval_seconds: 5
+  num_samples: 10000

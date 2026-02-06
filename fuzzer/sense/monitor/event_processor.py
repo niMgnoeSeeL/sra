@@ -194,9 +194,9 @@ class EventProcessor:
                 continue
             
             # Check if ALL intermediate locations are covered
-            for loc_id in flow_def.intermediate_ids:
-                if loc_id not in coverage:
-                    continue # Missing intermediate coverage
+            if not all(loc_id in coverage for loc_id in flow_def.intermediate_ids):
+                logger.debug(f"    ✗ Missing intermediate coverage for flow {flow_id}")
+                continue
             
             # Find valid source->sink pairs (source before sink)
             for cndt_src_event in cndt_src_events:
