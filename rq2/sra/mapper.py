@@ -24,7 +24,8 @@ def get_node_from_bb_lineno_fuzz(cfg_inter: Dict, func_name: str, line_no: int) 
     """
     for node, node_info in cfg_inter["nodes"].items():
         if (
-            node_info["func"] == func_name
+            node_info["linenums"] is not None 
+            and node_info["func"] == func_name
             and line_no in node_info["linenums"]
         ):
             return node, node_info

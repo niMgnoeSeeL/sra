@@ -178,10 +178,15 @@ def get_min_debug_id(nodes: List[pydot.Node]) -> int:
             debug_ids.update([int(match) for match in matches])
     return min(debug_ids)
 
+_CF_RE = re.compile(r'^\s*(?:[%@][-.\w]+\s*=\s*)?(?:br|phi)\b')
+
+def is_control_flow(codeline: str) -> bool:
+    """Return True if the line’s opcode is `br` or `phi` (with optional SSA assignment)."""
+    return bool(_CF_RE.match(codeline))
 
 def parse_node_label(
     node_label: str, block: str, function_in_consideration: Set[str]
-) -> Tuple[List[Tuple[List[str], Set[int], str]], bool, str, bool]:
+) -> Tuple[List[Tuple[List[str], Set[int], Set[int],str]], bool, str, bool]:
     """parse node label each call in the basic block"""
     # sourcery skip: raise-specific-error
 
@@ -195,11 +200,14 @@ def parse_node_label(
     bbs = []
     curr_bb = []
     curr_debug_id = set()
+    curr_cf_debug_id = set() # debug ids of control flow instructions
     for codeline in block.split("\n"):
         curr_bb.append(codeline)
         if debugid_matches := re.findall(regex_debugid, codeline, re.MULTILINE):
             debug_id = int(debugid_matches[0])
             curr_debug_id.add(debug_id)
+            if is_control_flow(codeline):
+                curr_cf_debug_id.add(debug_id)
         if call_matches := re.findall(regex_call, codeline, re.MULTILINE):
             if len(call_matches) > 1:
                 print(f"{codeline=}")
@@ -208,11 +216,11 @@ def parse_node_label(
             callee = call_matches[0][-1]
             if callee not in function_in_consideration:
                 continue
-            bbs.append((curr_bb, curr_debug_id, callee))
+            bbs.append((curr_bb, curr_debug_id, curr_cf_debug_id, callee))
             curr_bb = []
             curr_debug_id = set()
     if len(curr_debug_id):
-        bbs.append((curr_bb, curr_debug_id, None))
+        bbs.append((curr_bb, curr_debug_id, curr_cf_debug_id, None))
 
     return (
         bbs,
@@ -290,10 +298,14 @@ def parse_dotfiles(
     blocks_dict: Dict[str, str],
     non_overlap_lineidx: bool,
     debug: bool = False,
+    mark_cf_lines: bool = False
 ) -> Tuple[Dict, Dict]:  # sourcery skip: raise-specific-error
     """
     The second return dictionary maps from the node to the basic block in the
     original LLVM IR.
+
+    mark_cf_lines: whether to mark the lines numbers of debug intrinsics of control flow lines
+    Example: br i1 %16, label %17, label %141, !dbg !140 <--- this flag may not be reliable
     """
     cfgs_intra = {}
     node_to_bb = {}
@@ -402,25 +414,17 @@ def parse_dotfiles(
                     "nopred": nopred_flag,
                 }
                 node_to_bb[node_name] = (function_name, block_idx)
-            for idx, (text, debug_ids, call) in enumerate(bbs):
+            for idx, (text, debug_ids, cf_debug_ids, call) in enumerate(bbs):
                 node_name_with_idx = (
                     f"{node_name}-{idx}" if len(bbs) > 1 else node_name
                 )
                 lines = set()
+                lines_non_cf = set()
                 for debug_id in debug_ids:
-                    try:
-                        debug_info = debug_info_dict[debug_id]
-                    except KeyError as e:
-                        print(f"{function_name=}")
-                        print(f"{node_name=}")
-                        print(f"{text=}")
-                        print(f"{debug_ids=}")
-                        # raise exception with call stack
-                        raise e
-                    linenum = int(
-                        re.findall(regex_line, debug_info, re.MULTILINE)[0]
-                    )
+                    linenum = extract_lnum_from_dinfo(debug_info_dict, function_name, node_name, text, debug_ids, debug_id)
                     lines.add(linenum)
+                    if mark_cf_lines and debug_id not in cf_debug_ids:
+                        lines_non_cf.add(linenum)
                 if non_overlap_lineidx:
                     lines -= prev_lines
                 if len(lines) == 0:
@@ -431,6 +435,7 @@ def parse_dotfiles(
                     "branch": False,
                     "program_exit": False,
                     "nopred": False,
+                    "lines_non_cf": lines_non_cf if mark_cf_lines else None,
                 }
                 if idx == 0:
                     node_attr["nopred"] = nopred_flag
@@ -530,6 +535,20 @@ def parse_dotfiles(
             cfg["exit"] = exit_nodes
         cfgs_intra[function_name] = cfg
     return cfgs_intra, node_to_bb
+
+def extract_lnum_from_dinfo(debug_info_dict, function_name, node_name, text, debug_ids, debug_id):
+    try:
+        debug_info = debug_info_dict[debug_id]
+    except KeyError as e:
+        print(f"{function_name=}")
+        print(f"{node_name=}")
+        print(f"{text=}")
+        print(f"{debug_ids=}")
+                        # raise exception with call stack
+        raise e
+    linenum = int(re.findall(regex_line, debug_info, re.MULTILINE)[0])
+    
+    return linenum
 
 
 def gen_cfg_inter(cfgs_intra: Dict) -> Dict:
