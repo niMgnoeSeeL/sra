@@ -14,7 +14,7 @@ namespace taint {
 
 bool SARIFParser::parseSARIFFile(const std::string &filePath,
                                  const std::string &sourceDir) {
-  flows.clear();
+  // Note: Do NOT clear flows - we want to accumulate from multiple SARIF files
   errorMessage.clear();
   std::string baseDir;
 

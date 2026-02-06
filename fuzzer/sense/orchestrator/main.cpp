@@ -49,7 +49,7 @@
 namespace fs = std::filesystem;
 
 struct Config {
-  std::string sarifFile;
+  std::vector<std::string> sarifFiles; // Support multiple SARIF files
   std::string sourceDir;
   std::string inputLL;
   std::string outputLL;
@@ -66,6 +66,8 @@ void printUsage(const char *progName) {
   std::cout << "Required options:\n";
   std::cout
       << "  --sarif <file>       SARIF file with taint flow specifications\n";
+  std::cout << "                       (can be specified multiple times for "
+               "multiple CWEs)\n";
   std::cout << "  --input <file>       Input LLVM IR file (.ll)\n";
   std::cout << "  --source-dir <dir>   Source directory for AST analysis\n";
   std::cout
@@ -89,7 +91,8 @@ void printUsage(const char *progName) {
   std::cout << "  --help               Show this help message\n\n";
   std::cout << "Example:\n";
   std::cout << "  " << progName << " \\\n";
-  std::cout << "    --sarif flows.sarif \\\n";
+  std::cout << "    --sarif CWE190_TaintOverflow.sarif \\\n";
+  std::cout << "    --sarif CWE190_TaintUnderflow.sarif \\\n";
   std::cout << "    --input program.ll \\\n";
   std::cout << "    --output program.instrumented.ll \\\n";
   std::cout << "    --pass-dir ./build \\\n";
@@ -104,7 +107,7 @@ bool parseArgs(int argc, char **argv, Config &config) {
       printUsage(argv[0]);
       return false;
     } else if (arg == "--sarif" && i + 1 < argc) {
-      config.sarifFile = argv[++i];
+      config.sarifFiles.push_back(argv[++i]);
     } else if (arg == "--source-dir" && i + 1 < argc) {
       config.sourceDir = argv[++i];
     } else if (arg == "--input" && i + 1 < argc) {
@@ -138,7 +141,7 @@ bool parseArgs(int argc, char **argv, Config &config) {
   }
 
   // Validate required arguments
-  if (config.sarifFile.empty() || config.inputLL.empty() ||
+  if (config.sarifFiles.empty() || config.inputLL.empty() ||
       config.outputLL.empty() || config.passDir.empty()) {
     std::cerr << "ERROR: Missing required arguments\n\n";
     printUsage(argv[0]);
@@ -158,12 +161,23 @@ int main(int argc, char **argv) {
   }
 
   // Step 1: Parse SARIF file
-  std::cout << "[Step 1] Parsing SARIF file: " << config.sarifFile << "\n";
+  std::cout << "[Step 1] Parsing " << config.sarifFiles.size()
+            << " SARIF file(s)\n";
   taint::SARIFParser parser;
-  if (!parser.parseSARIFFile(config.sarifFile, config.sourceDir)) {
+
+  for (const auto &sarifFile : config.sarifFiles) {
+    size_t flowsBefore = parser.getFlows().size();
+    std::cout << "  - Loading: " << sarifFile << "\n";
+    if (!parser.parseSARIFFile(sarifFile, config.sourceDir)) {
     std::cerr << "ERROR: " << parser.getError() << "\n";
     return 1;
   }
+    size_t flowsAfter = parser.getFlows().size();
+    std::cout << "    Added " << (flowsAfter - flowsBefore) 
+              << " flows (total: " << flowsAfter << ")\n";
+  }
+
+  std::cout << "  Total flows loaded: " << parser.getFlows().size() << "\n";
 
   // Step 2: Build flow database and assign IDs
   std::cout << "\n[Step 2] Building flow database and assigning IDs\n";
