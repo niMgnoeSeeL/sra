@@ -22,6 +22,8 @@ static char g_shm_name[64] = {0};
 static int g_initialized = 0;
 static int g_verbose = 0;
 static FILE *g_log_file = NULL;
+// Number of writers currently populating event slots (in-flight)
+static uint32_t g_writers_inflight = 0;
 
 // Get monotonic timestamp in nanoseconds
 static uint64_t get_monotonic_ns(void) {
@@ -152,6 +154,21 @@ void flow_shutdown(void) {
   if (!g_initialized)
     return;
 
+  // Wait for any in-flight writers to finish populating event slots.
+  // This prevents a race where the monitor (which only reads the buffer
+  // after `completed` is set) might see num_events that include slots
+  // reserved but not yet written.
+  while (__atomic_load_n(&g_writers_inflight, __ATOMIC_ACQUIRE) != 0) {
+    if (g_verbose) {
+      fprintf(g_log_file,
+              "[flow_runtime] Waiting for %u in-flight writers before "
+              "marking completed\n",
+              g_writers_inflight);
+    }
+    /* short sleep to avoid busy-waiting */
+    usleep(1000);
+  }
+
   // Mark buffer as completed (atomic write so monitor can detect it)
   if (g_shm_buffer != NULL) {
     __atomic_store_n(&g_shm_buffer->completed, 1, __ATOMIC_RELEASE);
@@ -180,6 +197,8 @@ __attribute__((destructor)) static void flow_exit_handler(void) {
 
 void flow_report_source(void *data, size_t size, int src_id) {
   init_from_env();
+  // Mark writer in-flight so shutdown can wait for completion
+  __atomic_fetch_add(&g_writers_inflight, 1, __ATOMIC_ACQ_REL);
 
   // Write to shared memory
   if (g_shm_buffer != NULL) {
@@ -193,6 +212,7 @@ void flow_report_source(void *data, size_t size, int src_id) {
                 "event (src_id=%d)\n",
                 src_id);
       }
+      __atomic_fetch_sub(&g_writers_inflight, 1, __ATOMIC_ACQ_REL);
       return;
     }
 
@@ -204,6 +224,9 @@ void flow_report_source(void *data, size_t size, int src_id) {
     event->data_size = (uint32_t)size;
     event->padding = 0;
   }
+
+  // Writer finished
+  __atomic_fetch_sub(&g_writers_inflight, 1, __ATOMIC_ACQ_REL);
 
   // Also log if verbose mode enabled
   if (g_verbose) {
@@ -229,6 +252,8 @@ void flow_report_source(void *data, size_t size, int src_id) {
 
 void flow_report_sink(void *data, size_t size, int sink_id) {
   init_from_env();
+  // Mark writer in-flight so shutdown can wait for completion
+  __atomic_fetch_add(&g_writers_inflight, 1, __ATOMIC_ACQ_REL);
 
   // Write to shared memory
   if (g_shm_buffer != NULL) {
@@ -242,6 +267,7 @@ void flow_report_sink(void *data, size_t size, int sink_id) {
                 "event (sink_id=%d)\n",
                 sink_id);
       }
+      __atomic_fetch_sub(&g_writers_inflight, 1, __ATOMIC_ACQ_REL);
       return;
     }
 
@@ -253,6 +279,9 @@ void flow_report_sink(void *data, size_t size, int sink_id) {
     event->data_size = (uint32_t)size;
     event->padding = 0;
   }
+
+  // Writer finished
+  __atomic_fetch_sub(&g_writers_inflight, 1, __ATOMIC_ACQ_REL);
 
   // Also log if verbose mode enabled
   if (g_verbose) {
