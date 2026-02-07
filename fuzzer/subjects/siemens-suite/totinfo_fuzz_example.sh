@@ -4,7 +4,7 @@ set -e
 
 WORKDIR=/workspaces/fuzzer
 SUBJECT="/workspaces/fuzzer/subjects/siemens-suite/totinfo"
-CORPUS=$SUBJECT/corpora
+CORPUS=$SUBJECT/seed_corpus
 SARIF="$SUBJECT/taint_reports/Siemens-totinfo_CODEQLCWE-190_ArithmeticTainted.sarif"
 FT_DIR=/workspaces/fuzzer/fuzztastic
 BUILD_DIR=$WORKDIR/sense/build
@@ -55,7 +55,7 @@ ls -l $FUZZ_DIR
 
 echo "=== Start fuzzing ==="
 FUZZ_CAMP=$(mktemp -d $FUZZ_DIR/fuzz_campaign.XXXX)
-fuzzing_cmd="timeout $TIMEOUT $WORKDIR/AFLplusplus/afl-fuzz -i $CORPUS -o $FUZZ_CAMP -- $FUZZ_DIR/harness_afl @@"
+fuzzing_cmd="timeout $TIMEOUT $WORKDIR/AFLplusplus/afl-fuzz -i $CORPUS -o $FUZZ_CAMP -- $FUZZ_DIR/harness_afl"
 
 export AFL_TRY_AFFINITY=1
 export AFL_NO_SYNC=1

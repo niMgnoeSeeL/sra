@@ -36,7 +36,9 @@ The `totinfo` subject is a simple C program that processes some input data. Ther
 
 1. Move `BUILD.sh` to the totinfo directory.
 
-2. Run `totinfo_fuzz_example.sh` to see end-to-end example of running the pipeline. This includes
+2. `mkdir -p ..../totinfo/seed_corpus` and add some seed inputs there.
+
+3. Run `totinfo_fuzz_example.sh` to see end-to-end example of running the pipeline. This includes
     - Building the totinfo subject with debug info produce compilation database
     - Instrumenting totinfo with our taint tracking instrumentation tool
     - Fuzztastic instrumentation
