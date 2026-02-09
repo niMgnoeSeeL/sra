@@ -31,11 +31,22 @@ OUTPUT="$FUZZ_DIR/totinfo_fuzz.instrumented.ll"
     --output $OUTPUT \
     --compile-db $SUBJECT/compile_commands.json \
     --pass-dir $WORKDIR/sense/build \
-    --db-only \
     --verbose
 
-cp $SUBJECT/totinfo_fuzz.ll $OUTPUT
+# The orchestrator creates the final file with .dfcov.ll extension
+# We need to use that for CFG generation and fuzzing
+if [ -f "$OUTPUT.dfcov.ll" ]; then
+    mv "$OUTPUT.dfcov.ll" "$OUTPUT"
+fi
 echo "=== Finished instrumenting totinfo ==="
+
+# Step 2.5: Generate CFG for reachability analysis
+echo "=== Generating CFG for reachability estimator ==="
+python3 $WORKDIR/sense/monitor/generate_cfg.py \
+    --source-dir "$FUZZ_DIR" \
+    --source-name "totinfo_fuzz.instrumented" \
+    --opt-path /usr/bin/opt-20
+echo "=== Finished generating CFG ==="
 
 # Step 3: Run fuzztastic instrumentation on the instrumented totinfo
 echo "=== Running fuzztastic instrumentation on totinfo ==="
@@ -63,16 +74,18 @@ export AFL_NO_SYNC=1
 # Step 5: Launch Flow Monitor
 find /dev/shm/ -maxdepth 1 -name 'flow_events_*' -delete
 find /dev/shm/ -maxdepth 1 -name 'df_coverage_*' -delete
-echo "🚀 Launching Flow Monitor"
+echo "🚀 Launching Flow Monitor with Reachability Estimator"
 python3 $WORKDIR/sense/monitor/flow_monitor.py \
     --flowdb "$OUTPUT.flowdb" \
+    --cfg "$FUZZ_DIR/cfg_inter.json" \
     --config "$WORKDIR/sense/monitor/configs/development.yaml" \
     --output "$FUZZ_CAMP/totinfo.jsonl" \
-    --log-level INFO \
+    --log-level DEBUG \
     --log-file "$FUZZ_CAMP/totinfo.log" \
     --cleanup-on-exit &
 FLOW_MONITOR_PID=$!
 echo "Flow Monitor PID: $FLOW_MONITOR_PID, Log: $FUZZ_CAMP/totinfo.log"
+echo "Reachability estimation enabled with CFG: $FUZZ_DIR/cfg_inter.json"
 
 sleep 5  # Give Flow Monitor time to start
 

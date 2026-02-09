@@ -23,7 +23,17 @@ from flow_db import FlowDatabase
 from shm_protocol import discover_executions, parse_execution, ExecutionNotCompleteError
 from event_processor import EventProcessor, Statistics
 from analysis_db import SensitivityAnalysisDatabase
+from reachability_estimator import ReachabilityEstimator
 from enum import Enum, auto
+
+# Add SRA to path — vendored copy at fuzzer/sense/sra/,
+# with fallback to rq2/sra/ for development outside the devcontainer
+_sra_local = str(Path(__file__).resolve().parents[1])  # fuzzer/sense/
+_sra_rq2 = str(Path(__file__).resolve().parents[3] / "rq2")  # sra/rq2/
+for _p in [_sra_local, _sra_rq2]:
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 
 
 logger = logging.getLogger(__name__)
@@ -56,7 +66,14 @@ class FlowMonitor:
         self.processor = EventProcessor(flow_db)
         self.statistics = Statistics()
         self.analysis_db = SensitivityAnalysisDatabase(flow_db)
-        
+
+        # Load CFG and construct SRA Graph for reachability estimation
+        sra_graph = None
+        if config.cfg.cfg_path:
+            sra_graph = self._load_cfg(config.cfg.cfg_path)
+
+        self.reachability = ReachabilityEstimator(flow_db, sra_graph)
+
         self.shm_dir = Path(config.shared_memory.shm_dir)
         self.output_file: Optional[TextIO] = None
         self.running = False
@@ -85,6 +102,25 @@ class FlowMonitor:
         if self.csv_enabled:
             logger.info(f"CSV tracking enabled: {self.csv_output_path} (interval={self.csv_interval}s)")
     
+    @staticmethod
+    def _load_cfg(cfg_path: str):
+        """Load pre-built CFG JSON and construct SRA Graph."""
+        from sra.estimator import Graph
+
+        logger.info(f"Loading CFG from {cfg_path}")
+        with open(cfg_path, 'r') as f:
+            cfg_inter = json.load(f)
+
+        # Convert linenums from lists back to sets (JSON serializes sets as lists)
+        for node_info in cfg_inter["nodes"].values():
+            if node_info.get("linenums") is not None:
+                node_info["linenums"] = set(node_info["linenums"])
+
+        graph = Graph(cfg_inter)
+        logger.info(f"CFG loaded: {len(cfg_inter['nodes'])} nodes, "
+                     f"{len(graph.intra_cfgs)} functions")
+        return graph
+
     def start(self) -> None:
         """Start the monitoring service."""
         logger.info("Starting flow monitor service")
@@ -248,7 +284,10 @@ class FlowMonitor:
 
             # Store analysis in database
             self.analysis_db.add(analysis)
-            
+
+            # Update reachability estimator
+            self.reachability.update(analysis)
+
             # Update statistics
             self.statistics.update(analysis)
             
@@ -307,10 +346,16 @@ class FlowMonitor:
         """Print current statistics to logger."""
         prefix = "=== FINAL STATISTICS ===" if final else "=== Statistics ==="
         logger.info(f"\n{prefix}")
-        
+
         stats_str = str(self.statistics)
         for line in stats_str.split('\n'):
             logger.info(line)
+
+        # Print reachability estimates
+        if self.reachability.total_executions > 0:
+            reachability_report = self.reachability.report()
+            for line in reachability_report.split('\n'):
+                logger.info(line)
     
     def _cleanup_execution(self, pid: int) -> None:
         """

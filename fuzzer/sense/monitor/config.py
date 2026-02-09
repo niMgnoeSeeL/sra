@@ -31,6 +31,12 @@ class FlowDatabaseConfig:
 
 
 @dataclass
+class CFGConfig:
+    """Control flow graph configuration for reachability estimation."""
+    cfg_path: Optional[str] = None  # Path to pre-built cfg_inter JSON
+
+
+@dataclass
 class OutputConfig:
     """Output configuration."""
     format: str = "jsonl"
@@ -82,6 +88,7 @@ class MonitorConfig:
     """Complete monitor configuration."""
     shared_memory: SharedMemoryConfig = field(default_factory=SharedMemoryConfig)
     flow_database: FlowDatabaseConfig = field(default_factory=FlowDatabaseConfig)
+    cfg: CFGConfig = field(default_factory=CFGConfig)
     output: OutputConfig = field(default_factory=OutputConfig)
     processing: ProcessingConfig = field(default_factory=ProcessingConfig)
     logging: LoggingConfig = field(default_factory=LoggingConfig)
@@ -134,6 +141,7 @@ class MonitorConfig:
         return cls(
             shared_memory=SharedMemoryConfig(**data.get('shared_memory', {})),
             flow_database=FlowDatabaseConfig(**data.get('flow_database', {})),
+            cfg=CFGConfig(**data.get('cfg', {})),
             output=OutputConfig(**data.get('output', {})),
             processing=ProcessingConfig(
                 max_executions=data.get('processing', {}).get('max_executions')

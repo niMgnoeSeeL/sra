@@ -11,7 +11,7 @@ dry_run=false
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR" || exit 1
 
-CODEQL_PACK_DIR="$HOME/.codeql/packages/codeql/cpp-queries/1.5.0/Security/CWE"
+CODEQL_PACK_DIR="/opt/codeql/qlpacks/codeql/cpp-queries/1.5.10/Security/CWE"
 TAINT_REPORT_DIR="taint_reports"
 
 # List the subdirectories to get the subjects in Siemens Suite

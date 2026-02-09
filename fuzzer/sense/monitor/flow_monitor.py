@@ -64,6 +64,11 @@ _monitor: FlowMonitor = None
     help='Polling interval in seconds (default: 0.1)'
 )
 @click.option(
+    '--cfg',
+    type=click.Path(exists=True, path_type=Path),
+    help='Path to pre-built cfg_inter JSON for SRA reachability estimation'
+)
+@click.option(
     '--no-cleanup',
     is_flag=True,
     help='Disable automatic cleanup of processed shared memory'
@@ -83,7 +88,7 @@ _monitor: FlowMonitor = None
     is_flag=True,
     help='Disable statistics summary on exit'
 )
-def main(flowdb, config, output, output_format, log_level, log_file,
+def main(flowdb, config, cfg, output, output_format, log_level, log_file,
          max_executions, poll_interval, no_cleanup,
          cleanup_on_exit, stats_interval, no_stats):
     """
@@ -130,6 +135,7 @@ def main(flowdb, config, output, output_format, log_level, log_file,
         monitor_config = load_config(
             config_path=config,
             flowdb_path=flowdb,
+            cfg_path=cfg,
             output=output,
             output_format=output_format,
             log_level=log_level,
@@ -170,7 +176,7 @@ def main(flowdb, config, output, output_format, log_level, log_file,
         sys.exit(1)
 
 
-def load_config(config_path, flowdb_path, output, output_format, log_level,
+def load_config(config_path, flowdb_path, cfg_path, output, output_format, log_level,
                 log_file, max_executions, poll_interval, no_cleanup,
                 cleanup_on_exit, stats_interval, no_stats) -> MonitorConfig:
     """
@@ -194,7 +200,10 @@ def load_config(config_path, flowdb_path, output, output_format, log_level,
     # Override with command-line arguments (only if provided)
     if flowdb_path:
         cfg.flow_database.database_path = str(flowdb_path)
-    
+
+    if cfg_path:
+        cfg.cfg.cfg_path = str(cfg_path)
+
     if output:
         cfg.output.destination = str(output)
     
